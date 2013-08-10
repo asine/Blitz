@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportParameter.Simple
 {
-    public class SimpleReportParameterViewModel : ViewModelBase, IReportParameterViewModel
+    public class SimpleReportParameterViewModel : ViewModelBase
     {
         public ObservableCollection<DateTime> Dates { get; private set; } 
 

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Specialized;
+using System.Windows;
 using System.Windows.Controls;
 
 using Microsoft.Practices.Prism.Regions;
@@ -14,50 +15,63 @@ namespace Blitz.Client.Core.MVVM
 
         protected override void Adapt(IRegion region, TabControl regionTarget)
         {
-            region.Views.CollectionChanged += (s, e) =>
+            region.Views.CollectionChanged += (s, e) => RegionCollectionChanged(regionTarget, e);
+
+            regionTarget.SelectionChanged += (s, e) => TabControlSelectionChanged(e);
+        }
+
+        private static void RegionCollectionChanged(TabControl regionTarget, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+                foreach (FrameworkElement view in e.NewItems)
                 {
-                    foreach (FrameworkElement view in e.NewItems)
-                    {
-                        var viewModel = view.DataContext as IViewModel;
-                        if (viewModel == null) continue;
+                    var viewModel = view.DataContext as IViewModel;
+                    if (viewModel == null) continue;
 
-                        var tabItem = new TabItem {Header = viewModel.DisplayName, Content = view};
-                        regionTarget.Items.Add(tabItem);
-                    }
+                    var tabItem = new TabItem {Header = viewModel.DisplayName, Content = view};
+                    regionTarget.Items.Add(tabItem);
                 }
+            }
 
-                if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-                {
-                    foreach (var view in e.OldItems)
-                    {
-                        regionTarget.Items.Remove(view);
-                    }
-                }
-            };
-
-            regionTarget.SelectionChanged += (s, e) =>
+            if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (var obj in e.AddedItems)
+                foreach (var view in e.OldItems)
                 {
-                    var tabItem = obj as TabItem;
-                    if (tabItem == null) continue;
+                    TabItem tabItem = null;
 
-                    var view = tabItem.Content;
-                    Activate(view);
-                    break;
+                    foreach (TabItem item in regionTarget.Items)
+                    {
+                        if (item.Content == view)
+                            tabItem = item;
+                    }
+
+                    if (tabItem != null)
+                        regionTarget.Items.Remove(tabItem);
                 }
+            }
+        }
 
-                foreach (var obj in e.RemovedItems)
-                {
-                    var tabItem = obj as TabItem;
-                    if (tabItem == null) continue;
+        private static void TabControlSelectionChanged(SelectionChangedEventArgs e)
+        {
+            foreach (var obj in e.AddedItems)
+            {
+                var tabItem = obj as TabItem;
+                if (tabItem == null) continue;
 
-                    var view = tabItem.Content;
-                    DeActivate(view);
-                }
-            };
+                var view = tabItem.Content;
+                Activate(view);
+                break;
+            }
+
+            foreach (var obj in e.RemovedItems)
+            {
+                var tabItem = obj as TabItem;
+                if (tabItem == null) continue;
+
+                var view = tabItem.Content;
+                DeActivate(view);
+            }
         }
 
         private static void Activate(object item)

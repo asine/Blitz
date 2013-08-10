@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Linq;
 
-using Agatha.Common;
-using Agatha.ServiceLayer;
-
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
+using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class InitialiseParametersHandler : RequestHandler<InitialiseParametersRequest, InitialiseParametersResponse>
+    public class InitialiseParametersHandler : HandlerBase<InitialiseParametersRequest, InitialiseParametersResponse>
     {
-        public override Response Handle(InitialiseParametersRequest request)
+        public InitialiseParametersHandler(ILog log) 
+            : base(log)
+        {
+        }
+
+        protected override InitialiseParametersResponse Execute(InitialiseParametersRequest request)
         {
             var response = CreateTypedResponse();
 

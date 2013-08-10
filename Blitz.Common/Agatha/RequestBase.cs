@@ -2,7 +2,7 @@
 
 using Agatha.Common;
 
-namespace Blitz.Common
+namespace Blitz.Common.Agatha
 {
     [DataContract]
     public abstract class RequestBase<TResponse> : Request

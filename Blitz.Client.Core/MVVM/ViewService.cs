@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 
+using Blitz.Common.Core;
+
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
@@ -81,6 +83,29 @@ namespace Blitz.Client.Core.MVVM
 
             if (scoped)
                 container.RegisterInstance(regionManager);
+        }
+
+        public void ClearRegion(string regionName)
+        {
+            var regionManager = _regionManagerFactory();
+            var region = regionManager.Regions[regionName];
+
+            foreach (var obj in region.Views)
+            {
+                var view = obj as FrameworkElement;
+                if (view == null) continue;
+
+                var viewModel = view.DataContext as IViewModel;
+                if (viewModel == null) continue;
+
+                view.DataContext = null;
+
+                var closableViewModel = viewModel as ISupportClosing;
+                if (closableViewModel != null)
+                    closableViewModel.Close();
+
+                region.Remove(obj);
+            }
         }
 
         private static FrameworkElement CreateView(IUnityContainer container, Type viewModelType)

@@ -65,7 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHook.cs" />
+    <Compile Include="Core\ConsoleLogger.cs" />
     <Compile Include="Customer\GetHistoryHandler.cs" />
+    <Compile Include="Core\HandlerBase.cs" />
     <Compile Include="Customer\InitialiseParametersHandler.cs" />
     <Compile Include="Customer\ReportRunnerHandler.cs" />
     <Compile Include="Program.cs" />

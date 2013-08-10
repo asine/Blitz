@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-using Blitz.Client.Common.ReportParameter;
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
 
@@ -10,7 +10,7 @@ namespace Blitz.Client.Common.ReportRunner
 {
     [UseView(typeof(ReportRunnerView))]
     public class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : ViewModelBase
-        where TReportParameterViewModel : IReportParameterViewModel
+        where TReportParameterViewModel : IViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
         private readonly IViewService _viewService;
@@ -94,6 +94,8 @@ namespace Blitz.Client.Common.ReportRunner
             task
                 .ContinueWith(x =>
                 {
+                    _viewService.ClearRegion(RegionNames.REPORT_DATA);
+
                     var dataViewModels = x.Result;
 
                     foreach (var dataViewModel in dataViewModels)

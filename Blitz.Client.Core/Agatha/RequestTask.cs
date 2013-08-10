@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Agatha.Common;
 
-using Blitz.Common;
+using Blitz.Common.Agatha;
+using Blitz.Common.Core;
 
 namespace Blitz.Client.Core.Agatha
 {
@@ -59,23 +59,25 @@ namespace Blitz.Client.Core.Agatha
             return new Task<TResponse>(() => Execute<TRequest, TResponse>(request));
         }
 
-        private TResponse Execute<TRequest, TResponse>(TRequest request) where TRequest : RequestBase<TResponse>
+        private TResponse Execute<TRequest, TResponse>(TRequest request)
+            where TRequest : RequestBase<TResponse>
             where TResponse : Response
         {
-            var stopwatch = new Stopwatch();
+            using (var tester = new PerformanceTester())
+            {
+                request.Id = Guid.NewGuid().ToString();
 
-            request.Id = Guid.NewGuid().ToString();
+                _log.Info("Start RequestTask {0}, Id - {1}", typeof (TRequest), request.Id);
 
-            _log.Info("Start RequestTask {0}, Id - {1}", typeof (TRequest), request.Id);
+                var response = _requestDispatcher().Get<TResponse>(request);
 
-            stopwatch.Start();
-            var response = _requestDispatcher().Get<TResponse>(request);
-            stopwatch.Stop();
+                _log.Info("Stop RequestTask {0}, Id - {1}. Duration {2}",
+                    typeof (TRequest),
+                    request.Id,
+                    tester.Result.Milliseconds);
 
-            _log.Info("Stop RequestTask {0}, Id - {1}. Duration {2}", typeof (TRequest), request.Id,
-                stopwatch.ElapsedMilliseconds);
-
-            return response;
+                return response;
+            }
         }
     }
 }

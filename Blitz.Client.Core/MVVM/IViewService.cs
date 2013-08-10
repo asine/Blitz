@@ -11,5 +11,7 @@ namespace Blitz.Client.Core.MVVM
 
         void AddToRegion<TViewModel>(string regionName, Action<TViewModel> initialiseViewModel, bool scoped = false)
             where TViewModel : IViewModel;
+
+        void ClearRegion(string regionName);
     }
 }

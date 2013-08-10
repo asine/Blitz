@@ -18,15 +18,12 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.ColumnSpan="2"
-                   Grid.Row="0"
-                   Text="{Binding DisplayName}" />
-
         <Expander Grid.Column="0"
                   Grid.Row="1"
-                  ExpandDirection="Left"
+                  ExpandDirection="Right"
                   IsExpanded="{Binding IsExpanded}"
                   Header="Parameters">
+            
             <Grid Width="200">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -46,5 +43,6 @@
         <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_DATA}"
                     Grid.Column="1"
                     Grid.Row="1" />
+        
     </Grid>
 </UserControl>

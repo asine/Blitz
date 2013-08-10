@@ -2,8 +2,8 @@
 using Blitz.Client.Common.ReportParameter.Simple;
 using Blitz.Client.Common.ReportRunner;
 using Blitz.Client.Common.ReportViewer;
-using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer

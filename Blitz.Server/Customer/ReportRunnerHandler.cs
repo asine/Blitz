@@ -1,15 +1,19 @@
 ﻿using System.Linq;
 
-using Agatha.Common;
-using Agatha.ServiceLayer;
-
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
+using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class ReportRunnerHandler : RequestHandler<ReportRunnerRequest, ReportRunnerResponse>
+    public class ReportRunnerHandler : HandlerBase<ReportRunnerRequest, ReportRunnerResponse>
     {
-        public override Response Handle(ReportRunnerRequest request)
+        public ReportRunnerHandler(ILog log) 
+            : base(log)
+        {
+        }
+
+        protected override ReportRunnerResponse Execute(ReportRunnerRequest request)
         {
             var response = CreateTypedResponse();
 

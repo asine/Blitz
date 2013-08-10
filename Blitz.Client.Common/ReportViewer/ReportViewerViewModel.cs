@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportViewer
 {

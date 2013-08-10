@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportData.Simple
 {
-    public class SimpleReportDataViewModel : ViewModelBase
+    public class SimpleReportDataViewModel : Workspace
     {
         public ObservableCollection<object> Items { get; private set; }
 

@@ -57,13 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHook.cs" />
+    <Compile Include="Core\DebugLogger.cs" />
+    <Compile Include="Core\ILog.cs" />
+    <Compile Include="Core\PerformanceTester.cs" />
     <Compile Include="Customer\GetHistoryRequest.cs" />
     <Compile Include="Customer\GetHistoryResponse.cs" />
     <Compile Include="Customer\HistoryDto.cs" />
     <Compile Include="Customer\ReportDto.cs" />
     <Compile Include="Customer\ReportRunnerRequest.cs" />
     <Compile Include="Customer\ReportRunnerResponse.cs" />
-    <Compile Include="RequestBase.cs" />
+    <Compile Include="Agatha\RequestBase.cs" />
     <Compile Include="Customer\InitialiseParametersRequest.cs" />
     <Compile Include="Customer\InitialiseParametersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

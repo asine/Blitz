@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
-             xmlns:inf="clr-namespace:Blitz"
              xmlns:common="clr-namespace:Blitz.Client.Common"
              mc:Ignorable="d"
              d:DesignHeight="300"
@@ -14,8 +13,13 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        
         <TextBlock Text="{Binding DisplayName}" />
+        
         <TabControl Grid.Row="1"
-                    regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT}" />
+                    regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT}"
+                    TabStripPlacement="Left" />
+        
     </Grid>
+    
 </UserControl>

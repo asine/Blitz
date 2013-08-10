@@ -1,15 +1,19 @@
 ﻿using System.Linq;
 
-using Agatha.Common;
-using Agatha.ServiceLayer;
-
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
+using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class GetHistoryHandler : RequestHandler<GetHistoryRequest, GetHistoryResponse>
+    public class GetHistoryHandler : HandlerBase<GetHistoryRequest, GetHistoryResponse>
     {
-        public override Response Handle(GetHistoryRequest request)
+        public GetHistoryHandler(ILog log) 
+            : base(log)
+        {
+        }
+
+        protected override GetHistoryResponse Execute(GetHistoryRequest request)
         {
             var response = CreateTypedResponse();
 

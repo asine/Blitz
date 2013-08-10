@@ -96,7 +96,6 @@
       <DependentUpon>SimpleReportDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportData\Simple\SimpleReportDataViewModel.cs" />
-    <Compile Include="ReportParameter\IReportParameterViewModel.cs" />
     <Compile Include="ReportParameter\Simple\SimpleReportParameterView.xaml.cs">
       <DependentUpon>SimpleReportParameterView.xaml</DependentUpon>
     </Compile>
@@ -161,6 +160,10 @@
     <ProjectReference Include="..\Blitz.Client.Core\Blitz.Client.Core.csproj">
       <Project>{41AFE43B-1E42-40DF-B66E-A1ED04456652}</Project>
       <Name>Blitz.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blitz.Common\Blitz.Common.csproj">
+      <Project>{145A1613-AA64-42C1-9BA2-5965AF05F0DB}</Project>
+      <Name>Blitz.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

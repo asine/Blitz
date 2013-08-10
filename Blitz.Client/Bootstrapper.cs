@@ -3,11 +3,11 @@ using System.Windows.Controls;
 
 using Agatha.Common;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Customer;
 using Blitz.Client.Shell;
+using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;

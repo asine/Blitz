@@ -5,6 +5,9 @@ using Agatha.Common.WCF;
 using Agatha.ServiceLayer;
 using Agatha.ServiceLayer.WCF;
 
+using Blitz.Common.Core;
+using Blitz.Server.Core;
+
 using Microsoft.Practices.Unity;
 
 namespace Blitz.Server
@@ -16,6 +19,8 @@ namespace Blitz.Server
         public ServerBootstrapper()
         {
             var container = new UnityContainer();
+
+            container.RegisterType<ILog, ConsoleLogger>();
 
             InitialiseAgatha(container);
 
