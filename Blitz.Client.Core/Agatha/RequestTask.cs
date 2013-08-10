@@ -71,7 +71,7 @@ namespace Blitz.Client.Core.Agatha
 
                 var response = _requestDispatcher().Get<TResponse>(request);
 
-                _log.Info("Stop RequestTask {0}, Id - {1}. Duration {2}",
+                _log.Info("Finished RequestTask {0}, Id - {1}. Duration {2}",
                     typeof (TRequest),
                     request.Id,
                     tester.Result.Milliseconds);

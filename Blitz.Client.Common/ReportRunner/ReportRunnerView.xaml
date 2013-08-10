@@ -5,44 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
              xmlns:common="clr-namespace:Blitz.Client.Common"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Expander Grid.Column="0"
-                  Grid.Row="1"
-                  ExpandDirection="Right"
-                  IsExpanded="{Binding IsExpanded}"
-                  Header="Parameters">
-            
-            <Grid Width="200">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Expander Grid.Column="0"
+                      Grid.Row="1"
+                      ExpandDirection="Right"
+                      IsExpanded="{Binding IsExpanded}"
+                      Header="Parameters">
 
-                <ContentControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_PARAMETER}"
-                                Grid.Row="0" />
+                <Grid Width="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <Button Grid.Row="1"
-                        Content="Generate Report..."
-                        Command="{Binding GenerateReportCommand}" />
-            </Grid>
+                    <ContentControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_PARAMETER}"
+                                    Grid.Row="0" />
 
-        </Expander>
+                    <Button Grid.Row="1"
+                            Content="Generate Report..."
+                            Command="{Binding GenerateReportCommand}" />
+                </Grid>
 
-        <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_DATA}"
-                    Grid.Column="1"
-                    Grid.Row="1" />
-        
-    </Grid>
+            </Expander>
+
+            <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_DATA}"
+                        Grid.Column="1"
+                        Grid.Row="1" />
+
+        </Grid>
+    </xctk:BusyIndicator>
 </UserControl>
