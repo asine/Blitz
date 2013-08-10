@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20623.1 VSUPREVIEW
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client", "Blitz.Client\Blitz.Client.csproj", "{B94E7768-2B75-4245-9580-B2C34E376619}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.Common", "Blitz.Client.Common\Blitz.Client.Common.csproj", "{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.Core", "Blitz.Client.Core\Blitz.Client.Core.csproj", "{41AFE43B-1E42-40DF-B66E-A1ED04456652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.Customer", "Blitz.Client.Customer\Blitz.Client.Customer.csproj", "{0D1E3402-F4F5-46F5-AE79-57CCCD64525F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Server", "Blitz.Server\Blitz.Server.csproj", "{0419088D-FB73-4662-8B1D-6FBAEEA7766E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Common", "Blitz.Common\Blitz.Common.csproj", "{145A1613-AA64-42C1-9BA2-5965AF05F0DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{3AB1BAE7-9E60-4749-935C-89325E740459}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{933AB69A-9C11-4F13-9679-CD425205A39C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B94E7768-2B75-4245-9580-B2C34E376619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94E7768-2B75-4245-9580-B2C34E376619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94E7768-2B75-4245-9580-B2C34E376619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94E7768-2B75-4245-9580-B2C34E376619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D1E3402-F4F5-46F5-AE79-57CCCD64525F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1E3402-F4F5-46F5-AE79-57CCCD64525F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1E3402-F4F5-46F5-AE79-57CCCD64525F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1E3402-F4F5-46F5-AE79-57CCCD64525F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0419088D-FB73-4662-8B1D-6FBAEEA7766E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0419088D-FB73-4662-8B1D-6FBAEEA7766E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0419088D-FB73-4662-8B1D-6FBAEEA7766E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0419088D-FB73-4662-8B1D-6FBAEEA7766E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{145A1613-AA64-42C1-9BA2-5965AF05F0DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{145A1613-AA64-42C1-9BA2-5965AF05F0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{145A1613-AA64-42C1-9BA2-5965AF05F0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{145A1613-AA64-42C1-9BA2-5965AF05F0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B94E7768-2B75-4245-9580-B2C34E376619} = {3AB1BAE7-9E60-4749-935C-89325E740459}
+		{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1} = {3AB1BAE7-9E60-4749-935C-89325E740459}
+		{41AFE43B-1E42-40DF-B66E-A1ED04456652} = {3AB1BAE7-9E60-4749-935C-89325E740459}
+		{0D1E3402-F4F5-46F5-AE79-57CCCD64525F} = {3AB1BAE7-9E60-4749-935C-89325E740459}
+		{0419088D-FB73-4662-8B1D-6FBAEEA7766E} = {933AB69A-9C11-4F13-9679-CD425205A39C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+	EndGlobalSection
+EndGlobal
