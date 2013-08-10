@@ -7,9 +7,16 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
-    <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
+    
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
+                        BusyContent="{Binding BusyMessage}">
+        
         <Grid>
+            
             <DataGrid ItemsSource="{Binding Items}" />
+            
         </Grid>
+        
     </xctk:BusyIndicator>
+    
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
@@ -9,7 +10,7 @@ using Microsoft.Practices.Prism.Commands;
 namespace Blitz.Client.Common.ReportRunner
 {
     [UseView(typeof(ReportRunnerView))]
-    public class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : ViewModelBase
+    public class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : Workspace
         where TReportParameterViewModel : IViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
@@ -36,23 +37,6 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        #region IsBusy
-
-        private bool _isBusy;
-
-        public bool IsBusy
-        {
-            get { return _isBusy; }
-            private set
-            {
-                if (value.Equals(_isBusy)) return;
-                _isBusy = value;
-                RaisePropertyChanged(() => IsBusy);
-            }
-        }
-
-        #endregion
-
         public ReportRunnerViewModel(ILog log, IViewService viewService,
             TReportParameterViewModel reportParameterViewModel,
             TReportRunnerService reportRunnerService)
@@ -70,8 +54,9 @@ namespace Blitz.Client.Common.ReportRunner
 
         protected override void OnInitialise()
         {
+            BusyIndicatorSet("... Loading ...");
             _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel)
-                .ContinueWith(_ => IsBusy = false, TaskScheduler.FromCurrentSynchronizationContext());
+                .ContinueWith(_ => BusyIndicatorClear(), TaskScheduler.FromCurrentSynchronizationContext());
 
             _viewService.AddToRegion(_reportParameterViewModel, RegionNames.REPORT_PARAMETER);
         }
@@ -83,11 +68,9 @@ namespace Blitz.Client.Common.ReportRunner
 
         private void GenerateReport()
         {
-            IsBusy = true;
+            BusyIndicatorSet("... Loading ...");
 
-            var request = _reportRunnerService.CreateRequest(_reportParameterViewModel);
-
-            var task = from response in _reportRunnerService.Generate(request)
+            var task = from response in _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel))
                        from dataViewModels in _reportRunnerService.GenerateDataViewModels(response)
                        select dataViewModels;
 
@@ -103,9 +86,19 @@ namespace Blitz.Client.Common.ReportRunner
                         _viewService.AddToRegion(dataViewModel, RegionNames.REPORT_DATA);
                     }
 
-                    IsBusy = false;
+                    BusyIndicatorClear();
+
                     IsExpanded = false;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+
+            task
+                .ContinueWith(t =>
+                {
+                    if (t.Exception != null)
+                        Log.Error(t.Exception.Flatten().InnerException);
+
+                    BusyIndicatorClear();
+                }, TaskContinuationOptions.NotOnRanToCompletion);
 
             task.Start();
         }

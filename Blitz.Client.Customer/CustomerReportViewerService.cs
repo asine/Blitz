@@ -27,7 +27,7 @@ namespace Blitz.Client.Customer
             return _requestTask.GetUnstarted<GetHistoryRequest, GetHistoryResponse>(request);
         }
 
-        public Task<List<ReportViewerItemViewModel>> GenerateDataViewModels(GetHistoryResponse response)
+        public Task<List<ReportViewerItemViewModel>> GenerateItemViewModels(GetHistoryResponse response)
         {
             return new Task<List<ReportViewerItemViewModel>>(
                 () => new List<ReportViewerItemViewModel>(response.Results

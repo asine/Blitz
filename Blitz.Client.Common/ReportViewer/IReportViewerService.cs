@@ -9,6 +9,6 @@ namespace Blitz.Client.Common.ReportViewer
 
         Task<TResponse> GetHistory(TRequest request);
 
-        Task<List<ReportViewerItemViewModel>> GenerateDataViewModels(TResponse response);
+        Task<List<ReportViewerItemViewModel>> GenerateItemViewModels(TResponse response);
     }
 }

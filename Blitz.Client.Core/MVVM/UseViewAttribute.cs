@@ -2,7 +2,7 @@
 
 namespace Blitz.Client.Core.MVVM
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public sealed class UseViewAttribute : Attribute
     {
         public Type ViewType { get; private set; }
