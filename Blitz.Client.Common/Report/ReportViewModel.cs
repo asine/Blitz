@@ -3,9 +3,9 @@ using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.Report
 {
-    public abstract class ReportViewModel<TRunnerViewModel, TViewerViewModel> : ViewModelBase
-        where TRunnerViewModel : IViewModel
-        where TViewerViewModel : IViewModel
+    public abstract class ReportViewModel<TRunnerViewModel, TViewerViewModel> : Workspace
+        where TRunnerViewModel : IViewModel, ISupportActivationState
+        where TViewerViewModel : IViewModel, ISupportActivationState
     {
         private readonly IViewService _viewService;
 
@@ -17,8 +17,9 @@ namespace Blitz.Client.Common.Report
 
         protected override void OnInitialise()
         {
-            _viewService.AddToRegion<TRunnerViewModel>(RegionNames.REPORT);
-            _viewService.AddToRegion<TViewerViewModel>(RegionNames.REPORT);
+            _viewService.AddToRegion<TRunnerViewModel>(RegionNames.REPORT, viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)));
+
+            _viewService.AddToRegion<TViewerViewModel>(RegionNames.REPORT, viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)));
         }
     }
 }

@@ -3,10 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:regions="http://www.codeplex.com/CompositeWPF"
         xmlns:common1="clr-namespace:Blitz.Client.Common;assembly=Blitz.Client.Common"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:shell="clr-namespace:Blitz.Client.Shell"
+        xmlns:mvvm="clr-namespace:Blitz.Client.Core.MVVM;assembly=Blitz.Client.Core"
+        mc:Ignorable="d"
         Title="Reporting Desktop"
         Height="300"
-        Width="300">
-    <Grid>
+        Width="300"
+        d:DataContext="{d:DesignInstance shell:ShellViewModel}">
+
+    <Window.Resources>
+        <mvvm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+    <DockPanel>
+
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar ItemsSource="{Binding Path=ToolBarItems}">
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="3,0"
+                                Content="{Binding DisplayName}"
+                                ToolTip="{Binding DisplayName}"
+                                Command="{Binding Command}"
+                                Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
+            </ToolBar>
+        </ToolBarTray>
+
         <TabControl regions:RegionManager.RegionName="{x:Static common1:RegionNames.MAIN}" />
-    </Grid>
+
+    </DockPanel>
+
 </Window>

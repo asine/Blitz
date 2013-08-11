@@ -8,23 +8,36 @@ using Blitz.Client.Common.ReportParameter.Simple;
 using Blitz.Client.Common.ReportRunner;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer
 {
-    public class CustomerReportRunnerService : IReportRunnerService<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
+    public class CustomerReportRunnerService : ReportRunnerServiceBase<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
     {
         private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
+        private readonly IToolBarService _toolBarService;
+
+        private readonly List<IToolBarItem> _toolBarItems;
 
         public CustomerReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask)
+            IRequestTask requestTask, IToolBarService toolBarService)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
+            _toolBarService = toolBarService;
+
+            _toolBarItems = new List<IToolBarItem>();
+            _toolBarItems.Add(new ToolBarButtonItem {DisplayName = "Runner Test 1", IsVisible = false});
+
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                _toolBarService.Items.Add(toolBarItem);
+            }
         }
 
-        public Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
+        public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
                 .ContinueWith(x =>
@@ -39,17 +52,17 @@ namespace Blitz.Client.Customer
                 }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
+        public override ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
         {
             return new ReportRunnerRequest {ReportDate = reportParameterViewModel.SelectedDate};
         }
 
-        public Task<ReportRunnerResponse> Generate(ReportRunnerRequest request)
+        public override Task<ReportRunnerResponse> Generate(ReportRunnerRequest request)
         {
             return _requestTask.GetUnstarted<ReportRunnerRequest, ReportRunnerResponse>(request);
         }
 
-        public Task<List<IViewModel>> GenerateDataViewModels(ReportRunnerResponse response)
+        public override Task<List<IViewModel>> GenerateDataViewModels(ReportRunnerResponse response)
         {
             return new Task<List<IViewModel>>(
                 () => new List<IViewModel>(response.Results
@@ -67,6 +80,30 @@ namespace Blitz.Client.Customer
                         return dataViewModel;
                     })
                     .ToList()));
+        }
+
+        public override void OnActivate()
+        {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                toolBarItem.IsVisible = true;
+            }
+        }
+
+        public override void OnDeActivate()
+        {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                toolBarItem.IsVisible = false;
+            }
+        }
+
+        public override void CleanUp()
+        {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                _toolBarService.Items.Remove(toolBarItem);
+            }
         }
     }
 }

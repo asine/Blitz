@@ -12,6 +12,11 @@ namespace Blitz.Client.Core.MVVM
             _disposables = new List<IDisposable>();
         }
 
+        public void Add(IDisposable disposable)
+        {
+            _disposables.Add(disposable);
+        }
+
         public void Dispose()
         {
             foreach (var disposable in _disposables)

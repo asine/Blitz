@@ -79,7 +79,7 @@ namespace Blitz.Client.Core.MVVM
             var view = item as FrameworkElement;
             if (view == null) return;
 
-            var viewModel = view.DataContext as IViewModel;
+            var viewModel = view.DataContext as ISupportActivationState;
             if (viewModel == null) return;
 
             viewModel.Activate();
@@ -90,7 +90,7 @@ namespace Blitz.Client.Core.MVVM
             var view = item as FrameworkElement;
             if (view == null) return;
 
-            var viewModel = view.DataContext as IViewModel;
+            var viewModel = view.DataContext as ISupportActivationState;
             if (viewModel == null) return;
 
             viewModel.DeActivate();

@@ -14,5 +14,11 @@ namespace Blitz.Client.Common.ReportRunner
         Task<TResponse> Generate(TRequest request);
 
         Task<List<IViewModel>> GenerateDataViewModels(TResponse response);
+
+        void OnActivate();
+
+        void OnDeActivate();
+
+        void CleanUp();
     }
 }

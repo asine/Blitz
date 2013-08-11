@@ -102,5 +102,20 @@ namespace Blitz.Client.Common.ReportRunner
 
             task.Start();
         }
+
+        protected override void OnActivate()
+        {
+            _reportRunnerService.OnActivate();
+        }
+
+        protected override void OnDeActivate()
+        {
+            _reportRunnerService.OnDeActivate();
+        }
+
+        protected override void CleanUp()
+        {
+            _reportRunnerService.CleanUp();
+        }
     }
 }

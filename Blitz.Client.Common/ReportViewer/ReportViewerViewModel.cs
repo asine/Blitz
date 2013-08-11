@@ -56,5 +56,20 @@ namespace Blitz.Client.Common.ReportViewer
 
             task.Start();
         }
+
+        protected override void OnActivate()
+        {
+            _reportViewerService.OnActivate();
+        }
+
+        protected override void OnDeActivate()
+        {
+            _reportViewerService.OnDeActivate();
+        }
+
+        protected override void CleanUp()
+        {
+            _reportViewerService.CleanUp();
+        }
     }
 }

@@ -4,7 +4,5 @@
     {
         string DisplayName { get; }
 
-        void Activate();
-        void DeActivate();
     }
 }

@@ -87,10 +87,19 @@
   <ItemGroup>
     <Compile Include="Agatha\AgathaKnownTypeRegistration.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
+    <Compile Include="MVVM\AnonymousDisposable.cs" />
+    <Compile Include="MVVM\BooleanToVisibilityConverter.cs" />
     <Compile Include="MVVM\CompositeDisposable.cs" />
+    <Compile Include="MVVM\EventHandlerExtensions.cs" />
+    <Compile Include="MVVM\ISupportActivationState.cs" />
     <Compile Include="MVVM\ISupportClosing.cs" />
     <Compile Include="MVVM\IViewModel.cs" />
     <Compile Include="MVVM\IViewService.cs" />
+    <Compile Include="MVVM\ToolBar\IToolBarItem.cs" />
+    <Compile Include="MVVM\ToolBar\IToolBarService.cs" />
+    <Compile Include="MVVM\ToolBar\ToolBarButtonItem.cs" />
+    <Compile Include="MVVM\ToolBar\ToolBarService.cs" />
+    <Compile Include="MVVM\ViewModelHelpers.cs" />
     <Compile Include="MVVM\Workspace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

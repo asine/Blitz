@@ -4,30 +4,43 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Core.Agatha;
+using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer
 {
-    public class CustomerReportViewerService : IReportViewerService<GetHistoryRequest, GetHistoryResponse>
+    public class CustomerReportViewerService : ReportViewerServiceBase<GetHistoryRequest, GetHistoryResponse>
     {
         private readonly IRequestTask _requestTask;
+        private readonly IToolBarService _toolBarService;
 
-        public CustomerReportViewerService(IRequestTask requestTask)
+        private readonly List<IToolBarItem> _toolBarItems;
+
+        public CustomerReportViewerService(IRequestTask requestTask, IToolBarService toolBarService)
         {
             _requestTask = requestTask;
+            _toolBarService = toolBarService;
+
+            _toolBarItems = new List<IToolBarItem>();
+            _toolBarItems.Add(new ToolBarButtonItem { DisplayName = "Viewer Test 1", IsVisible = false });
+
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                _toolBarService.Items.Add(toolBarItem);
+            }
         }
 
-        public GetHistoryRequest CreateRequest()
+        public override GetHistoryRequest CreateRequest()
         {
             return new GetHistoryRequest();
         }
 
-        public Task<GetHistoryResponse> GetHistory(GetHistoryRequest request)
+        public override Task<GetHistoryResponse> GetHistory(GetHistoryRequest request)
         {
             return _requestTask.GetUnstarted<GetHistoryRequest, GetHistoryResponse>(request);
         }
 
-        public Task<List<ReportViewerItemViewModel>> GenerateItemViewModels(GetHistoryResponse response)
+        public override Task<List<ReportViewerItemViewModel>> GenerateItemViewModels(GetHistoryResponse response)
         {
             return new Task<List<ReportViewerItemViewModel>>(
                 () => new List<ReportViewerItemViewModel>(response.Results
@@ -39,6 +52,30 @@ namespace Blitz.Client.Customer
                         return item;
                     })
                     .ToList()));
+        }
+
+        public override void OnActivate()
+        {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                toolBarItem.IsVisible = true;
+            }
+        }
+
+        public override void OnDeActivate()
+        {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                toolBarItem.IsVisible = false;
+            }
+        }
+
+        public override void CleanUp()
+        {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                _toolBarService.Items.Remove(toolBarItem);
+            }
         }
     }
 }

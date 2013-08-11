@@ -5,6 +5,7 @@ using Agatha.Common;
 
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Customer;
 using Blitz.Client.Shell;
 using Blitz.Common.Core;
@@ -36,6 +37,7 @@ namespace Blitz.Client
             Container.RegisterType<IViewService, ViewService>();
             Container.RegisterType<ILog, DebugLogger>();
             Container.RegisterType<IRequestTask, RequestTask>();
+            Container.RegisterType<IToolBarService, ToolBarService>(new ContainerControlledLifetimeManager());
 
             InitialiseAgatha(Container);
         }

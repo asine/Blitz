@@ -6,7 +6,7 @@ using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportParameter.Simple
 {
-    public class SimpleReportParameterViewModel : ViewModelBase
+    public class SimpleReportParameterViewModel : Workspace
     {
         public ObservableCollection<DateTime> Dates { get; private set; } 
 

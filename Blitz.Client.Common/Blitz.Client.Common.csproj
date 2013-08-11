@@ -119,12 +119,14 @@
     </Compile>
     <Compile Include="ReportParameter\Simple\SimpleReportParameterViewModel.cs" />
     <Compile Include="ReportRunner\IReportRunnerService.cs" />
+    <Compile Include="ReportRunner\ReportRunnerServiceBase.cs" />
     <Compile Include="ReportRunner\ReportRunnerView.xaml.cs">
       <DependentUpon>ReportRunnerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportRunner\ReportRunnerViewModel.cs" />
     <Compile Include="ReportViewer\IReportViewerService.cs" />
     <Compile Include="ReportViewer\ReportViewerItemViewModel.cs" />
+    <Compile Include="ReportViewer\ReportViewerServiceBase.cs" />
     <Compile Include="ReportViewer\ReportViewerView.xaml.cs">
       <DependentUpon>ReportViewerView.xaml</DependentUpon>
     </Compile>
