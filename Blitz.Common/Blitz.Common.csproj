@@ -56,10 +56,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agatha\AgathaKnownTypeRegistration.cs" />
     <Compile Include="AssemblyHook.cs" />
     <Compile Include="Core\DebugLogger.cs" />
+    <Compile Include="Core\EnumerableEx.cs" />
     <Compile Include="Core\ILog.cs" />
     <Compile Include="Core\PerformanceTester.cs" />
+    <Compile Include="Core\UnityExtensions.cs" />
     <Compile Include="Customer\GetHistoryRequest.cs" />
     <Compile Include="Customer\GetHistoryResponse.cs" />
     <Compile Include="Customer\HistoryDto.cs" />

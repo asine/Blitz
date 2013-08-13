@@ -2,12 +2,15 @@
 using System.Windows.Controls;
 
 using Agatha.Common;
+using Agatha.Unity;
 
+using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Customer;
 using Blitz.Client.Shell;
+using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Modularity;
@@ -28,16 +31,19 @@ namespace Blitz.Client
         {
             Application.Current.MainWindow = (Window) Shell;
             Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.Activate();
         }
 
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
 
-            Container.RegisterType<IViewService, ViewService>();
-            Container.RegisterType<ILog, DebugLogger>();
-            Container.RegisterType<IRequestTask, RequestTask>();
-            Container.RegisterType<IToolBarService, ToolBarService>(new ContainerControlledLifetimeManager());
+            Container
+                .RegisterTransient<IViewService, ViewService>()
+                .RegisterTransient<ILog, DebugLogger>()
+                .RegisterTransient<IRequestTask, RequestTask>()
+                .RegisterSingleton<IToolBarService, ToolBarService>()
+                .RegisterSingleton<IDispatcherService, DispatcherService>();
 
             InitialiseAgatha(Container);
         }
@@ -56,7 +62,9 @@ namespace Blitz.Client
 
         private static void InitialiseAgatha(IUnityContainer container)
         {
-            new ClientConfiguration(typeof(AssemblyHook).Assembly, new Agatha.Unity.Container(container)).Initialize();
+            new ClientConfiguration(typeof(AssemblyHook)
+                .Assembly, new Container(container))
+                .Initialize();
 
             AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Blitz.Common.AssemblyHook).Assembly);
         }

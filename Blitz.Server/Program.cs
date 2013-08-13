@@ -8,7 +8,7 @@ namespace Blitz.Server
         {
             Console.WriteLine("Service starting...");
 
-            var serverBootstrapper = new ServerBootstrapper();
+            var serverBootstrapper = new Bootstrapper();
 
             Console.ReadKey(false);
 

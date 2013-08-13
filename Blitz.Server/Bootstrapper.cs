@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ServiceModel;
 
-using Agatha.Common.WCF;
 using Agatha.ServiceLayer;
 using Agatha.ServiceLayer.WCF;
+using Agatha.Unity;
 
+using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 using Blitz.Server.Core;
 
@@ -12,11 +13,11 @@ using Microsoft.Practices.Unity;
 
 namespace Blitz.Server
 {
-    public class ServerBootstrapper
+    public class Bootstrapper
     {
         private const string END_POINT = "http://localhost:1234/Agatha";
 
-        public ServerBootstrapper()
+        public Bootstrapper()
         {
             var container = new UnityContainer();
 
@@ -35,11 +36,10 @@ namespace Blitz.Server
 
         private static void InitialiseAgatha(IUnityContainer container)
         {
-            new ServiceLayerConfiguration(
-                typeof(AssemblyHook).Assembly, typeof(Common.AssemblyHook).Assembly, new Agatha.Unity.Container(container)).
-                Initialize();
+            new ServiceLayerConfiguration(typeof(AssemblyHook).Assembly, typeof(Common.AssemblyHook).Assembly, new Container(container))
+                .Initialize();
 
-            KnownTypeProvider.RegisterDerivedTypesOf<object>(new[] { typeof(Common.AssemblyHook) });
+            AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Common.AssemblyHook).Assembly);
         }
     }
 }
