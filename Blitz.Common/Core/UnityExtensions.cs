@@ -19,5 +19,12 @@ namespace Blitz.Common.Core
 
             return container;
         }
+        
+        public static IUnityContainer RegisterSingletonInstance<T>(this IUnityContainer container, T instance)
+        {
+            container.RegisterInstance<T>(instance, new ContainerControlledLifetimeManager());
+
+            return container;
+        }
     }
 }

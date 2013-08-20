@@ -17,10 +17,6 @@ namespace Blitz.Client.Core.Agatha
         Task<TResult> Get<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> selector)
             where TRequest : RequestBase<TResponse>
             where TResponse : Response;
-
-        Task<TResponse> GetUnstarted<TRequest, TResponse>(TRequest request)
-            where TRequest : RequestBase<TResponse>
-            where TResponse : Response;
     }
 
     public class RequestTask : IRequestTask
@@ -45,25 +41,14 @@ namespace Blitz.Client.Core.Agatha
             where TRequest : RequestBase<TResponse> 
             where TResponse : Response
         {
-            return Task.Factory.StartNew(() =>
-            {
-                var response = Execute<TRequest, TResponse>(request);
-                return selector(response);
-            });
-        }
-
-        public Task<TResponse> GetUnstarted<TRequest, TResponse>(TRequest request) 
-            where TRequest : RequestBase<TResponse> 
-            where TResponse : Response
-        {
-            return new Task<TResponse>(() => Execute<TRequest, TResponse>(request));
+            return Task.Factory.StartNew(() => selector(Execute<TRequest, TResponse>(request)));
         }
 
         private TResponse Execute<TRequest, TResponse>(TRequest request)
             where TRequest : RequestBase<TResponse>
             where TResponse : Response
         {
-            using (var tester = new PerformanceTester())
+            using (var performanceTester = new PerformanceTester())
             {
                 request.Id = Guid.NewGuid().ToString();
 
@@ -71,10 +56,13 @@ namespace Blitz.Client.Core.Agatha
 
                 var response = _requestDispatcher().Get<TResponse>(request);
 
+                if(response.Exception != null)
+                    throw new RequestException(response.Exception.Message);
+
                 _log.Info("Finished RequestTask {0}, Id - {1}. Duration {2}",
                     typeof (TRequest),
                     request.Id,
-                    tester.Result.Milliseconds);
+                    performanceTester.Result.Milliseconds);
 
                 return response;
             }

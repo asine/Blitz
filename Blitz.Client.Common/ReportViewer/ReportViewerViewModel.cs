@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Blitz.Client.Core;
+using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Common.Core;
 
@@ -16,8 +17,8 @@ namespace Blitz.Client.Common.ReportViewer
 
         public ObservableCollection<ReportViewerItemViewModel> Items { get; private set; }
 
-        public ReportViewerViewModel(ILog log, TReportViewerService reportViewerService)
-            : base(log)
+        public ReportViewerViewModel(ILog log, TReportViewerService reportViewerService, IDispatcherService dispatcherService)
+            : base(log, dispatcherService)
         {
             _reportViewerService = reportViewerService;
             DisplayName = "Viewer";
@@ -27,34 +28,20 @@ namespace Blitz.Client.Common.ReportViewer
 
         protected override void OnInitialise()
         {
-            BusyIndicatorSet("... Loading ...");
-
-            var task = from response in _reportViewerService.GetHistory(_reportViewerService.CreateRequest())
-                       from itemViewModels in _reportViewerService.GenerateItemViewModels(response)
-                       select itemViewModels;
-            task
-                .ContinueWith(x =>
+            BusyIndicatorSetAsync("... Loading ...")
+                .Then(_ => _reportViewerService.GetHistory(_reportViewerService.CreateRequest()))
+                .LogException(Log)
+                .Then(response => _reportViewerService.GenerateItemViewModels(response))
+                .LogException(Log)
+                .Then(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
                 {
-                    var dataViewModels = x.Result;
-
                     foreach (var dataViewModel in dataViewModels)
                     {
                         Items.Add(dataViewModel);
                     }
-
-                    BusyIndicatorClear();
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
-
-            task
-                .ContinueWith(t =>
-                {
-                    if (t.Exception != null)
-                        Log.Error(t.Exception.Flatten().InnerException);
-
-                    BusyIndicatorClear();
-                }, TaskContinuationOptions.NotOnRanToCompletion);
-
-            task.Start();
+                }))
+                .Catch<RequestException>(x => { })
+                .DoAlways(BusyIndicatorClear);
         }
 
         protected override void OnActivate()

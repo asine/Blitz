@@ -85,6 +85,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
     <Compile Include="MVVM\AnonymousDisposable.cs" />
     <Compile Include="MVVM\BooleanToVisibilityConverter.cs" />
@@ -116,10 +117,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MVVM\TabControlRegionAdapter.cs" />
-    <Compile Include="TaskMonad.cs" />
+    <Compile Include="TaskExtensions.cs" />
     <Compile Include="MVVM\UseViewAttribute.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewService.cs" />
+    <Compile Include="Unit.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

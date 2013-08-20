@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 
 namespace Blitz.Client.Common.ReportRunner
@@ -8,7 +9,7 @@ namespace Blitz.Client.Common.ReportRunner
     public abstract class ReportRunnerServiceBase<TReportParameterViewModel, TRequest, TResponse> :
         IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        public abstract Task ConfigureParameterViewModel(TReportParameterViewModel viewModel);
+        public abstract Task<Unit> ConfigureParameterViewModel(TReportParameterViewModel viewModel);
 
         public abstract TRequest CreateRequest(TReportParameterViewModel reportParameterViewModel);
 

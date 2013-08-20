@@ -9,8 +9,8 @@ namespace Blitz.Client.Common.Report
     {
         private readonly IViewService _viewService;
 
-        protected ReportViewModel(ILog log, IViewService viewService)
-            : base(log)
+        protected ReportViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService)
+            : base(log, dispatcherService)
         {
             _viewService = viewService;
         }

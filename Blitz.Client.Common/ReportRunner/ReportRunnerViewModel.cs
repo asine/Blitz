@@ -37,10 +37,10 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        public ReportRunnerViewModel(ILog log, IViewService viewService,
+        public ReportRunnerViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService,
             TReportParameterViewModel reportParameterViewModel,
             TReportRunnerService reportRunnerService)
-            : base(log)
+            : base(log, dispatcherService)
         {
             _viewService = viewService;
             _reportParameterViewModel = reportParameterViewModel;
@@ -54,11 +54,12 @@ namespace Blitz.Client.Common.ReportRunner
 
         protected override void OnInitialise()
         {
-            BusyIndicatorSet("... Loading ...");
-            _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel)
-                .ContinueWith(_ => BusyIndicatorClear(), TaskScheduler.FromCurrentSynchronizationContext());
-
-            _viewService.AddToRegion(_reportParameterViewModel, RegionNames.REPORT_PARAMETER);
+            BusyIndicatorSetAsync("... Loading ...")
+                .Then(_ => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
+                .LogException(Log)
+                .Then(_ => DispatcherService.ExecuteSyncOnUI(() => _viewService.AddToRegion(_reportParameterViewModel, RegionNames.REPORT_PARAMETER)))
+                .LogException(Log)
+                .DoAlways(BusyIndicatorClear);
         }
 
         protected virtual bool CanExecuteGenerateReport()
@@ -68,39 +69,25 @@ namespace Blitz.Client.Common.ReportRunner
 
         private void GenerateReport()
         {
-            BusyIndicatorSet("... Loading ...");
-
-            var task = from response in _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel))
-                       from dataViewModels in _reportRunnerService.GenerateDataViewModels(response)
-                       select dataViewModels;
-
-            task
-                .ContinueWith(x =>
+            BusyIndicatorSetAsync("... Loading ...")
+                .Then(_ => _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
+                .LogException(Log)
+                .Then(response => _reportRunnerService.GenerateDataViewModels(response))
+                .LogException(Log)
+                .Then(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
                 {
                     _viewService.ClearRegion(RegionNames.REPORT_DATA);
-
-                    var dataViewModels = x.Result;
-
                     foreach (var dataViewModel in dataViewModels)
                     {
                         _viewService.AddToRegion(dataViewModel, RegionNames.REPORT_DATA);
                     }
-
+                }))
+                .DoAlways(() =>
+                {
                     BusyIndicatorClear();
 
                     IsExpanded = false;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
-
-            task
-                .ContinueWith(t =>
-                {
-                    if (t.Exception != null)
-                        Log.Error(t.Exception.Flatten().InnerException);
-
-                    BusyIndicatorClear();
-                }, TaskContinuationOptions.NotOnRanToCompletion);
-
-            task.Start();
+                });
         }
 
         protected override void OnActivate()

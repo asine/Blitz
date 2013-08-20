@@ -12,8 +12,8 @@ namespace Blitz.Client.Shell
     {
         public ObservableCollection<IToolBarItem> ToolBarItems { get; private set; }
 
-        public ShellViewModel(ILog log, IToolBarService toolBarService) 
-            : base(log)
+        public ShellViewModel(ILog log, IToolBarService toolBarService, IDispatcherService dispatcherService) 
+            : base(log, dispatcherService)
         {
             ToolBarItems = toolBarService.Items;
 

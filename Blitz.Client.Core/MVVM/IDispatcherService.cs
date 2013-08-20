@@ -5,8 +5,8 @@ namespace Blitz.Client.Core.MVVM
 {
     public interface IDispatcherService
     {
-        void ExecuteSyncOnUI(Action action);
+        Task<Unit> ExecuteSyncOnUI(Action action);
 
-        Task ExecuteAsyncOnUI(Action action);
+        Task<Unit> ExecuteAsyncOnUI(Action action);
     }
 }

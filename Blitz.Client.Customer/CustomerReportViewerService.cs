@@ -37,12 +37,12 @@ namespace Blitz.Client.Customer
 
         public override Task<GetHistoryResponse> GetHistory(GetHistoryRequest request)
         {
-            return _requestTask.GetUnstarted<GetHistoryRequest, GetHistoryResponse>(request);
+            return _requestTask.Get<GetHistoryRequest, GetHistoryResponse>(request);
         }
 
         public override Task<List<ReportViewerItemViewModel>> GenerateItemViewModels(GetHistoryResponse response)
         {
-            return new Task<List<ReportViewerItemViewModel>>(
+            return Task.Factory.StartNew(
                 () => new List<ReportViewerItemViewModel>(response.Results
                     .Select((x, i) =>
                     {

@@ -13,8 +13,8 @@ namespace Blitz.Client.Customer
         ReportRunnerViewModel<SimpleReportParameterViewModel, CustomerReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>, 
         ReportViewerViewModel<CustomerReportViewerService, GetHistoryRequest, GetHistoryResponse>>
     {
-        public CustomerReportViewModel(ILog log, IViewService viewService)
-            : base(log, viewService)
+        public CustomerReportViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService)
+            : base(log, viewService, dispatcherService)
         {
         }
     }

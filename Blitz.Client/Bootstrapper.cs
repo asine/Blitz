@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 using Agatha.Common;
 using Agatha.Unity;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
@@ -43,7 +43,7 @@ namespace Blitz.Client
                 .RegisterTransient<ILog, DebugLogger>()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()
-                .RegisterSingleton<IDispatcherService, DispatcherService>();
+                .RegisterSingletonInstance<IDispatcherService>(new DispatcherService(Dispatcher.CurrentDispatcher));
 
             InitialiseAgatha(Container);
         }
@@ -62,8 +62,8 @@ namespace Blitz.Client
 
         private static void InitialiseAgatha(IUnityContainer container)
         {
-            new ClientConfiguration(typeof(AssemblyHook)
-                .Assembly, new Container(container))
+            new ClientConfiguration(new Container(container))
+                .AddRequestAndResponseAssembly(typeof (AssemblyHook).Assembly)
                 .Initialize();
 
             AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Blitz.Common.AssemblyHook).Assembly);

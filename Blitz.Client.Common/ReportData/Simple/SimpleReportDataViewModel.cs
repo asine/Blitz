@@ -9,8 +9,8 @@ namespace Blitz.Client.Common.ReportData.Simple
     {
         public ObservableCollection<object> Items { get; private set; }
 
-        public SimpleReportDataViewModel(ILog log)
-            : base(log)
+        public SimpleReportDataViewModel(ILog log, IDispatcherService dispatcherService)
+            : base(log, dispatcherService)
         {
             Items = new ObservableCollection<object>();
         }

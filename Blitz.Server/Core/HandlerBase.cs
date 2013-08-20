@@ -20,7 +20,7 @@ namespace Blitz.Server.Core
 
         public override Response Handle(TRequest request)
         {
-            using (var tester = new PerformanceTester())
+            using (var performanceTester = new PerformanceTester())
             {
                 Log.Info("Started processing request {0}, Id - {1}", typeof (TRequest).FullName, request.Id);
 
@@ -29,7 +29,7 @@ namespace Blitz.Server.Core
                 Log.Info("Finished processing request {0}, Id - {1}. Duration {2}", 
                     typeof (TRequest).FullName,
                     request.Id,
-                    tester.Result.Milliseconds);
+                    performanceTester.Result.Milliseconds);
 
                 return response;
             }

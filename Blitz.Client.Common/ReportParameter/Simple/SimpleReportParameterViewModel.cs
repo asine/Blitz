@@ -27,8 +27,8 @@ namespace Blitz.Client.Common.ReportParameter.Simple
 
         #endregion
 
-        public SimpleReportParameterViewModel(ILog log) 
-            : base(log)
+        public SimpleReportParameterViewModel(ILog log, IDispatcherService dispatcherService) 
+            : base(log, dispatcherService)
         {
             Dates = new ObservableCollection<DateTime>();
         }

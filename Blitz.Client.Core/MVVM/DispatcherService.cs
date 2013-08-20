@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -16,47 +15,53 @@ namespace Blitz.Client.Core.MVVM
             _dispatcher = dispatcher;
         }
 
-        public void ExecuteSyncOnUI(Action action)
+        public Task<Unit> ExecuteSyncOnUI(Action action)
         {
+            var taskSource = new TaskCompletionSource<Unit>();
+
             if (_dispatcher == null || _dispatcher.CheckAccess())
             {
-                action();
+                try
+                {
+                    action();
+                    taskSource.SetResult(Unit.Default);
+                }
+                catch (Exception ex)
+                {
+                    taskSource.SetException(ex);
+                }
             }
             else
             {
-                Exception exception = null;
-
                 Action method = () =>
                 {
                     try
                     {
                         action();
+                        taskSource.SetResult(Unit.Default);
                     }
                     catch (Exception ex)
                     {
-                        exception = ex;
+                        taskSource.SetException(ex);
                     }
                 };
 
                 _dispatcher.Invoke(method);
-
-                if (exception != null)
-                {
-                    throw new TargetInvocationException("An error occurred while dispatching a call to the UI Thread", exception);
-                }
             }
+
+            return taskSource.Task;
         }
 
-        public Task ExecuteAsyncOnUI(Action action)
+        public Task<Unit> ExecuteAsyncOnUI(Action action)
         {
-            var taskSource = new TaskCompletionSource<object>();
+            var taskSource = new TaskCompletionSource<Unit>();
 
             Action method = () =>
             {
                 try
                 {
                     action();
-                    taskSource.SetResult(null);
+                    taskSource.SetResult(Unit.Default);
                 }
                 catch (Exception ex)
                 {

@@ -36,7 +36,9 @@ namespace Blitz.Server
 
         private static void InitialiseAgatha(IUnityContainer container)
         {
-            new ServiceLayerConfiguration(typeof(AssemblyHook).Assembly, typeof(Common.AssemblyHook).Assembly, new Container(container))
+            new ServiceLayerConfiguration(new Container(container))
+                .AddRequestAndResponseAssembly(typeof (Common.AssemblyHook).Assembly)
+                .AddRequestHandlerAssembly(typeof (AssemblyHook).Assembly)
                 .Initialize();
 
             AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Common.AssemblyHook).Assembly);

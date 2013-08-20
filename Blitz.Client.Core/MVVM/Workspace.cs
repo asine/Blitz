@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Blitz.Common.Core;
 
@@ -8,6 +9,7 @@ namespace Blitz.Client.Core.MVVM
 {
     public abstract class Workspace : ViewModelBase, ISupportClosing, ISupportActivationState
     {
+        protected readonly IDispatcherService DispatcherService;
         protected readonly CompositeDisposable Disposables;
 
         #region IsBusy
@@ -44,9 +46,10 @@ namespace Blitz.Client.Core.MVVM
 
         #endregion
 
-        protected Workspace(ILog log) 
+        protected Workspace(ILog log, IDispatcherService dispatcherService) 
             : base(log)
         {
+            DispatcherService = dispatcherService;
             Disposables = new CompositeDisposable();
         }
 
@@ -67,7 +70,9 @@ namespace Blitz.Client.Core.MVVM
 
         #endregion
 
-        protected void BusyIndicatorSet(string message = "")
+        #region SupportAsyncOperations
+
+        protected void BusyIndicatorSet(string message)
         {
             IsBusy = true;
             BusyMessage = message;
@@ -78,6 +83,18 @@ namespace Blitz.Client.Core.MVVM
             IsBusy = false;
             BusyMessage = string.Empty;
         }
+
+        protected Task<Unit> BusyIndicatorSetAsync(string message)
+        {
+            return DispatcherService.ExecuteAsyncOnUI(() => BusyIndicatorSet(message));
+        }
+
+        protected Task<Unit> BusyIndicatorClearAsync()
+        {
+            return DispatcherService.ExecuteAsyncOnUI(() => BusyIndicatorClear());
+        }
+
+        #endregion
 
         #region SupportActivationState
 

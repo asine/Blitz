@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blitz.Client.Common.ReportData.Simple;
 using Blitz.Client.Common.ReportParameter.Simple;
 using Blitz.Client.Common.ReportRunner;
+using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
@@ -37,10 +38,10 @@ namespace Blitz.Client.Customer
             }
         }
 
-        public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
+        public override Task<Unit> ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
-                .ContinueWith(x =>
+                .ContinueWithOnSuccess(x =>
                 {
                     var availableDates = x.Result.AvailableDates.OrderByDescending(d => d);
                     foreach (var availableDate in availableDates)
@@ -49,7 +50,9 @@ namespace Blitz.Client.Customer
                     }
 
                     viewModel.SelectedDate = availableDates.First();
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+
+                    return Unit.Default;
+                });
         }
 
         public override ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
@@ -59,27 +62,26 @@ namespace Blitz.Client.Customer
 
         public override Task<ReportRunnerResponse> Generate(ReportRunnerRequest request)
         {
-            return _requestTask.GetUnstarted<ReportRunnerRequest, ReportRunnerResponse>(request);
+            return _requestTask.Get<ReportRunnerRequest, ReportRunnerResponse>(request);
         }
 
         public override Task<List<IViewModel>> GenerateDataViewModels(ReportRunnerResponse response)
         {
-            return new Task<List<IViewModel>>(
-                () => new List<IViewModel>(response.Results
-                    .Select((x, i) =>
+            return Task.Factory.StartNew(() => new List<IViewModel>(response.Results
+                .Select((x, i) =>
+                {
+                    var dataViewModel = _simpleReportDataViewModelFactory();
+                    dataViewModel.DisplayName = "ReportData " + i;
+
+                    for (var index = 0; index < 100; index++)
                     {
-                        var dataViewModel = _simpleReportDataViewModelFactory();
-                        dataViewModel.DisplayName = "ReportData " + i;
+                        var item = new ReportDto {Id = index};
+                        dataViewModel.Items.Add(item);
+                    }
 
-                        for (var index = 0; index < 100; index++)
-                        {
-                            var item = new ReportDto {Id = index};
-                            dataViewModel.Items.Add(item);
-                        }
-
-                        return dataViewModel;
-                    })
-                    .ToList()));
+                    return dataViewModel;
+                })
+                .ToList()));
         }
 
         public override void OnActivate()

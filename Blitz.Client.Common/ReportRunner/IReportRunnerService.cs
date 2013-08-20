@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 
 namespace Blitz.Client.Common.ReportRunner
 {
     public interface IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        Task ConfigureParameterViewModel(TReportParameterViewModel viewModel);
+        Task<Unit> ConfigureParameterViewModel(TReportParameterViewModel viewModel);
 
         TRequest CreateRequest(TReportParameterViewModel reportParameterViewModel);
 
