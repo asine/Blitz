@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
@@ -30,18 +28,17 @@ namespace Blitz.Client.Common.ReportViewer
         {
             BusyIndicatorSetAsync("... Loading ...")
                 .Then(_ => _reportViewerService.GetHistory(_reportViewerService.CreateRequest()))
-                .LogException(Log)
                 .Then(response => _reportViewerService.GenerateItemViewModels(response))
-                .LogException(Log)
-                .Then(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
+                .ThenDo(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
                 {
                     foreach (var dataViewModel in dataViewModels)
                     {
                         Items.Add(dataViewModel);
                     }
                 }))
+                .LogException(Log)
                 .Catch<RequestException>(x => { })
-                .DoAlways(BusyIndicatorClear);
+                .Finally(BusyIndicatorClear);
         }
 
         protected override void OnActivate()

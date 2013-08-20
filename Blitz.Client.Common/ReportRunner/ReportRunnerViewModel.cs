@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
@@ -55,11 +54,11 @@ namespace Blitz.Client.Common.ReportRunner
         protected override void OnInitialise()
         {
             BusyIndicatorSetAsync("... Loading ...")
-                .Then(_ => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
+                .Then(() => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
+                .ThenDo(() => DispatcherService.ExecuteSyncOnUI(() => _viewService.AddToRegion(_reportParameterViewModel, RegionNames.REPORT_PARAMETER)))
                 .LogException(Log)
-                .Then(_ => DispatcherService.ExecuteSyncOnUI(() => _viewService.AddToRegion(_reportParameterViewModel, RegionNames.REPORT_PARAMETER)))
-                .LogException(Log)
-                .DoAlways(BusyIndicatorClear);
+                .Catch<Exception>(x => { })
+                .Finally(BusyIndicatorClear);
         }
 
         protected virtual bool CanExecuteGenerateReport()
@@ -71,10 +70,8 @@ namespace Blitz.Client.Common.ReportRunner
         {
             BusyIndicatorSetAsync("... Loading ...")
                 .Then(_ => _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
-                .LogException(Log)
                 .Then(response => _reportRunnerService.GenerateDataViewModels(response))
-                .LogException(Log)
-                .Then(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
+                .ThenDo(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
                 {
                     _viewService.ClearRegion(RegionNames.REPORT_DATA);
                     foreach (var dataViewModel in dataViewModels)
@@ -82,7 +79,8 @@ namespace Blitz.Client.Common.ReportRunner
                         _viewService.AddToRegion(dataViewModel, RegionNames.REPORT_DATA);
                     }
                 }))
-                .DoAlways(() =>
+                .LogException(Log)
+                .Finally(() =>
                 {
                     BusyIndicatorClear();
 

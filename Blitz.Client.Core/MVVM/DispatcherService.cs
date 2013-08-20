@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -15,41 +16,35 @@ namespace Blitz.Client.Core.MVVM
             _dispatcher = dispatcher;
         }
 
-        public Task<Unit> ExecuteSyncOnUI(Action action)
+        public void ExecuteSyncOnUI(Action action)
         {
-            var taskSource = new TaskCompletionSource<Unit>();
-
             if (_dispatcher == null || _dispatcher.CheckAccess())
             {
-                try
-                {
-                    action();
-                    taskSource.SetResult(Unit.Default);
-                }
-                catch (Exception ex)
-                {
-                    taskSource.SetException(ex);
-                }
+                action();
             }
             else
             {
+                Exception exception = null;
+
                 Action method = () =>
                 {
                     try
                     {
                         action();
-                        taskSource.SetResult(Unit.Default);
                     }
                     catch (Exception ex)
                     {
-                        taskSource.SetException(ex);
+                        exception = ex;
                     }
                 };
 
                 _dispatcher.Invoke(method);
-            }
 
-            return taskSource.Task;
+                if (exception != null)
+                {
+                    throw new TargetInvocationException("An error occurred while dispatching a call to the UI Thread", exception);
+                }
+            }
         }
 
         public Task<Unit> ExecuteAsyncOnUI(Action action)

@@ -38,20 +38,18 @@ namespace Blitz.Client.Customer
             }
         }
 
-        public override Task<Unit> ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
+        public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
-                .ContinueWithOnSuccess(x =>
+                .ThenDo(x =>
                 {
-                    var availableDates = x.Result.AvailableDates.OrderByDescending(d => d);
+                    var availableDates = x.AvailableDates.OrderByDescending(d => d);
                     foreach (var availableDate in availableDates)
                     {
                         viewModel.Dates.Add(availableDate);
                     }
 
                     viewModel.SelectedDate = availableDates.First();
-
-                    return Unit.Default;
                 });
         }
 

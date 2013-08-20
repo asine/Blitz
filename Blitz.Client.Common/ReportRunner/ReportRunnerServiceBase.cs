@@ -9,7 +9,7 @@ namespace Blitz.Client.Common.ReportRunner
     public abstract class ReportRunnerServiceBase<TReportParameterViewModel, TRequest, TResponse> :
         IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        public abstract Task<Unit> ConfigureParameterViewModel(TReportParameterViewModel viewModel);
+        public abstract Task ConfigureParameterViewModel(TReportParameterViewModel viewModel);
 
         public abstract TRequest CreateRequest(TReportParameterViewModel reportParameterViewModel);
 
