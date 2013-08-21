@@ -42,6 +42,8 @@ namespace Blitz.Client
             Container
                 .RegisterTransient<IViewService, ViewService>()
                 .RegisterTransient<IDialogBuilder, DialogBuilder>()
+                .RegisterTransient<IRegionBuilder, RegionBuilder>()
+                .RegisterType(typeof (IRegionBuilder<>), typeof (RegionBuilder<>))
                 .RegisterTransient<ILog, DebugLogger>()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()

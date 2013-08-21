@@ -102,10 +102,12 @@
     <Compile Include="MVVM\DispatcherService.cs" />
     <Compile Include="MVVM\EventHandlerExtensions.cs" />
     <Compile Include="MVVM\IDispatcherService.cs" />
+    <Compile Include="MVVM\IRegionBuilder.cs" />
     <Compile Include="MVVM\ISupportActivationState.cs" />
     <Compile Include="MVVM\ISupportClosing.cs" />
     <Compile Include="MVVM\IViewModel.cs" />
     <Compile Include="MVVM\IViewService.cs" />
+    <Compile Include="MVVM\RegionBuilder.cs" />
     <Compile Include="MVVM\ToolBar\IToolBarItem.cs" />
     <Compile Include="MVVM\ToolBar\IToolBarService.cs" />
     <Compile Include="MVVM\ToolBar\ToolBarButtonItem.cs" />

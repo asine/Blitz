@@ -55,7 +55,7 @@ namespace Blitz.Client.Common.ReportRunner
         {
             BusyIndicatorSetAsync("... Loading ...")
                 .Then(() => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
-                .ThenDo(() => DispatcherService.ExecuteSyncOnUI(() => _viewService.AddToRegion(_reportParameterViewModel, RegionNames.REPORT_PARAMETER)))
+                .ThenDo(() => DispatcherService.ExecuteSyncOnUI(() => _viewService.RegionBuilder<TReportParameterViewModel>().Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel)))
                 .LogException(Log)
                 .Catch<Exception>(x => { })
                 .Finally(BusyIndicatorClear);
@@ -73,10 +73,10 @@ namespace Blitz.Client.Common.ReportRunner
                 .Then(response => _reportRunnerService.GenerateDataViewModels(response))
                 .ThenDo(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
                 {
-                    _viewService.ClearRegion(RegionNames.REPORT_DATA);
+                    _viewService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
                     foreach (var dataViewModel in dataViewModels)
                     {
-                        _viewService.AddToRegion(dataViewModel, RegionNames.REPORT_DATA);
+                        _viewService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
                     }
                 }))
                 .LogException(Log)

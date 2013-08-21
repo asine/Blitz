@@ -17,9 +17,13 @@ namespace Blitz.Client.Common.Report
 
         protected override void OnInitialise()
         {
-            _viewService.AddToRegion<TRunnerViewModel>(RegionNames.REPORT, viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)));
+            _viewService.RegionBuilder<TRunnerViewModel>()
+                .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)))
+                .Show(RegionNames.REPORT);
 
-            _viewService.AddToRegion<TViewerViewModel>(RegionNames.REPORT, viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)));
+            _viewService.RegionBuilder<TViewerViewModel>()
+                .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)))
+                .Show(RegionNames.REPORT);
         }
     }
 }
