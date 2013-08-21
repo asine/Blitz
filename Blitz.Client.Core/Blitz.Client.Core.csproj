@@ -90,6 +90,15 @@
     <Compile Include="MVVM\AnonymousDisposable.cs" />
     <Compile Include="MVVM\BooleanToVisibilityConverter.cs" />
     <Compile Include="MVVM\CompositeDisposable.cs" />
+    <Compile Include="MVVM\Dialog\Answer.cs" />
+    <Compile Include="MVVM\Dialog\DialogBuilder.cs" />
+    <Compile Include="MVVM\Dialog\DialogItemViewModel.cs" />
+    <Compile Include="MVVM\Dialog\DialogViewModel.cs" />
+    <Compile Include="MVVM\Dialog\DialogType.cs" />
+    <Compile Include="MVVM\Dialog\DialogView.xaml.cs">
+      <DependentUpon>DialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Dialog\IDialogBuilder.cs" />
     <Compile Include="MVVM\DispatcherService.cs" />
     <Compile Include="MVVM\EventHandlerExtensions.cs" />
     <Compile Include="MVVM\IDispatcherService.cs" />
@@ -138,6 +147,15 @@
       <Project>{145A1613-AA64-42C1-9BA2-5965AF05F0DB}</Project>
       <Name>Blitz.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MVVM\Dialog\[ReadMe].txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MVVM\Dialog\DialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

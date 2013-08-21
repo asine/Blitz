@@ -7,6 +7,7 @@ using Agatha.Unity;
 
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Customer;
 using Blitz.Client.Shell;
@@ -40,6 +41,7 @@ namespace Blitz.Client
 
             Container
                 .RegisterTransient<IViewService, ViewService>()
+                .RegisterTransient<IDialogBuilder, DialogBuilder>()
                 .RegisterTransient<ILog, DebugLogger>()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()

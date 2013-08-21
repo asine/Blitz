@@ -59,10 +59,19 @@ namespace Blitz.Client.Core.MVVM
         {
             Log.Info("Closing ViewModel {0} - {1}", GetType().FullName, DisplayName);
 
+            Closing();
+
             Disposables.Dispose();
 
             CleanUp();
+
+            Closed.SafeInvoke(this);
         }
+
+        public event EventHandler Closed;
+
+        protected virtual void Closing()
+        { }
 
         protected virtual void CleanUp()
         {

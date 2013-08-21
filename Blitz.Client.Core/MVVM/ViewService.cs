@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 
+using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Regions;
@@ -13,12 +14,14 @@ namespace Blitz.Client.Core.MVVM
         private readonly ILog _log;
         private readonly Func<IRegionManager> _regionManagerFactory;
         private readonly IUnityContainer _container;
+        private readonly Func<IDialogBuilder> _dialogBuilderFactory;
 
-        public ViewService(ILog log, Func<IRegionManager> regionManagerFactory, IUnityContainer container)
+        public ViewService(ILog log, Func<IRegionManager> regionManagerFactory, IUnityContainer container, Func<IDialogBuilder> dialogBuilderFactory)
         {
             _log = log;
             _regionManagerFactory = regionManagerFactory;
             _container = container;
+            _dialogBuilderFactory = dialogBuilderFactory;
         }
 
         public void AddToRegion(IViewModel viewModel, string regionName, bool scoped = false)
@@ -106,6 +109,72 @@ namespace Blitz.Client.Core.MVVM
 
                 region.Remove(obj);
             }
+        }
+
+        public IDialogBuilder DialogBuilder()
+        {
+            return _dialogBuilderFactory();
+        }
+
+        public void ShowModel(IViewModel viewModel)
+        {
+            _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
+            var view = CreateView(_container, viewModel.GetType());
+
+            _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
+            BindViewModel(view, viewModel);
+
+            var window = view as Window;
+            if (window != null)
+            {
+                ConnectUpClosing(viewModel, window);
+
+                window.ShowDialog();
+            }
+            else
+            {
+                window = new Window
+                {
+                    Content = view,
+                    Title = viewModel.DisplayName
+                };
+
+                ConnectUpClosing(viewModel, window);
+
+                window.ShowDialog();
+            }
+        }
+
+        private static void ConnectUpClosing(IViewModel viewModel, Window window)
+        {
+            var supportClosing = viewModel as ISupportClosing;
+            if (supportClosing == null) return;
+
+            // ViewModel is closed
+            EventHandler supportClosingOnClosed = null;
+            supportClosingOnClosed = (s, e) =>
+            {
+                window.Close();
+
+                if (supportClosingOnClosed != null)
+                {
+                    supportClosing.Closed -= supportClosingOnClosed;
+                }
+            };
+            supportClosing.Closed += supportClosingOnClosed;
+
+            // Window is closed
+            EventHandler windowOnClosed = null;
+            windowOnClosed = (s, e) =>
+            {
+                supportClosing.Close();
+
+                if (windowOnClosed != null)
+                {
+                    window.Closed -= windowOnClosed;
+                }
+            };
+            window.Closed += windowOnClosed;
         }
 
         private static FrameworkElement CreateView(IUnityContainer container, Type viewModelType)

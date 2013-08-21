@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Blitz.Client.Core.MVVM.Dialog;
+
 namespace Blitz.Client.Core.MVVM
 {
     public interface IViewService
@@ -13,5 +15,9 @@ namespace Blitz.Client.Core.MVVM
             where TViewModel : IViewModel;
 
         void ClearRegion(string regionName);
+
+        IDialogBuilder DialogBuilder();
+
+        void ShowModel(IViewModel viewModel);
     }
 }
