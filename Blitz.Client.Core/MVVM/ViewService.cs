@@ -12,13 +12,11 @@ namespace Blitz.Client.Core.MVVM
     {
         private readonly ILog _log;
         private readonly IUnityContainer _container;
-        private readonly Func<IDialogBuilder> _dialogBuilderFactory;
 
-        public ViewService(ILog log, IUnityContainer container, Func<IDialogBuilder> dialogBuilderFactory)
+        public ViewService(ILog log, IUnityContainer container)
         {
             _log = log;
             _container = container;
-            _dialogBuilderFactory = dialogBuilderFactory;
         }
 
         public IRegionBuilder RegionBuilder()
@@ -32,9 +30,14 @@ namespace Blitz.Client.Core.MVVM
             return _container.Resolve<IRegionBuilder<TViewModel>>();
         }
 
-        public IDialogBuilder DialogBuilder()
+        public IDialogBuilder<Answer> DialogBuilder()
         {
-            return _dialogBuilderFactory();
+            return _container.Resolve<IDialogBuilder<Answer>>();
+        }
+
+        public IDialogBuilder<T> DialogBuilder<T>()
+        {
+            return _container.Resolve<IDialogBuilder<T>>();
         }
 
         public void ShowModel(IViewModel viewModel)

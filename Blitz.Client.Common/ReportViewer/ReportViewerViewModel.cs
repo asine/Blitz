@@ -26,7 +26,7 @@ namespace Blitz.Client.Common.ReportViewer
 
         protected override void OnInitialise()
         {
-            BusyIndicatorSetAsync("... Loading ...")
+            BusyAsync("... Loading ...")
                 .Then(_ => _reportViewerService.GetHistory(_reportViewerService.CreateRequest()))
                 .Then(response => _reportViewerService.GenerateItemViewModels(response))
                 .ThenDo(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
@@ -37,8 +37,8 @@ namespace Blitz.Client.Common.ReportViewer
                     }
                 }))
                 .LogException(Log)
-                .Catch<RequestException>(x => { })
-                .Finally(BusyIndicatorClear);
+                .CatchAndHandle<RequestException>(x => { })
+                .Finally(Idle);
         }
 
         protected override void OnActivate()

@@ -9,8 +9,11 @@ using Blitz.Client.Common.ReportRunner;
 using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Customer;
+
+using Microsoft.Practices.Prism.Commands;
 
 namespace Blitz.Client.Customer
 {
@@ -23,14 +26,29 @@ namespace Blitz.Client.Customer
         private readonly List<IToolBarItem> _toolBarItems;
 
         public CustomerReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService)
+            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
             _toolBarService = toolBarService;
 
             _toolBarItems = new List<IToolBarItem>();
-            _toolBarItems.Add(new ToolBarButtonItem {DisplayName = "Runner Test 1", IsVisible = false});
+            _toolBarItems.Add(new ToolBarButtonItem
+            {
+                DisplayName = "Runner Test 1", 
+                Command = new DelegateCommand(() =>
+                {
+                    var answer = viewService.DialogBuilder()
+                        .WithDialogType(DialogType.Information)
+                        .WithAnswers(Answer.Ok, Answer.Cancel)
+                        .WithTitle("Title")
+                        .WithMessage("Message.....")
+                        .Show();
+
+                    var x = answer == Answer.Ok;
+                }),
+                IsVisible = false
+            });
 
             foreach (var toolBarItem in _toolBarItems)
             {

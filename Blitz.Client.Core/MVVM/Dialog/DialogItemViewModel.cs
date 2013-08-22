@@ -1,8 +1,8 @@
 ﻿namespace Blitz.Client.Core.MVVM.Dialog
 {
-    public class DialogItemViewModel
+    public class DialogItemViewModel<T>
     {
-        public Answer Response { get; set; }
+        public T Response { get; set; }
 
         public bool IsDefault { get; set; }
 

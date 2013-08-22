@@ -81,26 +81,26 @@ namespace Blitz.Client.Core.MVVM
 
         #region SupportAsyncOperations
 
-        protected void BusyIndicatorSet(string message)
+        protected void Busy(string message)
         {
             IsBusy = true;
             BusyMessage = message;
         }
 
-        protected void BusyIndicatorClear()
+        protected void Idle()
         {
             IsBusy = false;
             BusyMessage = string.Empty;
         }
 
-        protected Task<Unit> BusyIndicatorSetAsync(string message)
+        protected Task<Unit> BusyAsync(string message)
         {
-            return DispatcherService.ExecuteAsyncOnUI(() => BusyIndicatorSet(message));
+            return DispatcherService.ExecuteAsyncOnUI(() => Busy(message));
         }
 
-        protected Task<Unit> BusyIndicatorClearAsync()
+        protected Task<Unit> IdleAsync()
         {
-            return DispatcherService.ExecuteAsyncOnUI(() => BusyIndicatorClear());
+            return DispatcherService.ExecuteAsyncOnUI(() => Idle());
         }
 
         #endregion

@@ -53,12 +53,12 @@ namespace Blitz.Client.Common.ReportRunner
 
         protected override void OnInitialise()
         {
-            BusyIndicatorSetAsync("... Loading ...")
+            BusyAsync("... Loading ...")
                 .Then(() => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
                 .ThenDo(() => DispatcherService.ExecuteSyncOnUI(() => _viewService.RegionBuilder<TReportParameterViewModel>().Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel)))
                 .LogException(Log)
-                .Catch<Exception>(x => { })
-                .Finally(BusyIndicatorClear);
+                .CatchAndHandle<Exception>(x => { })
+                .Finally(Idle);
         }
 
         protected virtual bool CanExecuteGenerateReport()
@@ -68,7 +68,7 @@ namespace Blitz.Client.Common.ReportRunner
 
         private void GenerateReport()
         {
-            BusyIndicatorSetAsync("... Loading ...")
+            BusyAsync("... Loading ...")
                 .Then(_ => _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
                 .Then(response => _reportRunnerService.GenerateDataViewModels(response))
                 .ThenDo(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
@@ -82,7 +82,7 @@ namespace Blitz.Client.Common.ReportRunner
                 .LogException(Log)
                 .Finally(() =>
                 {
-                    BusyIndicatorClear();
+                    Idle();
 
                     IsExpanded = false;
                 });

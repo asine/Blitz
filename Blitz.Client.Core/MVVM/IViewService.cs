@@ -9,7 +9,9 @@ namespace Blitz.Client.Core.MVVM
 
         IRegionBuilder RegionBuilder();
 
-        IDialogBuilder DialogBuilder();
+        IDialogBuilder<Answer> DialogBuilder();
+
+        IDialogBuilder<T> DialogBuilder<T>();
 
         void ShowModel(IViewModel viewModel);
     }

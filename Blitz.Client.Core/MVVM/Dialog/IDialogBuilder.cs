@@ -1,17 +1,15 @@
-﻿using System.Windows.Documents;
-
-namespace Blitz.Client.Core.MVVM.Dialog
+﻿namespace Blitz.Client.Core.MVVM.Dialog
 {
-    public interface IDialogBuilder
+    public interface IDialogBuilder<T>
     {
-        IDialogBuilder WithDialogType(DialogType dialogType);
+        IDialogBuilder<T> WithDialogType(DialogType dialogType);
 
-        IDialogBuilder WithAnswers(params Answer[] answers);
+        IDialogBuilder<T> WithAnswers(params T[] answers);
 
-        IDialogBuilder WithTitle(string title);
+        IDialogBuilder<T> WithTitle(string title);
 
-        IDialogBuilder WithMessage(string message);
+        IDialogBuilder<T> WithMessage(string message);
 
-        Answer Show();
+        T Show();
     }
 }
