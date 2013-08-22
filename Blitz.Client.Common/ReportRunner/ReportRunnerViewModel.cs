@@ -1,7 +1,6 @@
-﻿using System;
-
-using Blitz.Client.Core;
+﻿using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
@@ -55,9 +54,18 @@ namespace Blitz.Client.Common.ReportRunner
         {
             BusyAsync("... Loading ...")
                 .Then(() => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
-                .ThenDo(() => DispatcherService.ExecuteSyncOnUI(() => _viewService.RegionBuilder<TReportParameterViewModel>().Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel)))
+                .ThenDo(() =>
+                    DispatcherService.ExecuteSyncOnUI(() => _viewService.RegionBuilder<TReportParameterViewModel>()
+                        .Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel)))
                 .LogException(Log)
-                .CatchAndHandle<Exception>(x => { })
+                .CatchAndHandle(x =>
+                    DispatcherService.ExecuteSyncOnUI(() =>
+                        _viewService.DialogBuilder()
+                            .WithDialogType(DialogType.Error)
+                            .WithAnswers(Answer.Ok)
+                            .WithTitle("Error")
+                            .WithMessage("Problem initialising parameters")
+                            .Show()))
                 .Finally(Idle);
         }
 
@@ -71,15 +79,24 @@ namespace Blitz.Client.Common.ReportRunner
             BusyAsync("... Loading ...")
                 .Then(_ => _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
                 .Then(response => _reportRunnerService.GenerateDataViewModels(response))
-                .ThenDo(dataViewModels => DispatcherService.ExecuteSyncOnUI(() =>
-                {
-                    _viewService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
-                    foreach (var dataViewModel in dataViewModels)
+                .ThenDo(dataViewModels =>
+                    DispatcherService.ExecuteSyncOnUI(() =>
                     {
-                        _viewService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
-                    }
-                }))
+                        _viewService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
+                        foreach (var dataViewModel in dataViewModels)
+                        {
+                            _viewService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
+                        }
+                    }))
                 .LogException(Log)
+                .CatchAndHandle(x =>
+                    DispatcherService.ExecuteSyncOnUI(() =>
+                        _viewService.DialogBuilder()
+                            .WithDialogType(DialogType.Error)
+                            .WithAnswers(Answer.Ok)
+                            .WithTitle("Error")
+                            .WithMessage("Problem Generating Report")
+                            .Show()))
                 .Finally(() =>
                 {
                     Idle();

@@ -325,6 +325,11 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        public static Task CatchAndHandle(this Task task, Action<Exception> exceptionHandler)
+        {
+            return CatchAndHandle<Exception>(task, exceptionHandler);
+        }
+
         public static Task CatchAndHandle<TException>(this Task task, Action<TException> exceptionHandler)
             where TException : Exception
         {
@@ -390,6 +395,7 @@ namespace Blitz.Client.Core
                 }
                 else if (task.IsFaulted)
                 {
+                    // Do this so the exception is handled.
                     var exception = t.Exception.Flatten();
 
                     tcs.TrySetResult(null);
