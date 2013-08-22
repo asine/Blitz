@@ -10,6 +10,10 @@ namespace Blitz.Client.Core.MVVM
 {
     public class ViewService : IViewService
     {
+        public const string SHELL_VIEW = "ShellView";
+
+        private Window _shellView;
+
         private readonly ILog _log;
         private readonly IUnityContainer _container;
 
@@ -17,6 +21,8 @@ namespace Blitz.Client.Core.MVVM
         {
             _log = log;
             _container = container;
+
+            _shellView = container.Resolve<Window>(SHELL_VIEW);
         }
 
         public IRegionBuilder RegionBuilder()
@@ -53,6 +59,7 @@ namespace Blitz.Client.Core.MVVM
             {
                 ConnectUpClosing(viewModel, window);
 
+                window.Owner = _shellView;
                 window.ShowDialog();
             }
             else
@@ -60,7 +67,8 @@ namespace Blitz.Client.Core.MVVM
                 window = new Window
                 {
                     Content = view,
-                    Title = viewModel.DisplayName
+                    Title = viewModel.DisplayName,
+                    Owner = _shellView
                 };
 
                 ConnectUpClosing(viewModel, window);
