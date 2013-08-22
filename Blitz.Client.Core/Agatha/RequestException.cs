@@ -6,8 +6,6 @@ namespace Blitz.Client.Core.Agatha
     {
         public RequestException(string message)
             : base(message)
-        {
-            
-        }
+        { }
     }
 }

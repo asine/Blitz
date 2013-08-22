@@ -12,6 +12,7 @@ namespace Blitz.Client.Core.MVVM
                 eventHandler(sender, eventArgs);
             }
         }
+
         public static void SafeInvoke(this EventHandler eventHandler, object sender)
         {
             if (eventHandler != null)

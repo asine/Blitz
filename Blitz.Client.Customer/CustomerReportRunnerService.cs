@@ -11,6 +11,7 @@ using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 using Microsoft.Practices.Prism.Commands;
@@ -26,7 +27,7 @@ namespace Blitz.Client.Customer
         private readonly List<IToolBarItem> _toolBarItems;
 
         public CustomerReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService)
+            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService, ILog log)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
@@ -45,7 +46,7 @@ namespace Blitz.Client.Customer
                         .WithMessage("Message.....")
                         .Show();
 
-                    var x = answer == Answer.Ok;
+                    log.Info(string.Format("Dialog selection - {0}", answer));
                 }),
                 IsVisible = false
             });
