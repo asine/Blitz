@@ -43,7 +43,7 @@ namespace Blitz.Client.Core.MVVM
         public void ShowModel(IViewModel viewModel)
         {
             _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
-            var view = CreateView(_container, viewModel.GetType());
+            var view = CreateView(viewModel.GetType());
 
             _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
             BindViewModel(view, viewModel);
@@ -101,7 +101,7 @@ namespace Blitz.Client.Core.MVVM
             window.Closed += windowOnClosed;
         }
 
-        internal static FrameworkElement CreateView(IUnityContainer container, Type viewModelType)
+        public static FrameworkElement CreateView(Type viewModelType)
         {
             // Work out the view type from the ViewModel type 
             var viewTypeName = viewModelType.FullName.Replace("Model", "");
@@ -110,7 +110,7 @@ namespace Blitz.Client.Core.MVVM
             var useViewAttribute = Attribute.GetCustomAttribute(viewModelType, typeof (UseViewAttribute), true) as UseViewAttribute;
             var viewType = useViewAttribute != null ? useViewAttribute.ViewType : viewModelType.Assembly.GetType(viewTypeName);
 
-            var view = (FrameworkElement)container.Resolve(viewType);
+            var view = (FrameworkElement)Activator.CreateInstance(viewType);
 
             return view;
         }
@@ -121,7 +121,7 @@ namespace Blitz.Client.Core.MVVM
             return container.Resolve<TViewModel>();
         }
 
-        internal static void BindViewModel<TViewModel>(FrameworkElement view, TViewModel viewModel)
+        public static void BindViewModel<TViewModel>(FrameworkElement view, TViewModel viewModel)
             where TViewModel : IViewModel
         {
             view.DataContext = viewModel;

@@ -80,7 +80,7 @@ namespace Blitz.Client.Core.MVVM
             var container = ViewService.GetContainer(_container, _scope);
 
             _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
-            var view = ViewService.CreateView(container, viewModel.GetType());
+            var view = ViewService.CreateView(viewModel.GetType());
 
             _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
             ViewService.BindViewModel(view, viewModel);
@@ -101,7 +101,7 @@ namespace Blitz.Client.Core.MVVM
             var container = ViewService.GetContainer(_container, _scope);
 
             _log.Info("Creating View for ViewModel - {0}", typeof(TViewModel).FullName);
-            var view = ViewService.CreateView(container, typeof(TViewModel));
+            var view = ViewService.CreateView(typeof(TViewModel));
 
             _log.Info("Creating ViewModel - {0}", typeof(TViewModel).FullName);
             var viewModel = ViewService.CreateViewModel<TViewModel>(container);

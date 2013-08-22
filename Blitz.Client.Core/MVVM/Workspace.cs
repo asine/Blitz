@@ -109,18 +109,18 @@ namespace Blitz.Client.Core.MVVM
 
         private bool _onInitialiseHasBeenCalled;
 
-        private bool _isActive;
+        public bool IsActive { get; private set; }
 
         void ISupportActivationState.Activate()
         {
             Log.Info("Activate called on {0} - {1}", GetType().FullName, DisplayName);
-            Log.Info("Active value - {0}", _isActive);
-            if (_isActive) return;
+            Log.Info("Active value - {0}", IsActive);
+            if (IsActive) return;
 
-            _isActive = true;
-            Log.Info("Active value - {0}", _isActive);
+            IsActive = true;
+            Log.Info("Active value - {0}", IsActive);
 
-            ActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(_isActive));
+            ActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(IsActive));
 
             OnActivate();
 
@@ -133,12 +133,12 @@ namespace Blitz.Client.Core.MVVM
 
         void ISupportActivationState.DeActivate()
         {
-            _isActive = false;
+            IsActive = false;
 
             Log.Info("DeActivate called on {0} - {1}", GetType().FullName, DisplayName);
-            Log.Info("DeActivate value - {0}", _isActive);
+            Log.Info("DeActivate value - {0}", IsActive);
 
-            ActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(_isActive));
+            ActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(IsActive));
 
             OnDeActivate();
         }
