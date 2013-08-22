@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Blitz.Client.Core.Tests
 {
-    class TaskExtensionsTests
+    public class TaskExtensionsTests
     {
     }
 }
