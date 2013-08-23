@@ -99,6 +99,8 @@
       <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Dialog\IDialogBuilder.cs" />
+    <Compile Include="MVVM\Dialog\IStandardDialogBuilder.cs" />
+    <Compile Include="MVVM\Dialog\StandardDialogBuilder.cs" />
     <Compile Include="MVVM\DispatcherService.cs" />
     <Compile Include="MVVM\EventHandlerExtensions.cs" />
     <Compile Include="MVVM\IDispatcherService.cs" />

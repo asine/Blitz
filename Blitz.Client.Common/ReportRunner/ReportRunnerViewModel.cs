@@ -55,17 +55,13 @@ namespace Blitz.Client.Common.ReportRunner
             BusyAsync("... Loading ...")
                 .Then(() => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
                 .ThenDo(() =>
-                    DispatcherService.ExecuteSyncOnUI(() => _viewService.RegionBuilder<TReportParameterViewModel>()
-                        .Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel)))
+                    DispatcherService.ExecuteSyncOnUI(() =>
+                        _viewService.RegionBuilder<TReportParameterViewModel>()
+                            .Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel)))
                 .LogException(Log)
                 .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(() =>
-                        _viewService.DialogBuilder()
-                            .WithDialogType(DialogType.Error)
-                            .WithAnswers(Answer.Ok)
-                            .WithTitle("Error")
-                            .WithMessage("Problem initialising parameters")
-                            .Show()))
+                    DispatcherService.ExecuteSyncOnUI(
+                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters")))
                 .Finally(Idle);
         }
 
@@ -90,13 +86,8 @@ namespace Blitz.Client.Common.ReportRunner
                     }))
                 .LogException(Log)
                 .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(() =>
-                        _viewService.DialogBuilder()
-                            .WithDialogType(DialogType.Error)
-                            .WithAnswers(Answer.Ok)
-                            .WithTitle("Error")
-                            .WithMessage("Problem Generating Report")
-                            .Show()))
+                    DispatcherService.ExecuteSyncOnUI(
+                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem Generating Report")))
                 .Finally(() =>
                 {
                     Idle();

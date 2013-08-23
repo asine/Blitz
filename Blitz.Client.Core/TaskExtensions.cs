@@ -44,6 +44,13 @@ namespace Blitz.Client.Core
             });
         }
 
+        /// <summary>
+        /// When first completes, pass the results to next.
+        /// next is only called if first completed successfully.
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task Then(this Task first, Func<Task> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
@@ -80,6 +87,15 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// When first completes, pass the results to next.
+        /// next is only called if first completed successfully.
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task<T2> Then<T1, T2>(this Task<T1> first, Func<T1, Task<T2>> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
@@ -170,6 +186,13 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Execute an Action, Task completes when it is finished.
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task ThenDo<T1>(this Task<T1> first, Action<T1> next)
         {
             if (first == null) throw new ArgumentNullException("first");
@@ -204,6 +227,12 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Execute an Action, Task completes when it is finished.
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task ThenDo(this Task first, Action next)
         {
             if (first == null) throw new ArgumentNullException("first");
@@ -238,6 +267,11 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// ALWAYS execute the action.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="action"></param>
         public static void Finally(this Task task, Action action)
         {
             if (action == null) throw new ArgumentNullException("action");
@@ -245,6 +279,13 @@ namespace Blitz.Client.Core
             task.ContinueWith(t => action(), TaskContinuationOptions.ExecuteSynchronously);
         }
 
+        /// <summary>
+        /// Catch exceptions ONLY of type TException and allow an Action to be performed on it.
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns></returns>
         public static Task Catch<TException>(this Task task, Action<TException> exceptionHandler)
             where TException : Exception
         {
@@ -285,6 +326,14 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Catch exceptions ONLY of type TException and allow an Action to be performed on it.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns></returns>
         public static Task<T> Catch<T, TException>(this Task<T> task, Action<TException> exceptionHandler)
             where TException : Exception
         {
@@ -325,11 +374,26 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Catch ANY exception and allow an Action to be performed on it.
+        /// Handle all exceptions raised.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns></returns>
         public static Task CatchAndHandle(this Task task, Action<Exception> exceptionHandler)
         {
             return CatchAndHandle<Exception>(task, exceptionHandler);
         }
 
+        /// <summary>
+        /// Catch exceptions ONLY of type TException and allow an Action to be performed on it.
+        /// Handle all exceptions raised.
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns></returns>
         public static Task CatchAndHandle<TException>(this Task task, Action<TException> exceptionHandler)
             where TException : Exception
         {
@@ -370,6 +434,11 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Handle all exceptions raised.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         public static Task HandleExceptions(this Task task)
         {
             if (task == null) throw new ArgumentNullException("task");
@@ -405,6 +474,13 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Log exceptions.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="logger"></param>
+        /// <returns></returns>
         public static Task<T> LogException<T>(this Task<T> task, ILog logger)
         {
             task.ContinueWith(t =>
@@ -417,6 +493,12 @@ namespace Blitz.Client.Core
             return task;
         }
 
+        /// <summary>
+        /// Log exceptions.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="logger"></param>
+        /// <returns></returns>
         public static Task LogException(this Task task, ILog logger)
         {
             task.ContinueWith(t =>
@@ -427,6 +509,17 @@ namespace Blitz.Client.Core
             }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnFaulted);
 
             return task;
+        }
+
+        /// <summary>
+        /// Task that immediately completes.
+        /// </summary>
+        /// <returns></returns>
+        public static Task Completed()
+        {
+            var tcs = new TaskCompletionSource<object>();
+            tcs.TrySetResult(null);
+            return tcs.Task;
         }
     }
 }

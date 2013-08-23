@@ -41,14 +41,8 @@ namespace Blitz.Client.Common.ReportViewer
                     }))
                 .LogException(Log)
                 .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(() =>
-                        _viewService.DialogBuilder()
-                            .WithDialogType(DialogType.Error)
-                            .WithAnswers(Answer.Ok)
-                            .WithTitle("Error")
-                            .WithMessage("Problem loading History")
-                            .Show())
-                )
+                    DispatcherService.ExecuteSyncOnUI(
+                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History")))
                 .Finally(Idle);
         }
 

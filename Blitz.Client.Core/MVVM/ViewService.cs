@@ -46,6 +46,11 @@ namespace Blitz.Client.Core.MVVM
             return _container.Resolve<IDialogBuilder<T>>();
         }
 
+        public IStandardDialogBuilder StandardDialogBuilder()
+        {
+            return _container.Resolve<IStandardDialogBuilder>();
+        }
+
         public void ShowModel(IViewModel viewModel)
         {
             _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
