@@ -8,6 +8,7 @@
         xmlns:shell="clr-namespace:Blitz.Client.Shell"
         xmlns:mvvm="clr-namespace:Blitz.Client.Core.MVVM;assembly=Blitz.Client.Core"
         xmlns:controls="clr-namespace:Blitz.Client.ModernUI.Windows.Controls;assembly=Blitz.Client.ModernUI"
+        xmlns:toolBar="clr-namespace:Blitz.Client.Core.MVVM.ToolBar;assembly=Blitz.Client.Core"
         mc:Ignorable="d"
         Title="Blitz"
         Height="300"
@@ -23,7 +24,7 @@
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar ItemsSource="{Binding Path=ToolBarItems}">
                 <ToolBar.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate DataType="toolBar:IToolBarItem">
                         <Button Margin="3,0"
                                 Content="{Binding DisplayName}"
                                 ToolTip="{Binding DisplayName}"

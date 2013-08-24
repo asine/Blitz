@@ -46,7 +46,8 @@
 
             <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_DATA}"
                         Grid.Column="1"
-                        Grid.Row="1" />
+                        Grid.Row="1"
+                        TabStripPlacement="Bottom" />
 
         </Grid>
     </xctk:BusyIndicator>
