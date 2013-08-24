@@ -25,8 +25,11 @@ namespace Blitz.Client
     {
         protected override DependencyObject CreateShell()
         {
-            var shellView = new ShellView {DataContext = Container.Resolve<ShellViewModel>()};
-            Container.RegisterInstance<Window>(ViewService.SHELL_VIEW, shellView);
+            var shellViewModel = Container.Resolve<ShellViewModel>();
+            var shellView = new ShellView();
+
+            ViewService.BindViewModel(shellView, shellViewModel);
+
             return shellView;
         }
 
