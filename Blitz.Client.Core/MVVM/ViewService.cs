@@ -69,6 +69,7 @@ namespace Blitz.Client.Core.MVVM
                     Content = view,
                     Title = viewModel.DisplayName,
                     SizeToContent = SizeToContent.WidthAndHeight,
+                    WindowStyle = WindowStyle.ToolWindow,
                     Owner = Application.Current.MainWindow
                 };
 

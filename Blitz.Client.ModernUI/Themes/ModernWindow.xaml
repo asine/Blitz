@@ -59,12 +59,15 @@
                                 <AdornerDecorator>
                                     <Grid x:Name="LayoutRoot">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="36" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="25" />
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="15" />
                                         </Grid.RowDefinitions>
+                                        
+                                        <TextBlock Margin="5,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   Text="{TemplateBinding Title}"
+                                                   Style="{DynamicResource Heading2}" />
 
                                         <!-- window background content -->
                                         <ContentControl Grid.RowSpan="5"
@@ -189,11 +192,11 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
 
-                                        <controls:TransitioningContentControl Grid.Row="3"
+                                        <controls:TransitioningContentControl Grid.Row="1"
                                                                               Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
 
                                         <!-- resize grip -->
-                                        <Grid Grid.Row="4">
+                                        <Grid Grid.Row="2">
                                             <Path x:Name="ResizeGrip"
                                                   Visibility="Collapsed"
                                                   Width="12"
@@ -205,6 +208,7 @@
                                                   Stretch="None"
                                                   Data="F1 M1,10 L3,10 M5,10 L7,10 M9,10 L11,10 M2,9 L2,11 M6,9 L6,11 M10,9 L10,11 M5,6 L7,6 M9,6 L11,6 M6,5 L6,7 M10,5 L10,7 M9,2 L11,2 M10,1 L10,3" />
                                         </Grid>
+                                            
                                     </Grid>
                                 </AdornerDecorator>
                             </Border>
