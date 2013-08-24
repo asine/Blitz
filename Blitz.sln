@@ -21,6 +21,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{933AB6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.Core.Tests", "Blitz.Client.Core.Tests\Blitz.Client.Core.Tests.csproj", "{9CFAC65B-6E55-4578-A6F5-16A01EB3E0E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.ModernUI", "Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj", "{1C3569B5-82A2-44C6-AF2C-2961E79BE218}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{88122908-6CFF-4586-B16D-74DC586690CC}"
+	ProjectSection(SolutionItems) = preProject
+		licenses\License.icons.txt = licenses\License.icons.txt
+		licenses\License.Modern.UI.txt = licenses\License.Modern.UI.txt
+		licenses\License.RelativeAnimatingContentControl.txt = licenses\License.RelativeAnimatingContentControl.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +64,10 @@ Global
 		{9CFAC65B-6E55-4578-A6F5-16A01EB3E0E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CFAC65B-6E55-4578-A6F5-16A01EB3E0E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CFAC65B-6E55-4578-A6F5-16A01EB3E0E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C3569B5-82A2-44C6-AF2C-2961E79BE218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C3569B5-82A2-44C6-AF2C-2961E79BE218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C3569B5-82A2-44C6-AF2C-2961E79BE218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C3569B5-82A2-44C6-AF2C-2961E79BE218}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +78,7 @@ Global
 		{0D1E3402-F4F5-46F5-AE79-57CCCD64525F} = {3AB1BAE7-9E60-4749-935C-89325E740459}
 		{B94E7768-2B75-4245-9580-B2C34E376619} = {3AB1BAE7-9E60-4749-935C-89325E740459}
 		{9CFAC65B-6E55-4578-A6F5-16A01EB3E0E6} = {3AB1BAE7-9E60-4749-935C-89325E740459}
+		{1C3569B5-82A2-44C6-AF2C-2961E79BE218} = {3AB1BAE7-9E60-4749-935C-89325E740459}
 		{0419088D-FB73-4662-8B1D-6FBAEEA7766E} = {933AB69A-9C11-4F13-9679-CD425205A39C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -2,6 +2,7 @@
 using System.Windows;
 
 using Blitz.Client.Core.MVVM.Dialog;
+using Blitz.Client.ModernUI.Windows.Controls;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Unity;
@@ -69,11 +70,12 @@ namespace Blitz.Client.Core.MVVM
             }
             else
             {
-                window = new Window
+                window = new ModernWindow
                 {
                     Content = view,
                     Title = viewModel.DisplayName,
-                    Owner = _shellView
+                    SizeToContent = SizeToContent.WidthAndHeight
+                    //Owner = _shellView
                 };
 
                 ConnectUpClosing(viewModel, window);

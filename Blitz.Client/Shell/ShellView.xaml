@@ -1,4 +1,4 @@
-﻿<Window x:Class="Blitz.Client.Shell.ShellView"
+﻿<controls:ModernWindow x:Class="Blitz.Client.Shell.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:regions="http://www.codeplex.com/CompositeWPF"
@@ -7,15 +7,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shell="clr-namespace:Blitz.Client.Shell"
         xmlns:mvvm="clr-namespace:Blitz.Client.Core.MVVM;assembly=Blitz.Client.Core"
+        xmlns:controls="clr-namespace:Blitz.Client.ModernUI.Windows.Controls;assembly=Blitz.Client.ModernUI"
         mc:Ignorable="d"
-        Title="Reporting Desktop"
+        Title="Blitz"
         Height="300"
         Width="300"
         d:DataContext="{d:DesignInstance shell:ShellViewModel}">
 
-    <Window.Resources>
+    <controls:ModernWindow.Resources>
         <mvvm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </Window.Resources>
+    </controls:ModernWindow.Resources>
 
     <DockPanel>
 
@@ -37,4 +38,4 @@
 
     </DockPanel>
 
-</Window>
+</controls:ModernWindow>

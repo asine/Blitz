@@ -28,6 +28,8 @@ namespace Blitz.Client.Core.MVVM
         protected ViewModelBase(ILog log)
         {
             Log = log;
+
+            DisplayName = string.Empty;
         }
     }
 }

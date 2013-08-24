@@ -8,7 +8,7 @@ using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer
 {
-    [UseView(typeof(RegionView))]
+    [UseView(typeof(ReportView))]
     public class CustomerReportViewModel : ReportViewModel<
         ReportRunnerViewModel<SimpleReportParameterViewModel, CustomerReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>, 
         ReportViewerViewModel<CustomerReportViewerService, GetHistoryRequest, GetHistoryResponse>>

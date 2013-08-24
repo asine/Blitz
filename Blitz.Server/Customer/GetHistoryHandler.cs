@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
@@ -22,6 +23,8 @@ namespace Blitz.Server.Customer
                 .ToList();
 
             response.Results = results;
+
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 
             return response;
         }

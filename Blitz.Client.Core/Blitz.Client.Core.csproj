@@ -147,6 +147,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj">
+      <Project>{1c3569b5-82a2-44c6-af2c-2961e79be218}</Project>
+      <Name>Blitz.Client.ModernUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Blitz.Common\Blitz.Common.csproj">
       <Project>{145A1613-AA64-42C1-9BA2-5965AF05F0DB}</Project>
       <Name>Blitz.Common</Name>
