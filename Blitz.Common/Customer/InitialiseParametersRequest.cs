@@ -5,7 +5,7 @@ using Blitz.Common.Agatha;
 namespace Blitz.Common.Customer
 {
     [DataContract]
-    public class InitialiseParametersRequest : RequestBase<InitialiseParametersResponse>
+    public class InitialiseParametersRequest : Request<InitialiseParametersResponse>
     {
     }
 }

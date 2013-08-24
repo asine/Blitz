@@ -1,19 +1,18 @@
 ﻿using Agatha.Common;
 using Agatha.ServiceLayer;
 
-using Blitz.Common;
 using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 
 namespace Blitz.Server.Core
 {
-    public abstract class HandlerBase<TRequest, TResponse> : RequestHandler<TRequest, TResponse> 
-        where TRequest : RequestBase<TResponse> 
+    public abstract class Handler<TRequest, TResponse> : RequestHandler<TRequest, TResponse> 
+        where TRequest : Request<TResponse> 
         where TResponse : Response, new()
     {
         protected readonly ILog Log;
 
-        protected HandlerBase(ILog log)
+        protected Handler(ILog log)
         {
             Log = log;
         }

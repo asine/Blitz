@@ -7,7 +7,7 @@ using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class ReportRunnerHandler : HandlerBase<ReportRunnerRequest, ReportRunnerResponse>
+    public class ReportRunnerHandler : Handler<ReportRunnerRequest, ReportRunnerResponse>
     {
         public ReportRunnerHandler(ILog log) 
             : base(log)

@@ -7,7 +7,7 @@ using Microsoft.Practices.Prism.Events;
 
 namespace Blitz.Client.Core.MVVM
 {
-    public abstract class Workspace : ViewModelBase, ISupportClosing, ISupportActivationState
+    public abstract class Workspace : ViewModel, ISupportClosing, ISupportActivationState
     {
         protected readonly IDispatcherService DispatcherService;
         protected readonly CompositeDisposable Disposables;

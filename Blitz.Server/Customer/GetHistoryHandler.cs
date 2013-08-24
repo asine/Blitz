@@ -7,7 +7,7 @@ using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class GetHistoryHandler : HandlerBase<GetHistoryRequest, GetHistoryResponse>
+    public class GetHistoryHandler : Handler<GetHistoryRequest, GetHistoryResponse>
     {
         public GetHistoryHandler(ILog log) 
             : base(log)

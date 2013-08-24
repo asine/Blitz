@@ -69,7 +69,7 @@
     <Compile Include="Customer\ReportDto.cs" />
     <Compile Include="Customer\ReportRunnerRequest.cs" />
     <Compile Include="Customer\ReportRunnerResponse.cs" />
-    <Compile Include="Agatha\RequestBase.cs" />
+    <Compile Include="Agatha\Request.cs" />
     <Compile Include="Customer\InitialiseParametersRequest.cs" />
     <Compile Include="Customer\InitialiseParametersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

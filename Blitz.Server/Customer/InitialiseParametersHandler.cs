@@ -7,7 +7,7 @@ using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class InitialiseParametersHandler : HandlerBase<InitialiseParametersRequest, InitialiseParametersResponse>
+    public class InitialiseParametersHandler : Handler<InitialiseParametersRequest, InitialiseParametersResponse>
     {
         public InitialiseParametersHandler(ILog log) 
             : base(log)

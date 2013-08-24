@@ -12,7 +12,7 @@ namespace Blitz.Client.Settings.Appearance
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.
     /// </summary>
-    public class AppearanceViewModel : ViewModelBase
+    public class AppearanceViewModel : ViewModel
     {
         private const string FONT_SMALL = "small";
         private const string FONT_LARGE = "large";

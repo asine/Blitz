@@ -11,11 +11,11 @@ namespace Blitz.Client.Core.Agatha
     public interface IRequestTask
     {
         Task<TResponse> Get<TRequest, TResponse>(TRequest request)
-            where TRequest : RequestBase<TResponse>
+            where TRequest : Request<TResponse>
             where TResponse : Response;
 
         Task<TResult> Get<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> selector)
-            where TRequest : RequestBase<TResponse>
+            where TRequest : Request<TResponse>
             where TResponse : Response;
     }
 
@@ -31,21 +31,21 @@ namespace Blitz.Client.Core.Agatha
         }
 
         public Task<TResponse> Get<TRequest, TResponse>(TRequest request)
-            where TRequest : RequestBase<TResponse>
+            where TRequest : Request<TResponse>
             where TResponse : Response
         {
             return Task.Factory.StartNew(() => Execute<TRequest, TResponse>(request));
         }
 
         public Task<TResult> Get<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> selector) 
-            where TRequest : RequestBase<TResponse> 
+            where TRequest : Request<TResponse> 
             where TResponse : Response
         {
             return Task.Factory.StartNew(() => selector(Execute<TRequest, TResponse>(request)));
         }
 
         private TResponse Execute<TRequest, TResponse>(TRequest request)
-            where TRequest : RequestBase<TResponse>
+            where TRequest : Request<TResponse>
             where TResponse : Response
         {
             using (var performanceTester = new PerformanceTester())

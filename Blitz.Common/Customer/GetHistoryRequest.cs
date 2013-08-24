@@ -5,7 +5,7 @@ using Blitz.Common.Agatha;
 namespace Blitz.Common.Customer
 {
     [DataContract]
-    public class GetHistoryRequest : RequestBase<GetHistoryResponse>
+    public class GetHistoryRequest : Request<GetHistoryResponse>
     {
     }
 }
