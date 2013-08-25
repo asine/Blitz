@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 using Blitz.Client.Core;
@@ -68,7 +66,7 @@ namespace Blitz.Client.Customer.ReportLayout
                 .LogException(Log)
                 .CatchAndHandle(x =>
                     DispatcherService.ExecuteSyncOnUI(
-                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters")))
+                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes")))
                 .Finally(Idle);
         }
 
