@@ -6,10 +6,8 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:shell="clr-namespace:Blitz.Client.Shell"
-                       xmlns:mvvm="clr-namespace:Blitz.Client.Core.MVVM;assembly=Blitz.Client.Core"
                        xmlns:controls="clr-namespace:Blitz.Client.ModernUI.Windows.Controls;assembly=Blitz.Client.ModernUI"
                        xmlns:toolBar="clr-namespace:Blitz.Client.Core.MVVM.ToolBar;assembly=Blitz.Client.Core"
-                       xmlns:icons="clr-namespace:Blitz.Client.ModernUI.Assets.Icons;assembly=Blitz.Client.ModernUI"
                        mc:Ignorable="d"
                        Title="Blitz"
                        Height="300"
@@ -18,42 +16,17 @@
                        d:DataContext="{d:DesignInstance shell:ShellViewModel}">
 
     <controls:ModernWindow.Resources>
-        
-        <mvvm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-        <icons:IconNameToImageConverter x:Key="IconNameToImageConverter" />
-        
+        <toolBar:ToolBarItemTemplateSelector x:Key="ToolBarItemTemplateSelector" />
+
     </controls:ModernWindow.Resources>
 
     <DockPanel>
 
         <ToolBarTray DockPanel.Dock="Top"
                      IsLocked="True">
-            <ToolBar ItemsSource="{Binding Path=ToolBarItems}">
-                <ToolBar.ItemTemplate>
-                    <DataTemplate DataType="toolBar:IToolBarItem">
-                        <Button Margin="3,0"
-                                ToolTip="{Binding DisplayName}"
-                                Command="{Binding Command}"
-                                Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center">
-                                <Canvas Width="22"
-                                        Height="22"
-                                        Visibility="{Binding ImageName, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=inverse}">
-                                    <Path x:Name="Excel"
-                                          Width="20"
-                                          Height="20"
-                                          Stretch="Fill"
-                                          Fill="{DynamicResource InputText}"
-                                          Data="{Binding ImageName, Converter={StaticResource IconNameToImageConverter}}" />
-                                </Canvas>
-                                <TextBlock Text="{Binding DisplayName}" />
-                            </StackPanel>
-                        </Button>
-                    </DataTemplate>
-                </ToolBar.ItemTemplate>
-            </ToolBar>
+            <ToolBar ItemsSource="{Binding Path=ToolBarItems}"
+                     ItemTemplateSelector="{StaticResource ToolBarItemTemplateSelector}" />
         </ToolBarTray>
 
         <TabControl regions:RegionManager.RegionName="{x:Static common1:RegionNames.MAIN}" />

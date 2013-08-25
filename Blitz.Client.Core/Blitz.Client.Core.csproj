@@ -113,6 +113,7 @@
     <Compile Include="MVVM\ToolBar\IToolBarItem.cs" />
     <Compile Include="MVVM\ToolBar\IToolBarService.cs" />
     <Compile Include="MVVM\ToolBar\ToolBarButtonItem.cs" />
+    <Compile Include="MVVM\ToolBar\ToolBarItemTemplateSelector.cs" />
     <Compile Include="MVVM\ToolBar\ToolBarService.cs" />
     <Compile Include="MVVM\ViewModelHelpers.cs" />
     <Compile Include="MVVM\Workspace.cs" />
@@ -161,6 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MVVM\Dialog\DialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\ToolBar\ToolBarItemTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,6 +6,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Blitz.Client.ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/Blitz.Client.ModernUI;component/Assets/ModernUI.Dark.xaml" />
+
+                <ResourceDictionary Source="/Blitz.Client.Core;component/MVVM/ToolBar/ToolBarItemTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
