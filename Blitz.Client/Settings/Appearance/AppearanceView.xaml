@@ -5,17 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:appearance="clr-namespace:Blitz.Client.Settings.Appearance"
              mc:Ignorable="d"
-             Height="375"
-             Width="210"
+             Height="355"
+             Width="200"
              d:DataContext="{d:DesignInstance appearance:AppearanceViewModel}">
 
     <Grid>
         <ScrollViewer>
             <StackPanel x:Name="Panel"
                         MinWidth="150">
-                <TextBlock Text="APPEARANCE"
-                           Style="{StaticResource Heading2}"
-                           Margin="0,0,0,8" />
 
                 <ListBox ItemsSource="{Binding AccentColors}"
                          SelectedItem="{Binding SelectedAccentColor, Mode=TwoWay}"

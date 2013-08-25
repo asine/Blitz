@@ -121,6 +121,8 @@ namespace Blitz.Client.Settings.Appearance
         public AppearanceViewModel(ILog log)
             : base(log)
         {
+            DisplayName = "Appearance";
+
             FontSizes = new ObservableCollection<string> {FONT_SMALL, FONT_LARGE};
 
             SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FONT_LARGE : FONT_SMALL;
