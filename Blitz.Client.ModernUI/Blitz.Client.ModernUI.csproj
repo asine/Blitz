@@ -68,6 +68,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Icons\IconNameToImageConverter.cs" />
+    <Compile Include="Assets\Icons\IconNames.cs" />
     <Compile Include="Presentation\AppearanceManager.cs" />
     <Compile Include="Presentation\CommandBase.cs" />
     <Compile Include="Presentation\Displayable.cs" />
@@ -160,6 +162,10 @@
     <Page Include="Assets\Hyperlink.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Icons\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Assets\Label.xaml">
       <Generator>MSBuild:Compile</Generator>

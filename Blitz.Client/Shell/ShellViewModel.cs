@@ -35,7 +35,8 @@ namespace Blitz.Client.Shell
                 Command = new DelegateCommand(() =>
                 {
                     toolBarItem1.IsVisible = !toolBarItem1.IsVisible;
-                })
+                }),
+                ImageName = "appbar_office_excel"
             });
             ToolBarItems.Add(new ToolBarButtonItem { DisplayName = "Test3" });
 

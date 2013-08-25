@@ -25,6 +25,8 @@ namespace Blitz.Client.Core.MVVM.ToolBar
         #endregion
 
         public DelegateCommand Command { get; set; }
+        
+        public string ImageName { get; set; }
 
         public ToolBarButtonItem()
         {

@@ -29,6 +29,8 @@
         <ResourceDictionary Source="ToolBar.xaml" />
         <ResourceDictionary Source="ToolTip.xaml" />
         <ResourceDictionary Source="TreeView.xaml" />
+        
+        <ResourceDictionary Source="Icons\Icons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- default accent colors and brushes -->
