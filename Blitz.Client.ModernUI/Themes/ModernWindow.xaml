@@ -3,7 +3,8 @@
                     xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
                     xmlns:controls="clr-namespace:Blitz.Client.ModernUI.Windows.Controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Blitz.Client.ModernUI;component/Assets/Button.xaml" />
@@ -63,11 +64,31 @@
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="15" />
                                         </Grid.RowDefinitions>
-                                        
-                                        <TextBlock Margin="5,0,0,0"
-                                                   VerticalAlignment="Center"
-                                                   Text="{TemplateBinding Title}"
-                                                   Style="{DynamicResource Heading2}" />
+
+                                        <Border Background="{DynamicResource Accent}"
+                                                Height="25"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Margin="0,0,80,0"
+                                                Padding="2,0,2,0"
+                                                DataContext="{TemplateBinding LogoData}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path Data="{Binding}"
+                                                      Stretch="Fill"
+                                                      Fill="{DynamicResource WindowText}"
+                                                      Width="20"
+                                                      Height="20"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=inverse}" />
+                                                <TextBlock Margin="2,0,0,0"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource WindowText}"
+                                                           Text="{TemplateBinding Title}"
+                                                           Style="{DynamicResource Heading2}"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </Border>
 
                                         <!-- window background content -->
                                         <ContentControl Grid.RowSpan="5"
@@ -208,7 +229,7 @@
                                                   Stretch="None"
                                                   Data="F1 M1,10 L3,10 M5,10 L7,10 M9,10 L11,10 M2,9 L2,11 M6,9 L6,11 M10,9 L10,11 M5,6 L7,6 M9,6 L11,6 M6,5 L6,7 M10,5 L10,7 M9,2 L11,2 M10,1 L10,3" />
                                         </Grid>
-                                            
+
                                     </Grid>
                                 </AdornerDecorator>
                             </Border>

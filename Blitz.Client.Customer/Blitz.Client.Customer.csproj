@@ -86,6 +86,9 @@
     <Compile Include="CustomerReportRunnerService.cs" />
     <Compile Include="CustomerReportViewerService.cs" />
     <Compile Include="CustomerReportViewModel.cs" />
+    <Compile Include="EmployeeReportRunnerService.cs" />
+    <Compile Include="EmployeeReportViewerService.cs" />
+    <Compile Include="EmployeeReportViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

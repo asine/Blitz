@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -30,6 +31,9 @@ namespace Blitz.Client.Core.MVVM
                     if (viewModel == null) continue;
 
                     var tabItem = new TabItem {Header = viewModel.DisplayName, Content = view};
+
+                    ConnectUpClosing(viewModel, regionTarget, tabItem);
+
                     regionTarget.Items.Add(tabItem);
                 }
             }
@@ -99,6 +103,25 @@ namespace Blitz.Client.Core.MVVM
         protected override IRegion CreateRegion()
         {
             return new SingleActiveRegion();
+        }
+
+        private static void ConnectUpClosing(IViewModel viewModel, TabControl tabControl, TabItem tabItem)
+        {
+            var supportClosing = viewModel as ISupportClosing;
+            if (supportClosing == null) return;
+
+            // ViewModel is closed
+            EventHandler supportClosingOnClosed = null;
+            supportClosingOnClosed = (s, e) =>
+            {
+                tabControl.Items.Remove(tabItem);
+
+                if (supportClosingOnClosed != null)
+                {
+                    supportClosing.Closed -= supportClosingOnClosed;
+                }
+            };
+            supportClosing.Closed += supportClosingOnClosed;
         }
     }
 }

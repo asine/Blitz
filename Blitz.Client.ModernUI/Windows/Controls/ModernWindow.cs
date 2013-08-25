@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 using Blitz.Client.ModernUI.Presentation;
@@ -29,6 +30,10 @@ namespace Blitz.Client.ModernUI.Windows.Controls
         /// Identifies the TitleLinks dependency property.
         /// </summary>
         public static readonly DependencyProperty TitleLinksProperty = DependencyProperty.Register("TitleLinks", typeof(LinkCollection), typeof(ModernWindow));
+        /// <summary>
+        /// Identifies the LogoData dependency property.
+        /// </summary>
+        public static readonly DependencyProperty LogoDataProperty = DependencyProperty.Register("LogoData", typeof(Geometry), typeof(ModernWindow));
 
         private Storyboard backgroundAnimation;
 
@@ -150,6 +155,15 @@ namespace Blitz.Client.ModernUI.Windows.Controls
         {
             get { return GetValue(BackgroundContentProperty); }
             set { SetValue(BackgroundContentProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the path data for the logo displayed in the title area of the window.
+        /// </summary>
+        public Geometry LogoData
+        {
+            get { return (Geometry)GetValue(LogoDataProperty); }
+            set { SetValue(LogoDataProperty, value); }
         }
     }
 }

@@ -19,16 +19,16 @@ namespace Blitz.Client.Customer
 
         public void Initialize()
         {
-            _log.Info("Adding Customer Report1 to Main region");
+            _log.Info("Adding Customer Report to Main region");
             _viewService.RegionBuilder<CustomerReportViewModel>()
                 .WithScope()
                 .WithInitialisation(x => x.DisplayName = "Customer Report1")
                 .Show(RegionNames.MAIN);
 
-            _log.Info("Adding Customer Report2 to Main region");
-            _viewService.RegionBuilder<CustomerReportViewModel>()
+            _log.Info("Adding Employee Report to Main region");
+            _viewService.RegionBuilder<EmployeeReportViewModel>()
                 .WithScope()
-                .WithInitialisation(x => x.DisplayName = "Customer Report2")
+                .WithInitialisation(x => x.DisplayName = "Employee Report2")
                 .Show(RegionNames.MAIN);
         }
     }

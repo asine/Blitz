@@ -22,7 +22,7 @@ namespace Blitz.Client.Customer
             _toolBarService = toolBarService;
 
             _toolBarItems = new List<IToolBarItem>();
-            _toolBarItems.Add(new ToolBarButtonItem { DisplayName = "Viewer Test 1", IsVisible = false });
+            _toolBarItems.Add(new ToolBarButtonItem { DisplayName = "Customer Viewer Test 1", IsVisible = false });
 
             foreach (var toolBarItem in _toolBarItems)
             {

@@ -22,7 +22,7 @@ namespace Blitz.Client.Common.Report
                 .Show(RegionNames.REPORT);
 
             _viewService.RegionBuilder<TViewerViewModel>()
-                .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)))
+                .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelDeActivation(viewModel)))
                 .Show(RegionNames.REPORT);
         }
     }

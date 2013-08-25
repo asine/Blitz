@@ -36,14 +36,14 @@ namespace Blitz.Client.Customer
             _toolBarItems = new List<IToolBarItem>();
             _toolBarItems.Add(new ToolBarButtonItem
             {
-                DisplayName = "Runner Test 1", 
+                DisplayName = "Customer Runner Test 1",
                 Command = new DelegateCommand(() =>
                 {
                     var answer = viewService.DialogBuilder()
                         .WithDialogType(DialogType.Information)
                         .WithAnswers(Answer.Ok, Answer.Cancel)
-                        .WithTitle("Title")
-                        .WithMessage("Message.....")
+                        .WithTitle("Something interesting happened")
+                        .WithMessage("No really.....")
                         .Show();
 
                     log.Info(string.Format("Dialog selection - {0}", answer));
@@ -74,7 +74,7 @@ namespace Blitz.Client.Customer
 
         public override ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
         {
-            return new ReportRunnerRequest {ReportDate = reportParameterViewModel.SelectedDate};
+            return new ReportRunnerRequest { ReportDate = reportParameterViewModel.SelectedDate };
         }
 
         public override Task<ReportRunnerResponse> Generate(ReportRunnerRequest request)
@@ -92,7 +92,7 @@ namespace Blitz.Client.Customer
 
                     for (var index = 0; index < 100; index++)
                     {
-                        var item = new ReportDto {Id = index};
+                        var item = new ReportDto { Id = index };
                         dataViewModel.Items.Add(item);
                     }
 

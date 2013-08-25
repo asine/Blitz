@@ -34,7 +34,7 @@ namespace Blitz.Client.Core.MVVM.Dialog
 
         public void Initialise(DialogType dialogType, List<T> answers, string title, string message)
         {
-            DisplayName = title;
+            DisplayName = string.Format("{0} - {1}", dialogType, title);
             Message = message;
 
             for (var index = 0; index < answers.Count; index++)
