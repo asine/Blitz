@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Blitz.Common.Core;
 
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 
 namespace Blitz.Client.Core.MVVM
@@ -46,14 +47,18 @@ namespace Blitz.Client.Core.MVVM
 
         #endregion
 
+        public DelegateCommand ClosingCommand { get; private set; }
+
         protected Workspace(ILog log, IDispatcherService dispatcherService) 
             : base(log)
         {
             DispatcherService = dispatcherService;
             Disposables = new CompositeDisposable();
+
+            ClosingCommand = new DelegateCommand(Close);
         }
 
-        #region ISupportClosing
+        #region SupportClosing
 
         public void Close()
         {

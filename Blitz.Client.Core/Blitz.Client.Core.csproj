@@ -88,6 +88,8 @@
     <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
     <Compile Include="MVVM\AnonymousDisposable.cs" />
+    <Compile Include="MVVM\BindableCollection.cs" />
+    <Compile Include="MVVM\BindableCollectionFactory.cs" />
     <Compile Include="MVVM\BooleanToVisibilityConverter.cs" />
     <Compile Include="MVVM\CompositeDisposable.cs" />
     <Compile Include="MVVM\Dialog\Answer.cs" />

@@ -63,8 +63,11 @@
     <Compile Include="Core\ILog.cs" />
     <Compile Include="Core\PerformanceTester.cs" />
     <Compile Include="Core\UnityExtensions.cs" />
+    <Compile Include="Customer\AttributeDto.cs" />
     <Compile Include="Customer\GetHistoryRequest.cs" />
     <Compile Include="Customer\GetHistoryResponse.cs" />
+    <Compile Include="Customer\GetAttributesRequest.cs" />
+    <Compile Include="Customer\GetAttributesResponse.cs" />
     <Compile Include="Customer\HistoryDto.cs" />
     <Compile Include="Customer\ReportDto.cs" />
     <Compile Include="Customer\ReportRunnerRequest.cs" />

@@ -73,10 +73,29 @@ namespace Blitz.Client.Core.MVVM
                     Owner = Application.Current.MainWindow
                 };
 
+                ConnectUpActivation(viewModel, window);
                 ConnectUpClosing(viewModel, window);
 
                 window.ShowDialog();
             }
+        }
+
+        private static void ConnectUpActivation(IViewModel viewModel, Window window)
+        {
+            var supportActivationState = viewModel as ISupportActivationState;
+            if (supportActivationState == null) return;
+
+            RoutedEventHandler windowOnLoaded = null;
+            windowOnLoaded = (s, e) =>
+            {
+                supportActivationState.Activate();
+
+                if (windowOnLoaded != null)
+                {
+                    window.Loaded -= windowOnLoaded;
+                }
+            };
+            window.Loaded += windowOnLoaded;
         }
 
         private static void ConnectUpClosing(IViewModel viewModel, Window window)

@@ -11,6 +11,7 @@ using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.Customer.ReportLayout;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
@@ -27,13 +28,21 @@ namespace Blitz.Client.Customer
         private readonly List<IToolBarItem> _toolBarItems;
 
         public CustomerReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService, ILog log)
+            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService, ILog log, 
+            Func<ReportLayoutViewModel> reportLayoutViewModelFactory)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
             _toolBarService = toolBarService;
 
             _toolBarItems = new List<IToolBarItem>();
+            _toolBarItems.Add(new ToolBarButtonItem
+            {
+                DisplayName = "Layout",
+                Command = new DelegateCommand(() => viewService.ShowModel(reportLayoutViewModelFactory())),
+                IsVisible = false
+            });
+
             _toolBarItems.Add(new ToolBarButtonItem
             {
                 DisplayName = "Customer Runner Test 1",
