@@ -7,19 +7,17 @@ namespace Blitz.Client.Core.MVVM.ToolBar
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            DataTemplate template = null;
+            if (item == null) return null;
 
-            var typeName = item.GetType().Name;
-            switch (typeName)
+            switch (item.GetType().Name)
             {
                 case "ToolBarButtonItem":
                 {
-                    template = Application.Current.TryFindResource("ToolBarButtonItemTemplate") as DataTemplate;
-                    break;
+                    return Application.Current.TryFindResource("ToolBarButtonItemTemplate") as DataTemplate;
                 }
             }
 
-            return template;
+            return null;
         }
     }
 }

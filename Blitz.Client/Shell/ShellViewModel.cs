@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Client.ModernUI.Presentation;
 using Blitz.Client.ModernUI.Windows.Controls;
 using Blitz.Client.Settings.Appearance;
@@ -36,7 +37,7 @@ namespace Blitz.Client.Shell
                 {
                     toolBarItem1.IsVisible = !toolBarItem1.IsVisible;
                 }),
-                ImageName = "appbar_office_excel"
+                ImageName = IconNames.EXCEL
             });
             ToolBarItems.Add(new ToolBarButtonItem { DisplayName = "Test3" });
 
