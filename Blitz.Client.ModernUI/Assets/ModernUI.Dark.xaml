@@ -32,7 +32,9 @@
     <SolidColorBrush x:Key="DataGridHeaderForegroundSelected" Color="#d1d1d1" />
     <SolidColorBrush x:Key="DataGridGridLines" Color="#333333" />
     <SolidColorBrush x:Key="DataGridDropSeparator" Color="{DynamicResource AccentColor}" />
-    
+
+    <SolidColorBrush x:Key="ExpanderBackground" Color="#2B2B2B" />
+
     <SolidColorBrush x:Key="Hyperlink" Color="{DynamicResource AccentColor}" />
     <SolidColorBrush x:Key="HyperlinkHover" Color="{DynamicResource AccentColor}" />
     <SolidColorBrush x:Key="HyperlinkDisabled" Color="#717171" />
