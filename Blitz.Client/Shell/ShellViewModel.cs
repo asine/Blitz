@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Client.ModernUI.Presentation;
 using Blitz.Client.ModernUI.Windows.Controls;
 using Blitz.Client.Settings.Appearance;
@@ -29,18 +28,6 @@ namespace Blitz.Client.Shell
             _viewService = viewService;
             ToolBarItems = toolBarService.Items;
             TitleLinks = new LinkCollection();
-
-            var toolBarButtonItem = new ToolBarButtonItem { DisplayName = "Test1"};
-            ToolBarItems.Add(toolBarButtonItem);
-
-            ToolBarItems.Add(new ToolBarButtonItem
-            {
-                DisplayName = "Test2",
-                Command = new DelegateCommand(() => toolBarButtonItem.IsVisible = !toolBarButtonItem.IsVisible),
-                ImageName = IconNames.EXCEL
-            });
-
-            ToolBarItems.Add(new ToolBarButtonItem { DisplayName = "Test3" });
 
             ToolBarItems.Add(new ToolBarButtonItem
             {
