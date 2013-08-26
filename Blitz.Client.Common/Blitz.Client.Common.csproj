@@ -130,8 +130,12 @@
       <DependentUpon>ReportRunnerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportRunner\ReportRunnerViewModel.cs" />
+    <Compile Include="ReportViewer\History\HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReportViewer\History\HistoryViewModel.cs" />
     <Compile Include="ReportViewer\IReportViewerService.cs" />
-    <Compile Include="ReportViewer\ReportViewerItemViewModel.cs" />
+    <Compile Include="ReportViewer\History\HistoryItemViewModel.cs" />
     <Compile Include="ReportViewer\ReportViewerService.cs" />
     <Compile Include="ReportViewer\ReportViewerView.xaml.cs">
       <DependentUpon>ReportViewerView.xaml</DependentUpon>
@@ -153,6 +157,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ReportViewer\History\HistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Report\ReportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

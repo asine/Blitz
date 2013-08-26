@@ -6,9 +6,9 @@ using Agatha.Common;
 namespace Blitz.Common.Customer
 {
     [DataContract]
-    public class GetHistoryResponse : Response
+    public class GetHistoryReportsResponse : Response
     {
         [DataMember]
-        public ICollection<HistoryDto> Results { get; set; }
+        public ICollection<ReportDto> Results { get; set; }
     }
 }

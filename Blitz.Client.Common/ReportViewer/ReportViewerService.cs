@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Blitz.Client.Common.ReportViewer.History;
+using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportViewer
 {
-    public abstract class ReportViewerService<TRequest, TResponse> : IReportViewerService<TRequest, TResponse>
+    public abstract class ReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
+        : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
         private readonly IToolBarService _toolBarService;
         private readonly ILog _log;
@@ -32,11 +36,17 @@ namespace Blitz.Client.Common.ReportViewer
             return Enumerable.Empty<IToolBarItem>();
         }
 
-        public abstract TRequest CreateRequest();
+        public abstract THistoryRequest CreateHistoryRequest();
 
-        public abstract Task<TResponse> GetHistory(TRequest request);
+        public abstract Task<THistoryResponse> GetHistory(THistoryRequest request);
 
-        public abstract Task<List<ReportViewerItemViewModel>> GenerateItemViewModels(TResponse response);
+        public abstract Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModels(THistoryResponse response);
+
+        public abstract TReportRequest CreateReportRequest(long id);
+
+        public abstract Task<TReportResponse> GenerateReport(TReportRequest request);
+
+        public abstract Task<List<IViewModel>> GenerateReportViewModels(TReportResponse response);
 
         public virtual void OnActivate()
         {

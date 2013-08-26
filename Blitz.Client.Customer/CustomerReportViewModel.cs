@@ -10,8 +10,8 @@ namespace Blitz.Client.Customer
 {
     [UseView(typeof(ReportView))]
     public class CustomerReportViewModel : ReportViewModel<
-        ReportRunnerViewModel<SimpleReportParameterViewModel, CustomerReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>, 
-        ReportViewerViewModel<CustomerReportViewerService, GetHistoryRequest, GetHistoryResponse>>
+        ReportRunnerViewModel<SimpleReportParameterViewModel, CustomerReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>,
+        ReportViewerViewModel<CustomerReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>>
     {
         public CustomerReportViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService)
             : base(log, viewService, dispatcherService)

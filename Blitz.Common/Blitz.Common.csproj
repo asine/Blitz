@@ -64,10 +64,12 @@
     <Compile Include="Core\PerformanceTester.cs" />
     <Compile Include="Core\UnityExtensions.cs" />
     <Compile Include="Customer\AttributeDto.cs" />
-    <Compile Include="Customer\GetHistoryRequest.cs" />
-    <Compile Include="Customer\GetHistoryResponse.cs" />
+    <Compile Include="Customer\GetHistoryListRequest.cs" />
+    <Compile Include="Customer\GetHistoryListResponse.cs" />
     <Compile Include="Customer\GetAttributesRequest.cs" />
     <Compile Include="Customer\GetAttributesResponse.cs" />
+    <Compile Include="Customer\GetHistoryReportsRequest.cs" />
+    <Compile Include="Customer\GetHistoryReportsResponse.cs" />
     <Compile Include="Customer\HistoryDto.cs" />
     <Compile Include="Customer\ReportDto.cs" />
     <Compile Include="Customer\ReportRunnerRequest.cs" />

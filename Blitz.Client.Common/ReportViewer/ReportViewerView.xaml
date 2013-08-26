@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:common="clr-namespace:Blitz.Client.Common"
+             xmlns:regions="http://www.codeplex.com/CompositeWPF"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
@@ -12,9 +14,10 @@
                         BusyContent="{Binding BusyMessage}">
         
         <Grid>
-            
-            <DataGrid ItemsSource="{Binding Items}" />
-            
+
+            <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.HISTORY_DATA}"
+                        TabStripPlacement="Bottom" />
+
         </Grid>
         
     </xctk:BusyIndicator>

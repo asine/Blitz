@@ -6,19 +6,19 @@ using Blitz.Server.Core;
 
 namespace Blitz.Server.Customer
 {
-    public class ReportRunnerHandler : Handler<ReportRunnerRequest, ReportRunnerResponse>
+    public class GetHistoryListHandler : Handler<GetHistoryListRequest, GetHistoryListResponse>
     {
-        public ReportRunnerHandler(ILog log) 
+        public GetHistoryListHandler(ILog log) 
             : base(log)
         {
         }
 
-        protected override ReportRunnerResponse Execute(ReportRunnerRequest request)
+        protected override GetHistoryListResponse Execute(GetHistoryListRequest request)
         {
             var response = CreateTypedResponse();
 
             var results = Enumerable.Range(0, 5)
-                .Select(x => new ReportDto {Id = x})
+                .Select(x => new HistoryDto { Id = x })
                 .ToList();
 
             response.Results = results;
