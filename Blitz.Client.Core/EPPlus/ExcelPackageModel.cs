@@ -1,6 +1,6 @@
 ﻿namespace Blitz.Client.Core.EPPlus
 {
-    public class PackageModel
+    public class ExcelPackageModel
     {
         public string TemplatePath { get; set; }
 

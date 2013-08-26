@@ -1,6 +1,9 @@
-﻿using Blitz.Client.Common.ReportViewer.History;
+﻿using System.Collections.Generic;
+
+using Blitz.Client.Common.ReportViewer.History;
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Events;
@@ -15,18 +18,25 @@ namespace Blitz.Client.Common.ReportViewer
         private readonly IViewService _viewService;
         private readonly HistoryViewModel _historyViewModel;
 
-        public ReportViewerViewModel(ILog log, TReportViewerService reportViewerService, IDispatcherService dispatcherService, 
-            IViewService viewService, HistoryViewModel historyViewModel)
+        private readonly IToolBarService _toolBarService;
+        private readonly List<IToolBarItem> _toolBarItems;
+
+        public ReportViewerViewModel(ILog log, TReportViewerService reportViewerService, IDispatcherService dispatcherService,
+            IViewService viewService, IToolBarService toolBarService, HistoryViewModel historyViewModel)
             : base(log, dispatcherService)
         {
             _reportViewerService = reportViewerService;
             _viewService = viewService;
+            _toolBarService = toolBarService;
             _historyViewModel = historyViewModel;
+
+            DisplayName = "Viewer";
 
             _historyViewModel.Open += Open;
             Disposables.Add(new AnonymousDisposable(() => _historyViewModel.Open -= Open));
 
-            DisplayName = "Viewer";
+            _toolBarItems = new List<IToolBarItem>();
+            _toolBarItems.ForEach(toolBarItem => _toolBarService.Items.Add(toolBarItem));
         }
 
         private void Open(object sender, DataEventArgs<long> e)
@@ -76,16 +86,31 @@ namespace Blitz.Client.Common.ReportViewer
 
         protected override void OnActivate()
         {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                toolBarItem.IsVisible = true;
+            }
+
             _reportViewerService.OnActivate();
         }
 
         protected override void OnDeActivate()
         {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                toolBarItem.IsVisible = false;
+            }
+
             _reportViewerService.OnDeActivate();
         }
 
         protected override void CleanUp()
         {
+            foreach (var toolBarItem in _toolBarItems)
+            {
+                _toolBarService.Items.Remove(toolBarItem);
+            }
+
             _reportViewerService.CleanUp();
         }
     }

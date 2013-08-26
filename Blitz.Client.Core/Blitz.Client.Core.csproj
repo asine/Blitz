@@ -90,10 +90,12 @@
   <ItemGroup>
     <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
-    <Compile Include="EPPlus\ReflectionSheetWriter.cs" />
-    <Compile Include="EPPlus\PackageModel.cs" />
-    <Compile Include="EPPlus\PackageWriter.cs" />
-    <Compile Include="EPPlus\SheetModel.cs" />
+    <Compile Include="EPPlus\DataWriterModel.cs" />
+    <Compile Include="EPPlus\ReflectionDataWriter.cs" />
+    <Compile Include="EPPlus\ExcelPackageModel.cs" />
+    <Compile Include="EPPlus\ExcelPackageWriter.cs" />
+    <Compile Include="EPPlus\ExcelWorkSheetModel.cs" />
+    <Compile Include="EPPlus\ExcelWorkSheetWriter.cs" />
     <Compile Include="MVVM\AnonymousDisposable.cs" />
     <Compile Include="MVVM\BindableCollection.cs" />
     <Compile Include="MVVM\BindableCollectionFactory.cs" />

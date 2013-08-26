@@ -61,11 +61,7 @@ namespace Blitz.Client.Common.ReportRunner
             GenerateReportCommand = new DelegateCommand(GenerateReport, CanExecuteGenerateReport);
 
             _toolBarItems = new List<IToolBarItem> {CreateExportToExcelToolBarItem()};
-
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Add(toolBarItem);
-            }
+            _toolBarItems.ForEach(toolBarItem => _toolBarService.Items.Add(toolBarItem));
         }
 
         protected override void OnInitialise()
