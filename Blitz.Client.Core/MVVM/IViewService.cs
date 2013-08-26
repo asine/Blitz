@@ -13,7 +13,7 @@ namespace Blitz.Client.Core.MVVM
 
         IDialogBuilder<T> DialogBuilder<T>();
 
-        void ShowModel(IViewModel viewModel);
+        void ShowModal(IViewModel viewModel);
         IStandardDialogBuilder StandardDialogBuilder();
     }
 }

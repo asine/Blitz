@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 using Blitz.Client.Core.EPPlus;
 
-namespace Blitz.Client.Common.ReportRunner
+namespace Blitz.Client.Common.ExportToExcel
 {
     public class BasicExportToExcel : IBasicExportToExcel
     {
         private readonly PackageWriter _packageWriter;
         private readonly ReflectionSheetWriter _reflectionSheetWriter;
 
-        protected BasicExportToExcel(PackageWriter packageWriter,
+        public BasicExportToExcel(PackageWriter packageWriter,
             ReflectionSheetWriter reflectionSheetWriter)
         {
             _packageWriter = packageWriter;

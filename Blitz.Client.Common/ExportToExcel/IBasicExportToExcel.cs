@@ -1,4 +1,4 @@
-﻿namespace Blitz.Client.Common.ReportRunner
+﻿namespace Blitz.Client.Common.ExportToExcel
 {
     public interface IBasicExportToExcel : IExportToExcel<object>
     {

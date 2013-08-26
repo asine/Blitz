@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Client.ModernUI.Presentation;
@@ -27,32 +28,45 @@ namespace Blitz.Client.Shell
         {
             _viewService = viewService;
             ToolBarItems = toolBarService.Items;
+            TitleLinks = new LinkCollection();
 
-            var toolBarItem1 = new ToolBarButtonItem { DisplayName = "Test1"};
-            ToolBarItems.Add(toolBarItem1);
+            var toolBarButtonItem = new ToolBarButtonItem { DisplayName = "Test1"};
+            ToolBarItems.Add(toolBarButtonItem);
+
             ToolBarItems.Add(new ToolBarButtonItem
             {
                 DisplayName = "Test2",
-                Command = new DelegateCommand(() =>
-                {
-                    toolBarItem1.IsVisible = !toolBarItem1.IsVisible;
-                }),
+                Command = new DelegateCommand(() => toolBarButtonItem.IsVisible = !toolBarButtonItem.IsVisible),
                 ImageName = IconNames.EXCEL
             });
+
             ToolBarItems.Add(new ToolBarButtonItem { DisplayName = "Test3" });
 
-            TitleLinks = new LinkCollection();
-            var appearanceLink = new Link
+            ToolBarItems.Add(new ToolBarButtonItem
+            {
+                DisplayName = "Dialog Test 1",
+                Command = new DelegateCommand(() =>
+                {
+                    var answer = viewService.DialogBuilder()
+                        .WithDialogType(DialogType.Information)
+                        .WithAnswers(Answer.Ok, Answer.Cancel)
+                        .WithTitle("Something else interesting happened")
+                        .WithMessage("No really.....")
+                        .Show();
+
+                    log.Info(string.Format("Dialog selection - {0}", answer));
+                })
+            });
+
+            TitleLinks.Add(new Link
             {
                 DisplayName = "Appearance",
                 Command = new DelegateCommand(() =>
                 {
-                    var viewModel = appearanceViewModelFactory();
-                    _viewService.ShowModel(viewModel);
+                    var viewModel1 = appearanceViewModelFactory();
+                    _viewService.ShowModal(viewModel1);
                 })
-            };
-
-            TitleLinks.Add(appearanceLink);
+            });
         }
     }
 }

@@ -11,6 +11,7 @@ using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer
@@ -19,25 +20,15 @@ namespace Blitz.Client.Customer
     {
         private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
-        private readonly IToolBarService _toolBarService;
         private readonly IBasicExportToExcel _exportToExcel;
 
-        private readonly List<IToolBarItem> _toolBarItems;
-
         public EmployeeReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService, IBasicExportToExcel exportToExcel)
+            IRequestTask requestTask, IToolBarService toolBarService, ILog log, IBasicExportToExcel exportToExcel)
+            : base(toolBarService, log)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
-            _toolBarService = toolBarService;
             _exportToExcel = exportToExcel;
-
-            _toolBarItems = new List<IToolBarItem>();
-
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Add(toolBarItem);
-            }
         }
 
         public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
@@ -57,7 +48,7 @@ namespace Blitz.Client.Customer
 
         public override ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
         {
-            return new ReportRunnerRequest {ReportDate = reportParameterViewModel.SelectedDate};
+            return new ReportRunnerRequest { ReportDate = reportParameterViewModel.SelectedDate };
         }
 
         public override Task<ReportRunnerResponse> Generate(ReportRunnerRequest request)
@@ -75,7 +66,7 @@ namespace Blitz.Client.Customer
 
                     for (var index = 0; index < 100; index++)
                     {
-                        var item = new ReportDto {Id = index};
+                        var item = new ReportDto { Id = index };
                         dataViewModel.Items.Add(item);
                     }
 
@@ -102,30 +93,6 @@ namespace Blitz.Client.Customer
             }
 
             _exportToExcel.ExportToExcel(sheets);
-        }
-
-        public override void OnActivate()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = true;
-            }
-        }
-
-        public override void OnDeActivate()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = false;
-            }
-        }
-
-        public override void CleanUp()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Remove(toolBarItem);
-            }
         }
     }
 }

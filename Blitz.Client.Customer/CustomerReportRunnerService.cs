@@ -23,28 +23,25 @@ namespace Blitz.Client.Customer
     {
         private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
-        private readonly IToolBarService _toolBarService;
+        private readonly IViewService _viewService;
         private readonly Func<ReportLayoutViewModel> _reportLayoutViewModelFactory;
         private readonly IBasicExportToExcel _exportToExcel;
-
-        private readonly List<IToolBarItem> _toolBarItems;
 
         public CustomerReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
             IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService, ILog log,
             Func<ReportLayoutViewModel> reportLayoutViewModelFactory, IBasicExportToExcel exportToExcel)
+            : base(toolBarService, log)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
-            _toolBarService = toolBarService;
+            _viewService = viewService;
             _reportLayoutViewModelFactory = reportLayoutViewModelFactory;
             _exportToExcel = exportToExcel;
+        }
 
-            _toolBarItems = new List<IToolBarItem> {CreateShowLayoutToolBarItem(viewService)};
-
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Add(toolBarItem);
-            }
+        protected override IEnumerable<IToolBarItem> AddToolBarItems()
+        {
+            yield return CreateShowLayoutToolBarItem();
         }
 
         public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
@@ -111,43 +108,19 @@ namespace Blitz.Client.Customer
             _exportToExcel.ExportToExcel(sheets);
         }
 
-        private ToolBarButtonItem CreateShowLayoutToolBarItem(IViewService viewService)
+        private ToolBarButtonItem CreateShowLayoutToolBarItem()
         {
             return new ToolBarButtonItem
             {
                 DisplayName = "Layout",
-                Command = new DelegateCommand(() => ShowLayout(viewService)),
+                Command = new DelegateCommand(ShowLayout),
                 IsVisible = false
             };
         }
 
-        private void ShowLayout(IViewService viewService)
+        private void ShowLayout()
         {
-            viewService.ShowModal(_reportLayoutViewModelFactory());
-        }
-
-        public override void OnActivate()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = true;
-            }
-        }
-
-        public override void OnDeActivate()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = false;
-            }
-        }
-
-        public override void CleanUp()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Remove(toolBarItem);
-            }
+            _viewService.ShowModal(_reportLayoutViewModelFactory());
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Windows.Threading;
 using Agatha.Common;
 using Agatha.Unity;
 
+using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
@@ -53,7 +54,8 @@ namespace Blitz.Client
                 .RegisterTransient<ILog, DebugLogger>()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()
-                .RegisterSingletonInstance<IDispatcherService>(new DispatcherService(Dispatcher.CurrentDispatcher));
+                .RegisterSingletonInstance<IDispatcherService>(new DispatcherService(Dispatcher.CurrentDispatcher))
+                .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>();
 
             InitialiseAgatha(Container);
         }

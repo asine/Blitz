@@ -83,11 +83,6 @@ namespace Blitz.Client.Common.ReportRunner
                 .Finally(Idle);
         }
 
-        protected virtual bool CanExecuteGenerateReport()
-        {
-            return true;
-        }
-
         private void GenerateReport()
         {
             BusyAsync("... Loading ...")
@@ -120,21 +115,14 @@ namespace Blitz.Client.Common.ReportRunner
                 });
         }
 
+        protected virtual bool CanExecuteGenerateReport()
+        {
+            return true;
+        }
+
         private ToolBarButtonItem CreateExportToExcelToolBarItem()
         {
-            _exportToExcel = new DelegateCommand(() =>
-                BusyAsync("... Exporting to Excel ...")
-                    .ThenDo(_ => _reportRunnerService.ExportToExcel(_response))
-                    .LogException(Log)
-                    .CatchAndHandle(x =>
-                        DispatcherService.ExecuteSyncOnUI(
-                            () => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel")))
-                    .Finally(() =>
-                    {
-                        Idle();
-
-                        IsExpanded = false;
-                    }), CanExportToExcel);
+            _exportToExcel = new DelegateCommand(ExportToExcel, CanExportToExcel);
 
             return new ToolBarButtonItem
             {
@@ -145,7 +133,23 @@ namespace Blitz.Client.Common.ReportRunner
             };
         }
 
-        public virtual bool CanExportToExcel()
+        private void ExportToExcel()
+        {
+            BusyAsync("... Exporting to Excel ...")
+                .ThenDo(_ => _reportRunnerService.ExportToExcel(_response))
+                .LogException(Log)
+                .CatchAndHandle(x =>
+                    DispatcherService.ExecuteSyncOnUI(
+                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel")))
+                .Finally(() =>
+                {
+                    Idle();
+
+                    IsExpanded = false;
+                });
+        }
+
+        protected virtual bool CanExportToExcel()
         {
             return !(_response == null);
         }

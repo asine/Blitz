@@ -5,29 +5,19 @@ using System.Threading.Tasks;
 using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer
 {
-    public class CustomerReportViewerService : ReportViewerServiceBase<GetHistoryRequest, GetHistoryResponse>
+    public class CustomerReportViewerService : ReportViewerService<GetHistoryRequest, GetHistoryResponse>
     {
         private readonly IRequestTask _requestTask;
-        private readonly IToolBarService _toolBarService;
 
-        private readonly List<IToolBarItem> _toolBarItems;
-
-        public CustomerReportViewerService(IRequestTask requestTask, IToolBarService toolBarService)
+        public CustomerReportViewerService(IToolBarService toolBarService, ILog log, IRequestTask requestTask) 
+            : base(toolBarService, log)
         {
             _requestTask = requestTask;
-            _toolBarService = toolBarService;
-
-            _toolBarItems = new List<IToolBarItem>();
-            _toolBarItems.Add(new ToolBarButtonItem { DisplayName = "Customer Viewer Test 1", IsVisible = false });
-
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Add(toolBarItem);
-            }
         }
 
         public override GetHistoryRequest CreateRequest()
@@ -52,30 +42,6 @@ namespace Blitz.Client.Customer
                         return item;
                     })
                     .ToList()));
-        }
-
-        public override void OnActivate()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = true;
-            }
-        }
-
-        public override void OnDeActivate()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = false;
-            }
-        }
-
-        public override void CleanUp()
-        {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Remove(toolBarItem);
-            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Blitz.Client.Common.ReportRunner
+namespace Blitz.Client.Common.ExportToExcel
 {
     public interface IExportToExcel<T>
     {

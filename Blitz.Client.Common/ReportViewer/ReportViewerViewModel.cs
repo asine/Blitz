@@ -2,7 +2,6 @@
 
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportViewer

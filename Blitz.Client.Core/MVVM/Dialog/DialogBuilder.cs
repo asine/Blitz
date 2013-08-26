@@ -53,7 +53,7 @@ namespace Blitz.Client.Core.MVVM.Dialog
         {
             var viewModel = _dialogViewModel;
             viewModel.Initialise(_dialogType, _answers, _title, _message);
-            _viewService.ShowModel(viewModel);
+            _viewService.ShowModal(viewModel);
 
             return viewModel.SelectedAnswer;
         }
