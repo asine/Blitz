@@ -15,6 +15,8 @@ namespace Blitz.Client.Common.ReportRunner
 
         Task<List<IViewModel>> GenerateDataViewModels(TResponse response);
 
+        void ExportToExcel(TResponse response); 
+
         void OnActivate();
 
         void OnDeActivate();

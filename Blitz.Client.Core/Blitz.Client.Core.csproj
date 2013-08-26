@@ -39,6 +39,9 @@
     <Reference Include="Agatha.Unity">
       <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.3.1.3.3\lib\net35\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -87,6 +90,10 @@
   <ItemGroup>
     <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
+    <Compile Include="EPPlus\ReflectionSheetWriter.cs" />
+    <Compile Include="EPPlus\PackageModel.cs" />
+    <Compile Include="EPPlus\PackageWriter.cs" />
+    <Compile Include="EPPlus\SheetModel.cs" />
     <Compile Include="MVVM\AnonymousDisposable.cs" />
     <Compile Include="MVVM\BindableCollection.cs" />
     <Compile Include="MVVM\BindableCollectionFactory.cs" />
@@ -172,6 +179,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

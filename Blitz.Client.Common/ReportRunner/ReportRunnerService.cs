@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 
 namespace Blitz.Client.Common.ReportRunner
@@ -16,6 +15,8 @@ namespace Blitz.Client.Common.ReportRunner
         public abstract Task<TResponse> Generate(TRequest request);
 
         public abstract Task<List<IViewModel>> GenerateDataViewModels(TResponse response);
+
+        public abstract void ExportToExcel(TResponse response);
 
         public virtual void OnActivate()
         { }
