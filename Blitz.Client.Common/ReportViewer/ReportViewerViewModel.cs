@@ -11,7 +11,7 @@ using Microsoft.Practices.Prism.Events;
 namespace Blitz.Client.Common.ReportViewer
 {
     [UseView(typeof(ReportViewerView))]
-    public class ReportViewerViewModel<TReportViewerService, THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : Workspace
+    public abstract class ReportViewerViewModel<TReportViewerService, THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : Workspace
         where TReportViewerService : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
         private readonly TReportViewerService _reportViewerService;
@@ -21,7 +21,7 @@ namespace Blitz.Client.Common.ReportViewer
         private readonly IToolBarService _toolBarService;
         private readonly List<IToolBarItem> _toolBarItems;
 
-        public ReportViewerViewModel(ILog log, TReportViewerService reportViewerService, IDispatcherService dispatcherService,
+        protected ReportViewerViewModel(ILog log, TReportViewerService reportViewerService, IDispatcherService dispatcherService,
             IViewService viewService, IToolBarService toolBarService, HistoryViewModel historyViewModel)
             : base(log, dispatcherService)
         {
@@ -33,7 +33,7 @@ namespace Blitz.Client.Common.ReportViewer
             DisplayName = "Viewer";
 
             _historyViewModel.Open += Open;
-            Disposables.Add(new AnonymousDisposable(() => _historyViewModel.Open -= Open));
+            Disposables.Add(AnonymousDisposable.Create(() => _historyViewModel.Open -= Open));
 
             _toolBarItems = new List<IToolBarItem>();
             _toolBarItems.ForEach(toolBarItem => _toolBarService.Items.Add(toolBarItem));
@@ -42,8 +42,8 @@ namespace Blitz.Client.Common.ReportViewer
         private void Open(object sender, DataEventArgs<long> e)
         {
             BusyAsync("... Opening Historic Report ...")
-                .Then(_ => _reportViewerService.GenerateReport(_reportViewerService.CreateReportRequest(e.Value)))
-                .Then(response => _reportViewerService.GenerateReportViewModels(response))
+                .Then(_ => _reportViewerService.GenerateReportAsync(_reportViewerService.CreateReportRequest(e.Value)))
+                .Then(response => _reportViewerService.GenerateReportViewModelsAsync(response))
                 .ThenDo(dataViewModels =>
                     DispatcherService.ExecuteSyncOnUI(() =>
                     {
@@ -63,8 +63,8 @@ namespace Blitz.Client.Common.ReportViewer
         protected override void OnInitialise()
         {
             BusyAsync("... Loading ...")
-                .Then(_ => _reportViewerService.GetHistory(_reportViewerService.CreateHistoryRequest()))
-                .Then(response => _reportViewerService.GenerateHistoryItemViewModels(response))
+                .Then(_ => _reportViewerService.GetHistoryAsync(_reportViewerService.CreateHistoryRequest()))
+                .Then(response => _reportViewerService.GenerateHistoryItemViewModelsAsync(response))
                 .ThenDo(dataViewModels =>
                     DispatcherService.ExecuteSyncOnUI(() =>
                     {

@@ -13,13 +13,13 @@ namespace Blitz.Client.Common.ReportViewer
         : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
         private readonly IToolBarService _toolBarService;
-        private readonly ILog _log;
+        protected readonly ILog Log;
         private readonly List<IToolBarItem> _toolBarItems;
 
         protected ReportViewerService(IToolBarService toolBarService, ILog log)
         {
             _toolBarService = toolBarService;
-            _log = log;
+            Log = log;
             _toolBarItems = new List<IToolBarItem>();
 
             _toolBarItems.AddRange(AddToolBarItems());
@@ -37,15 +37,15 @@ namespace Blitz.Client.Common.ReportViewer
 
         public abstract THistoryRequest CreateHistoryRequest();
 
-        public abstract Task<THistoryResponse> GetHistory(THistoryRequest request);
+        public abstract Task<THistoryResponse> GetHistoryAsync(THistoryRequest request);
 
-        public abstract Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModels(THistoryResponse response);
+        public abstract Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModelsAsync(THistoryResponse response);
 
         public abstract TReportRequest CreateReportRequest(long id);
 
-        public abstract Task<TReportResponse> GenerateReport(TReportRequest request);
+        public abstract Task<TReportResponse> GenerateReportAsync(TReportRequest request);
 
-        public abstract Task<List<IViewModel>> GenerateReportViewModels(TReportResponse response);
+        public abstract Task<List<IViewModel>> GenerateReportViewModelsAsync(TReportResponse response);
 
         public virtual void OnActivate()
         {

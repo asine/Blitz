@@ -10,15 +10,15 @@ namespace Blitz.Client.Common.ReportViewer
     {
         THistoryRequest CreateHistoryRequest();
 
-        Task<THistoryResponse> GetHistory(THistoryRequest request);
+        Task<THistoryResponse> GetHistoryAsync(THistoryRequest request);
 
-        Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModels(THistoryResponse response);
+        Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModelsAsync(THistoryResponse response);
 
         TReportRequest CreateReportRequest(long id);
 
-        Task<TReportResponse> GenerateReport(TReportRequest request);
+        Task<TReportResponse> GenerateReportAsync(TReportRequest request);
 
-        Task<List<IViewModel>> GenerateReportViewModels(TReportResponse response);
+        Task<List<IViewModel>> GenerateReportViewModelsAsync(TReportResponse response);
 
         void OnActivate();
 

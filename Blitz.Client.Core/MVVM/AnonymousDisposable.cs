@@ -22,5 +22,10 @@ namespace Blitz.Client.Core.MVVM
                 _dispose();
             }
         }
+
+        public static AnonymousDisposable Create(Action action)
+        {
+            return new AnonymousDisposable(action);
+        }
     }
 }

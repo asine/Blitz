@@ -82,7 +82,7 @@
   <ItemGroup>
     <Compile Include="EmployeeModule.cs" />
     <Compile Include="ReportRunnerService.cs" />
-    <Compile Include="ReportViewerService.cs" />
+    <Compile Include="ReportRunnerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

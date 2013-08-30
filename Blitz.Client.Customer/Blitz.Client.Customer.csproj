@@ -92,7 +92,9 @@
   <ItemGroup>
     <Compile Include="CustomerModule.cs" />
     <Compile Include="ReportRunnerService.cs" />
+    <Compile Include="ReportRunnerViewModel.cs" />
     <Compile Include="ReportViewerService.cs" />
+    <Compile Include="ReportViewerViewModel.cs" />
     <Compile Include="ReportViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

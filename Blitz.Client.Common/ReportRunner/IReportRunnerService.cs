@@ -7,13 +7,13 @@ namespace Blitz.Client.Common.ReportRunner
 {
     public interface IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        Task ConfigureParameterViewModel(TReportParameterViewModel viewModel);
+        Task ConfigureParameterViewModelAsync(TReportParameterViewModel viewModel);
 
         TRequest CreateRequest(TReportParameterViewModel reportParameterViewModel);
 
-        Task<TResponse> Generate(TRequest request);
+        Task<TResponse> GenerateAsync(TRequest request);
 
-        Task<List<IViewModel>> GenerateDataViewModels(TResponse response);
+        Task<List<IViewModel>> GenerateDataViewModelsAsync(TResponse response);
 
         void ExportToExcel(TResponse response); 
 

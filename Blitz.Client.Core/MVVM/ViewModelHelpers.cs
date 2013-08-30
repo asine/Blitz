@@ -18,7 +18,7 @@ namespace Blitz.Client.Core.MVVM
             };
             source.OnActivationStateChanged += sourceOnActivationStateChanged;
 
-            return new AnonymousDisposable(() => source.OnActivationStateChanged -= sourceOnActivationStateChanged);
+            return AnonymousDisposable.Create(() => source.OnActivationStateChanged -= sourceOnActivationStateChanged);
         }
 
         public static IDisposable SyncViewModelDeActivation(this ISupportActivationState source,
@@ -31,7 +31,7 @@ namespace Blitz.Client.Core.MVVM
             };
             source.OnActivationStateChanged += sourceOnActivationStateChanged;
 
-            return new AnonymousDisposable(() => source.OnActivationStateChanged -= sourceOnActivationStateChanged);
+            return AnonymousDisposable.Create(() => source.OnActivationStateChanged -= sourceOnActivationStateChanged);
         }
     }
 }

@@ -32,12 +32,12 @@ namespace Blitz.Client.Customer
             return new GetHistoryListRequest();
         }
 
-        public override Task<GetHistoryListResponse> GetHistory(GetHistoryListRequest request)
+        public override Task<GetHistoryListResponse> GetHistoryAsync(GetHistoryListRequest request)
         {
             return _requestTask.Get<GetHistoryListRequest, GetHistoryListResponse>(request);
         }
 
-        public override Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModels(GetHistoryListResponse response)
+        public override Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModelsAsync(GetHistoryListResponse response)
         {
             return Task.Factory.StartNew(
                 () => new List<HistoryItemViewModel>(response.Results
@@ -56,12 +56,12 @@ namespace Blitz.Client.Customer
             return new GetHistoryReportsRequest {Id = id};
         }
 
-        public override Task<GetHistoryReportsResponse> GenerateReport(GetHistoryReportsRequest request)
+        public override Task<GetHistoryReportsResponse> GenerateReportAsync(GetHistoryReportsRequest request)
         {
             return _requestTask.Get<GetHistoryReportsRequest, GetHistoryReportsResponse>(request);
         }
 
-        public override Task<List<IViewModel>> GenerateReportViewModels(GetHistoryReportsResponse response)
+        public override Task<List<IViewModel>> GenerateReportViewModelsAsync(GetHistoryReportsResponse response)
         {
             return Task.Factory.StartNew(() => new List<IViewModel>(response.Results
                 .Select((x, i) =>

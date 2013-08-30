@@ -11,7 +11,7 @@ using Microsoft.Practices.Prism.Commands;
 namespace Blitz.Client.Common.ReportRunner
 {
     [UseView(typeof(ReportRunnerView))]
-    public class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : Workspace
+    public abstract class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : Workspace
         where TReportParameterViewModel : IViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
@@ -45,7 +45,7 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        public ReportRunnerViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService, IToolBarService toolBarService,
+        protected ReportRunnerViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService, IToolBarService toolBarService,
             TReportParameterViewModel reportParameterViewModel,
             TReportRunnerService reportRunnerService)
             : base(log, dispatcherService)
@@ -67,7 +67,7 @@ namespace Blitz.Client.Common.ReportRunner
         protected override void OnInitialise()
         {
             BusyAsync("... Loading ...")
-                .Then(() => _reportRunnerService.ConfigureParameterViewModel(_reportParameterViewModel))
+                .Then(() => _reportRunnerService.ConfigureParameterViewModelAsync(_reportParameterViewModel))
                 .ThenDo(() =>
                     DispatcherService.ExecuteSyncOnUI(() =>
                         _viewService.RegionBuilder<TReportParameterViewModel>()
@@ -82,11 +82,11 @@ namespace Blitz.Client.Common.ReportRunner
         private void GenerateReport()
         {
             BusyAsync("... Loading ...")
-                .Then(_ => _reportRunnerService.Generate(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
+                .Then(_ => _reportRunnerService.GenerateAsync(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
                 .Then(response =>
                 {
                     _response = response;
-                    return _reportRunnerService.GenerateDataViewModels(response);
+                    return _reportRunnerService.GenerateDataViewModelsAsync(response);
                 })
                 .ThenDo(dataViewModels =>
                     DispatcherService.ExecuteSyncOnUI(() =>

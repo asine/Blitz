@@ -31,7 +31,7 @@ namespace Blitz.Client.Employee
             _exportToExcel = exportToExcel;
         }
 
-        public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
+        public override Task ConfigureParameterViewModelAsync(SimpleReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
                 .ThenDo(x =>
@@ -51,12 +51,12 @@ namespace Blitz.Client.Employee
             return new ReportRunnerRequest { ReportDate = reportParameterViewModel.SelectedDate };
         }
 
-        public override Task<ReportRunnerResponse> Generate(ReportRunnerRequest request)
+        public override Task<ReportRunnerResponse> GenerateAsync(ReportRunnerRequest request)
         {
             return _requestTask.Get<ReportRunnerRequest, ReportRunnerResponse>(request);
         }
 
-        public override Task<List<IViewModel>> GenerateDataViewModels(ReportRunnerResponse response)
+        public override Task<List<IViewModel>> GenerateDataViewModelsAsync(ReportRunnerResponse response)
         {
             return Task.Factory.StartNew(() => new List<IViewModel>(response.Results
                 .Select((x, i) =>
