@@ -16,9 +16,9 @@ namespace Blitz.Client.Core.MVVM
                 else
                     viewModel.DeActivate();
             };
-            source.ActivationStateChanged += sourceOnActivationStateChanged;
+            source.OnActivationStateChanged += sourceOnActivationStateChanged;
 
-            return new AnonymousDisposable(() => source.ActivationStateChanged -= sourceOnActivationStateChanged);
+            return new AnonymousDisposable(() => source.OnActivationStateChanged -= sourceOnActivationStateChanged);
         }
 
         public static IDisposable SyncViewModelDeActivation(this ISupportActivationState source,
@@ -29,9 +29,9 @@ namespace Blitz.Client.Core.MVVM
                 if (!e.Value)
                     viewModel.DeActivate();
             };
-            source.ActivationStateChanged += sourceOnActivationStateChanged;
+            source.OnActivationStateChanged += sourceOnActivationStateChanged;
 
-            return new AnonymousDisposable(() => source.ActivationStateChanged -= sourceOnActivationStateChanged);
+            return new AnonymousDisposable(() => source.OnActivationStateChanged -= sourceOnActivationStateChanged);
         }
     }
 }

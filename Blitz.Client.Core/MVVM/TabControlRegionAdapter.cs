@@ -118,10 +118,10 @@ namespace Blitz.Client.Core.MVVM
 
                 if (supportClosingOnClosed != null)
                 {
-                    supportClosing.Closed -= supportClosingOnClosed;
+                    supportClosing.OnClosed -= supportClosingOnClosed;
                 }
             };
-            supportClosing.Closed += supportClosingOnClosed;
+            supportClosing.OnClosed += supportClosingOnClosed;
         }
     }
 }

@@ -14,12 +14,12 @@ using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer
 {
-    public class EmployeeReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
+    public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
         private readonly IRequestTask _requestTask;
         private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
 
-        public EmployeeReportViewerService(IToolBarService toolBarService, ILog log, IRequestTask requestTask,
+        public ReportViewerService(IToolBarService toolBarService, ILog log, IRequestTask requestTask, 
             Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory) 
             : base(toolBarService, log)
         {
@@ -53,7 +53,7 @@ namespace Blitz.Client.Customer
 
         public override GetHistoryReportsRequest CreateReportRequest(long id)
         {
-            return new GetHistoryReportsRequest { Id = id };
+            return new GetHistoryReportsRequest {Id = id};
         }
 
         public override Task<GetHistoryReportsResponse> GenerateReport(GetHistoryReportsRequest request)

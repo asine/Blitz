@@ -10,7 +10,6 @@ using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Customer;
 using Blitz.Client.Shell;
 using Blitz.Common.Agatha;
 using Blitz.Common.Core;
@@ -69,7 +68,8 @@ namespace Blitz.Client
 
         protected override void ConfigureModuleCatalog()
         {
-            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(CustomerReportModule));
+            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Customer.CustomerModule));
+            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Employee.EmployeeModule));
         }
 
         private static void InitialiseAgatha(IUnityContainer container)

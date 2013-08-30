@@ -180,6 +180,10 @@
       <Project>{0D1E3402-F4F5-46F5-AE79-57CCCD64525F}</Project>
       <Name>Blitz.Client.Customer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blitz.Client.Employee\Blitz.Client.Employee.csproj">
+      <Project>{3b0c3300-db6e-4eaf-b543-232a4f163644}</Project>
+      <Name>Blitz.Client.Employee</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj">
       <Project>{1c3569b5-82a2-44c6-af2c-2961e79be218}</Project>
       <Name>Blitz.Client.ModernUI</Name>

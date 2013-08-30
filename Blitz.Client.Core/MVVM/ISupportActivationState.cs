@@ -12,6 +12,8 @@ namespace Blitz.Client.Core.MVVM
 
         void DeActivate();
 
-        event EventHandler<DataEventArgs<bool>>  ActivationStateChanged;
+        event EventHandler<DataEventArgs<bool>>  OnActivationStateChanged;
+
+        event EventHandler OnInitialised;
     }
 }

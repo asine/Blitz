@@ -70,10 +70,10 @@ namespace Blitz.Client.Core.MVVM
 
             CleanUp();
 
-            Closed.SafeInvoke(this);
+            OnClosed.SafeInvoke(this);
         }
 
-        public event EventHandler Closed;
+        public event EventHandler OnClosed;
 
         protected virtual void Closing()
         { }
@@ -125,7 +125,7 @@ namespace Blitz.Client.Core.MVVM
             IsActive = true;
             Log.Info("Active value - {0}", IsActive);
 
-            ActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(IsActive));
+            OnActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(IsActive));
 
             OnActivate();
 
@@ -133,6 +133,7 @@ namespace Blitz.Client.Core.MVVM
 
             Log.Info("Calling OnInitialise on {0} - {1}", GetType().FullName, DisplayName);
             OnInitialise();
+            OnInitialised.SafeInvoke(this);
             _onInitialiseHasBeenCalled = true;
         }
 
@@ -143,12 +144,14 @@ namespace Blitz.Client.Core.MVVM
             Log.Info("DeActivate called on {0} - {1}", GetType().FullName, DisplayName);
             Log.Info("DeActivate value - {0}", IsActive);
 
-            ActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(IsActive));
+            OnActivationStateChanged.SafeInvoke(this, new DataEventArgs<bool>(IsActive));
 
             OnDeActivate();
         }
 
-        public event EventHandler<DataEventArgs<bool>>  ActivationStateChanged;
+        public event EventHandler<DataEventArgs<bool>>  OnActivationStateChanged;
+
+        public event EventHandler OnInitialised;
 
         protected virtual void OnInitialise()
         { }

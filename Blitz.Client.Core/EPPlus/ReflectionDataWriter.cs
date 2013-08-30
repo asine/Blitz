@@ -56,7 +56,6 @@ namespace Blitz.Client.Core.EPPlus
                 }
 
                 dataWriterModel.NextRow();
-
                 dataWriterModel.RestartColumns();
             }
         }

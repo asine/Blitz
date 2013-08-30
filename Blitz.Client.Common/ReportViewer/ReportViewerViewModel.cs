@@ -47,7 +47,7 @@ namespace Blitz.Client.Common.ReportViewer
                 .ThenDo(dataViewModels =>
                     DispatcherService.ExecuteSyncOnUI(() =>
                     {
-                        _viewService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
+                        _viewService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
                         foreach (var dataViewModel in dataViewModels)
                         {
                             _viewService.RegionBuilder<IViewModel>().Show(RegionNames.HISTORY_DATA, dataViewModel);

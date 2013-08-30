@@ -6,6 +6,6 @@ namespace Blitz.Client.Core.MVVM
     {
         void Close();
 
-        event EventHandler Closed;
+        event EventHandler OnClosed;
     }
 }

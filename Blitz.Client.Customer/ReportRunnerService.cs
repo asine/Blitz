@@ -11,24 +11,37 @@ using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.Customer.ReportLayout;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
+using Microsoft.Practices.Prism.Commands;
+
 namespace Blitz.Client.Customer
 {
-    public class EmployeeReportRunnerService : ReportRunnerService<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
+    public class ReportRunnerService : ReportRunnerService<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
     {
         private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
+        private readonly IViewService _viewService;
+        private readonly Func<ReportLayoutViewModel> _reportLayoutViewModelFactory;
         private readonly IBasicExportToExcel _exportToExcel;
 
-        public EmployeeReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService, ILog log, IBasicExportToExcel exportToExcel)
+        public ReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
+            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService, ILog log,
+            Func<ReportLayoutViewModel> reportLayoutViewModelFactory, IBasicExportToExcel exportToExcel)
             : base(toolBarService, log)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
+            _viewService = viewService;
+            _reportLayoutViewModelFactory = reportLayoutViewModelFactory;
             _exportToExcel = exportToExcel;
+        }
+
+        protected override IEnumerable<IToolBarItem> AddToolBarItems()
+        {
+            yield return CreateShowLayoutToolBarItem();
         }
 
         public override Task ConfigureParameterViewModel(SimpleReportParameterViewModel viewModel)
@@ -93,6 +106,21 @@ namespace Blitz.Client.Customer
             }
 
             _exportToExcel.ExportToExcel(sheets);
+        }
+
+        private ToolBarButtonItem CreateShowLayoutToolBarItem()
+        {
+            return new ToolBarButtonItem
+            {
+                DisplayName = "Layout",
+                Command = new DelegateCommand(ShowLayout),
+                IsVisible = false
+            };
+        }
+
+        private void ShowLayout()
+        {
+            _viewService.ShowModal(_reportLayoutViewModelFactory());
         }
     }
 }
