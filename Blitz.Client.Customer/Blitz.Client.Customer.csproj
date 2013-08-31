@@ -91,11 +91,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerModule.cs" />
-    <Compile Include="ReportRunnerService.cs" />
-    <Compile Include="ReportRunnerViewModel.cs" />
-    <Compile Include="ReportViewerService.cs" />
-    <Compile Include="ReportViewerViewModel.cs" />
-    <Compile Include="ReportViewModel.cs" />
+    <Compile Include="ReportRunner\ReportRunnerService.cs" />
+    <Compile Include="ReportRunner\ReportRunnerViewModel.cs" />
+    <Compile Include="Reportviewer\ReportViewerService.cs" />
+    <Compile Include="Reportviewer\ReportViewerViewModel.cs" />
+    <Compile Include="Report\ReportViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

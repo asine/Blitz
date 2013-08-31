@@ -21,6 +21,8 @@ namespace Blitz.Client.Core.MVVM
 
         public void Clear(string regionName)
         {
+            _log.Info("Clearing region {0}", regionName);
+
             var regionManager = _regionManagerFactory();
             var region = regionManager.Regions[regionName];
 

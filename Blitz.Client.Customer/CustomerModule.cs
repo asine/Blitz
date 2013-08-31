@@ -1,5 +1,6 @@
 ﻿using Blitz.Client.Common;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Customer.Report;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Modularity;

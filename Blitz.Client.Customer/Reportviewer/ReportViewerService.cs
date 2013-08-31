@@ -12,7 +12,7 @@ using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
-namespace Blitz.Client.Customer
+namespace Blitz.Client.Customer.Reportviewer
 {
     public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {

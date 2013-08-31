@@ -10,7 +10,6 @@ using Microsoft.Practices.Prism.Commands;
 
 namespace Blitz.Client.Common.ReportRunner
 {
-    [UseView(typeof(ReportRunnerView))]
     public abstract class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : Workspace
         where TReportParameterViewModel : IViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>

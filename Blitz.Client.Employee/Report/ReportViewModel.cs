@@ -1,9 +1,10 @@
 ﻿using Blitz.Client.Common;
 using Blitz.Client.Common.Report;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Employee.ReportRunner;
 using Blitz.Common.Core;
 
-namespace Blitz.Client.Employee
+namespace Blitz.Client.Employee.Report
 {
     [UseView(typeof(ReportView))]
     public class ReportViewModel : Common.Report.ReportViewModel

@@ -10,7 +10,6 @@ using Microsoft.Practices.Prism.Events;
 
 namespace Blitz.Client.Common.ReportViewer
 {
-    [UseView(typeof(ReportViewerView))]
     public abstract class ReportViewerViewModel<TReportViewerService, THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : Workspace
         where TReportViewerService : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {

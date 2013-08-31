@@ -5,8 +5,9 @@ using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
-namespace Blitz.Client.Customer
+namespace Blitz.Client.Customer.Reportviewer
 {
+    [UseView(typeof(ReportViewerView))]
     public class ReportViewerViewModel : ReportViewerViewModel<ReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
         public ReportViewerViewModel(ILog log, ReportViewerService reportViewerService, IDispatcherService dispatcherService, IViewService viewService, 

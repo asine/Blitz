@@ -79,8 +79,7 @@ namespace Blitz.Client.Core.MVVM
         { }
 
         protected virtual void CleanUp()
-        {
-        }
+        { }
 
         #endregion
 
