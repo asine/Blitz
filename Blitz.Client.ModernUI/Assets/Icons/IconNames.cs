@@ -2,6 +2,7 @@
 {
     public static class IconNames
     {
-        public const string EXCEL = "appbar_office_excel";
+        public const string EXCEL = "appbar.office.excel";
+        public const string NEW = "appbar.page.new";
     }
 }

@@ -35,7 +35,7 @@ namespace Blitz.Client.Employee
 
             var newReportMenuItem = _menuService.CreateMenuButtonItem();
             newReportMenuItem.DisplayName = "New";
-            newReportMenuItem.ImageName = IconNames.EXCEL;
+            newReportMenuItem.ImageName = IconNames.NEW;
             newReportMenuItem.Command = new DelegateCommand(() =>
             {
                 _log.Info("Adding Employee Report to Main region");
