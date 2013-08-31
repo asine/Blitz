@@ -11,13 +11,13 @@ namespace Blitz.Client.Common.ReportRunner
     public abstract class ReportRunnerService<TReportParameterViewModel, TRequest, TResponse> 
         : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        private readonly IToolBarService _toolBarService;
+        protected readonly IToolBarService ToolBarService;
         protected readonly ILog Log;
         private readonly List<IToolBarItem> _toolBarItems;
 
         protected ReportRunnerService(IToolBarService toolBarService, ILog log)
         {
-            _toolBarService = toolBarService;
+            ToolBarService = toolBarService;
             Log = log;
             _toolBarItems = new List<IToolBarItem>();
 
@@ -64,7 +64,7 @@ namespace Blitz.Client.Common.ReportRunner
         {
             foreach (var toolBarItem in _toolBarItems)
             {
-                _toolBarService.Items.Remove(toolBarItem);
+                ToolBarService.Items.Remove(toolBarItem);
             }
         }
     }

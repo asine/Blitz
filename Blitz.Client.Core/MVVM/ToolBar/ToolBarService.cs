@@ -1,14 +1,22 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
 
 namespace Blitz.Client.Core.MVVM.ToolBar
 {
     public class ToolBarService : IToolBarService
     {
-        public ObservableCollection<IToolBarItem> Items { get; private set; }
+        private readonly Func<ToolBarButtonItem> _toolBarButtonItemFactory;
+        public BindableCollection<IToolBarItem> Items { get; private set; }
 
-        public ToolBarService()
+        public ToolBarService(BindableCollectionFactory bindableCollectionFactory,
+                              Func<ToolBarButtonItem> toolBarButtonItemFactory)
         {
-            Items = new ObservableCollection<IToolBarItem>();
+            _toolBarButtonItemFactory = toolBarButtonItemFactory;
+            Items = bindableCollectionFactory.Get<IToolBarItem>();
+        }
+
+        public ToolBarButtonItem CreateToolBarButtonItem()
+        {
+            return _toolBarButtonItemFactory();
         }
     }
 }

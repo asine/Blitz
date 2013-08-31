@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Blitz.Client.Core.MVVM.ToolBar
+﻿namespace Blitz.Client.Core.MVVM.ToolBar
 {
     public interface IToolBarService
     {
-        ObservableCollection<IToolBarItem> Items { get; }
+        BindableCollection<IToolBarItem> Items { get; }
+        ToolBarButtonItem CreateToolBarButtonItem();
     }
 }

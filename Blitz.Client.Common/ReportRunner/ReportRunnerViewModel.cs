@@ -119,13 +119,12 @@ namespace Blitz.Client.Common.ReportRunner
         {
             _exportToExcel = new DelegateCommand(ExportToExcel, CanExportToExcel);
 
-            return new ToolBarButtonItem
-            {
-                DisplayName = "Excel Export",
-                Command = _exportToExcel,
-                IsVisible = false,
-                ImageName = IconNames.EXCEL
-            };
+            var exportToExcelToolBarItem = _toolBarService.CreateToolBarButtonItem();
+            exportToExcelToolBarItem.DisplayName = "Excel Export";
+            exportToExcelToolBarItem.Command = _exportToExcel;
+            exportToExcelToolBarItem.IsVisible = false;
+            exportToExcelToolBarItem.ImageName = IconNames.EXCEL;
+            return exportToExcelToolBarItem;
         }
 
         private void ExportToExcel()

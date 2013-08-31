@@ -9,6 +9,7 @@ using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
+using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Shell;
 using Blitz.Common.Agatha;
@@ -53,6 +54,7 @@ namespace Blitz.Client
                 .RegisterTransient<ILog, DebugLogger>()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()
+                .RegisterSingleton<IMenuService, MenuService>()
                 .RegisterSingletonInstance<IDispatcherService>(new DispatcherService(Dispatcher.CurrentDispatcher))
                 .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>();
 

@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Blitz.Client.ModernUI.Windows.Converters;assembly=Blitz.Client.ModernUI"
+                    xmlns:icons="clr-namespace:Blitz.Client.ModernUI.Assets.Icons;assembly=Blitz.Client.ModernUI"
+                    xmlns:menu="clr-namespace:Blitz.Client.Core.MVVM.Menu">
+
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <icons:IconNameToImageConverter x:Key="IconNameToImageConverter" />
+
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+
+    <menu:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" />
+
+    <HierarchicalDataTemplate x:Key="MenuItemTemplate"
+                              ItemsSource="{Binding Items}"
+                              ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}">
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Center">
+            <Canvas Width="16"
+                    Height="16"
+                    Visibility="{Binding ImageName, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=inverse}">
+                <Path x:Name="Excel"
+                      Width="14"
+                      Height="14"
+                      Stretch="Fill"
+                      Fill="{DynamicResource InputText}"
+                      Data="{Binding ImageName, Converter={StaticResource IconNameToImageConverter}}" />
+            </Canvas>
+            <TextBlock Text="{Binding DisplayName}" />
+        </StackPanel>
+
+        <HierarchicalDataTemplate.ItemContainerStyle>
+            <Style TargetType="MenuItem">
+                <Setter Property="Command"
+                        Value="{Binding Command}" />
+            </Style>
+        </HierarchicalDataTemplate.ItemContainerStyle>
+
+    </HierarchicalDataTemplate>
+
+    <DataTemplate x:Key="MenuSeperatorItemTemplate"
+                  DataType="menu:MenuSeperatorItem">
+        <Separator>
+            <Separator.Template>
+                <ControlTemplate>
+                    <Line X1="0"
+                          X2="1"
+                          Stroke="Black"
+                          StrokeThickness="1"
+                          Stretch="Fill" />
+                </ControlTemplate>
+            </Separator.Template>
+        </Separator>
+    </DataTemplate>
+
+</ResourceDictionary>

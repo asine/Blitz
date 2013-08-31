@@ -8,6 +8,7 @@
                        xmlns:shell="clr-namespace:Blitz.Client.Shell"
                        xmlns:controls="clr-namespace:Blitz.Client.ModernUI.Windows.Controls;assembly=Blitz.Client.ModernUI"
                        xmlns:toolBar="clr-namespace:Blitz.Client.Core.MVVM.ToolBar;assembly=Blitz.Client.Core"
+                       xmlns:menu="clr-namespace:Blitz.Client.Core.MVVM.Menu;assembly=Blitz.Client.Core"
                        mc:Ignorable="d"
                        Title="Blitz"
                        Height="300"
@@ -19,9 +20,15 @@
 
         <toolBar:ToolBarItemTemplateSelector x:Key="ToolBarItemTemplateSelector" />
 
+        <menu:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" />
+
     </controls:ModernWindow.Resources>
 
     <DockPanel>
+
+        <Menu DockPanel.Dock="Top"
+              ItemsSource="{Binding MenuItems}"
+              ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}" />
 
         <ToolBarTray DockPanel.Dock="Top"
                      IsLocked="True">

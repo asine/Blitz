@@ -110,12 +110,11 @@ namespace Blitz.Client.Customer.ReportRunner
 
         private ToolBarButtonItem CreateShowLayoutToolBarItem()
         {
-            return new ToolBarButtonItem
-            {
-                DisplayName = "Layout",
-                Command = new DelegateCommand(ShowLayout),
-                IsVisible = false
-            };
+            var showLayoutToolBarItem = ToolBarService.CreateToolBarButtonItem();
+            showLayoutToolBarItem.DisplayName = "Layout";
+            showLayoutToolBarItem.Command = new DelegateCommand(ShowLayout);
+            showLayoutToolBarItem.IsVisible = false;
+            return showLayoutToolBarItem;
         }
 
         private void ShowLayout()

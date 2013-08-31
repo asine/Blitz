@@ -122,6 +122,13 @@
     <Compile Include="MVVM\ISupportClosing.cs" />
     <Compile Include="MVVM\IViewModel.cs" />
     <Compile Include="MVVM\IViewService.cs" />
+    <Compile Include="MVVM\Menu\IMenuItem.cs" />
+    <Compile Include="MVVM\Menu\IMenuService.cs" />
+    <Compile Include="MVVM\Menu\MenuGroupItem.cs" />
+    <Compile Include="MVVM\Menu\MenuButtonItem.cs" />
+    <Compile Include="MVVM\Menu\MenuSeperatorItem.cs" />
+    <Compile Include="MVVM\Menu\MenuItemTemplateSelector.cs" />
+    <Compile Include="MVVM\Menu\MenuService.cs" />
     <Compile Include="MVVM\RegionBuilder.cs" />
     <Compile Include="MVVM\ToolBar\IToolBarItem.cs" />
     <Compile Include="MVVM\ToolBar\IToolBarService.cs" />
@@ -175,6 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MVVM\Dialog\DialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Menu\MenuItemTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
