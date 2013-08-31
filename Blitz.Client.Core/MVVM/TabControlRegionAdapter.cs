@@ -32,6 +32,7 @@ namespace Blitz.Client.Core.MVVM
 
                     var tabItem = new TabItem {Header = viewModel.DisplayName, Content = view};
 
+                    ConnectUpActivation(viewModel, regionTarget, tabItem);
                     ConnectUpClosing(viewModel, regionTarget, tabItem);
 
                     regionTarget.Items.Add(tabItem);
@@ -122,6 +123,18 @@ namespace Blitz.Client.Core.MVVM
                 }
             };
             supportClosing.OnClosed += supportClosingOnClosed;
+        }
+
+        private static void ConnectUpActivation(IViewModel viewModel, TabControl tabControl, TabItem tabItem)
+        {
+            var supportActivationState = viewModel as ISupportActivationState;
+            if (supportActivationState == null) return;
+
+            supportActivationState.OnActivationStateChanged += (s, e) =>
+            {
+                if (supportActivationState.IsActive)
+                    tabControl.SelectedItem = tabItem;
+            };
         }
     }
 }
