@@ -21,7 +21,8 @@
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=SubmenuItemTemplateKey}"
                      TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="true">
-            <Rectangle Name="Bg" Fill="{TemplateBinding MenuItem.Background}"/>
+            <Rectangle Name="Bg"
+                       Fill="{DynamicResource WindowBackground}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="24"
@@ -81,7 +82,8 @@
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=SubmenuHeaderTemplateKey}"
                      TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="true">
-            <Rectangle Name="Bg" Fill="{TemplateBinding MenuItem.Background}"/>
+            <Rectangle Name="Bg"
+                       Fill="{DynamicResource WindowBackground}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="24"
@@ -129,17 +131,20 @@
                    IsOpen="{Binding Path=IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
                    Focusable="false"
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
-                <Grid Margin="4" Background="{DynamicResource PopupBackground}">
+                <Grid Margin="4" Background="{DynamicResource WindowBackground}">
                     <Grid x:Name="Shdw">
                         <Border Background="#0C000000" BorderBrush="#0F000000" BorderThickness="1" CornerRadius="2.5" Margin="-1" />
                         <Border Background="#0A000000" BorderBrush="#0C000000" BorderThickness="1" CornerRadius="2.75" Margin="-2" />
                     </Grid>
                     <Border x:Name="SubMenuBorder"
-                            Background="{DynamicResource PopupBackground}"
+                            Background="{DynamicResource WindowBackground}"
                             BorderBrush="{DynamicResource WindowBorderActive}"
                             BorderThickness="1"
                             Margin="0,-1,0,0">
-                        <ScrollViewer Name="SubMenuScrollViewer" CanContentScroll="true" Foreground="{DynamicResource ItemText}">
+                        <ScrollViewer Name="SubMenuScrollViewer"
+                                      CanContentScroll="true"
+                                      Foreground="{DynamicResource ItemText}"
+                                      Background="{DynamicResource WindowBackground}">
                             <Grid RenderOptions.ClearTypeHint="Enabled">
                                 <ItemsPresenter Name="ItemsPresenter"
                                                 KeyboardNavigation.TabNavigation="Cycle"
@@ -186,7 +191,7 @@
         <Setter Property="VerticalContentAlignment"
                 Value="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Background"
-                Value="{DynamicResource PopupBackground}"/>
+                Value="{DynamicResource WindowBackground}"/>
         <Setter Property="Foreground"
                 Value="{DynamicResource WindowText}" />
         <Setter Property="ScrollViewer.PanningMode"

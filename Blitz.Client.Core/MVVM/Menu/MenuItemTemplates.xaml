@@ -41,17 +41,7 @@
 
     <DataTemplate x:Key="MenuSeperatorItemTemplate"
                   DataType="menu:MenuSeperatorItem">
-        <Separator>
-            <Separator.Template>
-                <ControlTemplate>
-                    <Line X1="0"
-                          X2="1"
-                          Stroke="Black"
-                          StrokeThickness="1"
-                          Stretch="Fill" />
-                </ControlTemplate>
-            </Separator.Template>
-        </Separator>
+        <Separator Style="{DynamicResource {x:Static MenuItem.SeparatorStyleKey}}" />
     </DataTemplate>
 
 </ResourceDictionary>

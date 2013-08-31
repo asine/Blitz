@@ -54,7 +54,7 @@ namespace Blitz.Client.Shell
             menuItem1.ImageName = IconNames.EXCEL;
             MenuItems.Add(menuItem1);
 
-            var menuItem2 = menuService.CreateMenuButtonItem();
+            var menuItem2 = menuService.CreateMenuGroupItem();
             menuItem2.DisplayName = "Menu2";
             menuItem2.ImageName = IconNames.EXCEL;
             menuItem1.Items.Add(menuItem2);
@@ -70,6 +70,15 @@ namespace Blitz.Client.Shell
             });
             menuItem3.ImageName = IconNames.EXCEL;
             menuItem1.Items.Add(menuItem3);
+
+            var menuItem4 = menuService.CreateMenuButtonItem();
+            menuItem4.DisplayName = "Menu4";
+            menuItem4.Command = new DelegateCommand(() =>
+            {
+
+            });
+            menuItem4.ImageName = IconNames.EXCEL;
+            menuItem2.Items.Add(menuItem4);
 
             TitleLinks.Add(new Link
             {

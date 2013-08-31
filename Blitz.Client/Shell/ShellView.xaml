@@ -28,7 +28,7 @@
 
         <Menu DockPanel.Dock="Top"
               ItemsSource="{Binding MenuItems}"
-              ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}" />
+              ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}" Style="{DynamicResource MenuStyle}" />
 
         <ToolBarTray DockPanel.Dock="Top"
                      IsLocked="True">
