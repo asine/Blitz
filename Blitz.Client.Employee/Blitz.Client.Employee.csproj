@@ -117,6 +117,10 @@
       <Project>{41AFE43B-1E42-40DF-B66E-A1ED04456652}</Project>
       <Name>Blitz.Client.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj">
+      <Project>{1C3569B5-82A2-44C6-AF2C-2961E79BE218}</Project>
+      <Name>Blitz.Client.ModernUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Blitz.Common\Blitz.Common.csproj">
       <Project>{145A1613-AA64-42C1-9BA2-5965AF05F0DB}</Project>
       <Name>Blitz.Common</Name>

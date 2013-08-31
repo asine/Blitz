@@ -16,6 +16,6 @@ namespace Blitz.Client.Core.MVVM
 
         void Show(string regionName, TViewModel viewModel);
 
-        void Show(string regionName);
+        TViewModel Show(string regionName);
     }
 }

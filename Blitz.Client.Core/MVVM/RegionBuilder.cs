@@ -97,7 +97,7 @@ namespace Blitz.Client.Core.MVVM
                 container.RegisterInstance(regionManager);
         }
 
-        public void Show(string regionName)
+        public TViewModel Show(string regionName)
         {
             _log.Info("Scope = {0}", _scope);
             var container = ViewService.GetContainer(_container, _scope);
@@ -119,6 +119,8 @@ namespace Blitz.Client.Core.MVVM
 
             if (_scope)
                 container.RegisterInstance(regionManager);
+
+            return viewModel;
         }
 
         private static IRegionManager AddToRegion(Func<IRegionManager> regionManagerFactory, string regionName, FrameworkElement view, bool scoped = false)

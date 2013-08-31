@@ -4,7 +4,6 @@ using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Client.ModernUI.Presentation;
 using Blitz.Client.ModernUI.Windows.Controls;
 using Blitz.Client.Settings.Appearance;
@@ -48,37 +47,6 @@ namespace Blitz.Client.Shell
                 log.Info(string.Format("Dialog selection - {0}", answer));
             });
             ToolBarItems.Add(toolBarButtonItem);
-
-            var menuItem1 = menuService.CreateMenuGroupItem();
-            menuItem1.DisplayName = "Menu1";
-            menuItem1.ImageName = IconNames.EXCEL;
-            MenuItems.Add(menuItem1);
-
-            var menuItem2 = menuService.CreateMenuGroupItem();
-            menuItem2.DisplayName = "Menu2";
-            menuItem2.ImageName = IconNames.EXCEL;
-            menuItem1.Items.Add(menuItem2);
-
-            var menuSeperator = menuService.CreateMenuSeperatorItem();
-            menuItem1.Items.Add(menuSeperator);
-
-            var menuItem3 = menuService.CreateMenuButtonItem();
-            menuItem3.DisplayName = "Menu3";
-            menuItem3.Command = new DelegateCommand(() =>
-            {
-
-            });
-            menuItem3.ImageName = IconNames.EXCEL;
-            menuItem1.Items.Add(menuItem3);
-
-            var menuItem4 = menuService.CreateMenuButtonItem();
-            menuItem4.DisplayName = "Menu4";
-            menuItem4.Command = new DelegateCommand(() =>
-            {
-
-            });
-            menuItem4.ImageName = IconNames.EXCEL;
-            menuItem2.Items.Add(menuItem4);
 
             TitleLinks.Add(new Link
             {
