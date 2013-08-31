@@ -170,6 +170,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Blitz.Client.Blotter\Blitz.Client.Blotter.csproj">
+      <Project>{2f3c8247-4978-40fa-b04b-3053f88d5258}</Project>
+      <Name>Blitz.Client.Blotter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.Common\Blitz.Client.Common.csproj">
       <Project>{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}</Project>
       <Name>Blitz.Client.Common</Name>

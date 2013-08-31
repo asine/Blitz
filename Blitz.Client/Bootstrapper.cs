@@ -72,6 +72,7 @@ namespace Blitz.Client
         {
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Customer.CustomerModule));
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Employee.EmployeeModule));
+            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Blotter.BlotterModule));
         }
 
         private static void InitialiseAgatha(IUnityContainer container)
