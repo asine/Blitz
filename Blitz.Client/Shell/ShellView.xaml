@@ -28,11 +28,12 @@
 
         <Menu DockPanel.Dock="Top"
               ItemsSource="{Binding MenuItems}"
-              ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}" Style="{DynamicResource MenuStyle}" />
+              ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}"
+              Style="{DynamicResource MenuStyle}" />
 
         <ToolBarTray DockPanel.Dock="Top"
                      IsLocked="True">
-            <ToolBar ItemsSource="{Binding Path=ToolBarItems}"
+            <ToolBar ItemsSource="{Binding ToolBarItems}"
                      ItemTemplateSelector="{StaticResource ToolBarItemTemplateSelector}" />
         </ToolBarTray>
 
