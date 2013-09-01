@@ -2,7 +2,6 @@
 using System.Linq;
 
 using Blitz.Client.Core;
-using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
@@ -13,7 +12,7 @@ namespace Blitz.Client.Customer.ReportLayout
 {
     public class ReportLayoutViewModel : Workspace
     {
-        private readonly IRequestTask _requestTask;
+        private readonly IReportLayoutService _service;
         private readonly IViewService _viewService;
         private readonly Func<ReportLayoutItemViewModel> _reportLayoutItemViewModelFactory;
 
@@ -31,12 +30,12 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public DelegateCommand OkCommand { get; private set; }
 
-        public ReportLayoutViewModel(ILog log, IDispatcherService dispatcherService, 
-            IRequestTask requestTask, IViewService viewService, BindableCollectionFactory bindableCollectionFactory, 
+        public ReportLayoutViewModel(ILog log, IDispatcherService dispatcherService,
+            IReportLayoutService service, IViewService viewService, BindableCollectionFactory bindableCollectionFactory, 
             Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
             : base(log, dispatcherService)
         {
-            _requestTask = requestTask;
+            _service = service;
             _viewService = viewService;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
 
@@ -56,13 +55,12 @@ namespace Blitz.Client.Customer.ReportLayout
         protected override void OnInitialise()
         {
             BusyAsync("... Loading Attributes ...")
-                .Then(_ => _requestTask.Get<GetAttributesRequest, GetAttributesResponse>(new GetAttributesRequest()))
+                .Then(_ => _service.GetAttributes())
                 .ThenDo(response =>
-                    DispatcherService.ExecuteSyncOnUI(() =>
-                    {
-                        Available.AddRange(response.Dimensions.Select(CreateDimension));
-                        Available.AddRange(response.Measures.Select(CreateMeasure));
-                    }))
+                {
+                    Available.AddRange(response.Dimensions.Select(CreateDimension));
+                    Available.AddRange(response.Measures.Select(CreateMeasure));
+                })
                 .LogException(Log)
                 .CatchAndHandle(x =>
                     DispatcherService.ExecuteSyncOnUI(

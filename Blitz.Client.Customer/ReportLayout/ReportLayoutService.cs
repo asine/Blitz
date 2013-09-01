@@ -5,6 +5,11 @@ using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer.ReportLayout
 {
+    public interface IReportLayoutService
+    {
+        Task<GetAttributesResponse> GetAttributes();
+    }
+
     public class ReportLayoutService : IReportLayoutService
     {
         private readonly IRequestTask _requestTask;
