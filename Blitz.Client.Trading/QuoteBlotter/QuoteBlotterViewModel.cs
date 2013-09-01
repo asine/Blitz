@@ -43,9 +43,7 @@ namespace Blitz.Client.Trading.QuoteBlotter
                     Items.AddRange(items);
                 })
                 .LogException(Log)
-                .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(
-                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes")))
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"))
                 .Finally(Idle);
         }
     }

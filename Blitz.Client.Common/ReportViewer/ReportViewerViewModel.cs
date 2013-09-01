@@ -44,18 +44,15 @@ namespace Blitz.Client.Common.ReportViewer
                 .Then(_ => _reportViewerService.GenerateReportAsync(_reportViewerService.CreateReportRequest(e.Value)))
                 .Then(response => _reportViewerService.GenerateReportViewModelsAsync(response))
                 .ThenDo(dataViewModels =>
-                    DispatcherService.ExecuteSyncOnUI(() =>
+                {
+                    _viewService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
+                    foreach (var dataViewModel in dataViewModels)
                     {
-                        _viewService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
-                        foreach (var dataViewModel in dataViewModels)
-                        {
-                            _viewService.RegionBuilder<IViewModel>().Show(RegionNames.HISTORY_DATA, dataViewModel);
-                        }
-                    }))
+                        _viewService.RegionBuilder<IViewModel>().Show(RegionNames.HISTORY_DATA, dataViewModel);
+                    }
+                })
                 .LogException(Log)
-                .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(
-                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report")))
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"))
                 .Finally(Idle);
         }
 
@@ -65,7 +62,6 @@ namespace Blitz.Client.Common.ReportViewer
                 .Then(_ => _reportViewerService.GetHistoryAsync(_reportViewerService.CreateHistoryRequest()))
                 .Then(response => _reportViewerService.GenerateHistoryItemViewModelsAsync(response))
                 .ThenDo(dataViewModels =>
-                    DispatcherService.ExecuteSyncOnUI(() =>
                     {
                         foreach (var dataViewModel in dataViewModels)
                         {
@@ -75,11 +71,9 @@ namespace Blitz.Client.Common.ReportViewer
                         _viewService.RegionBuilder<HistoryViewModel>()
                             .Show(RegionNames.HISTORY_DATA, _historyViewModel);
                         ((ISupportActivationState)_historyViewModel).Activate();
-                    }))
+                    })
                 .LogException(Log)
-                .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(
-                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History")))
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History"))
                 .Finally(Idle);
         }
 

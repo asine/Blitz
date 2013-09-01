@@ -62,9 +62,7 @@ namespace Blitz.Client.Customer.ReportLayout
                     Available.AddRange(response.Measures.Select(CreateMeasure));
                 })
                 .LogException(Log)
-                .CatchAndHandle(x =>
-                    DispatcherService.ExecuteSyncOnUI(
-                        () => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes")))
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"))
                 .Finally(Idle);
         }
 

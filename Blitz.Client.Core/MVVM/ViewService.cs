@@ -13,11 +13,13 @@ namespace Blitz.Client.Core.MVVM
     {
         private readonly ILog _log;
         private readonly IUnityContainer _container;
+        private readonly IDispatcherService _dispatcherService;
 
-        public ViewService(ILog log, IUnityContainer container)
+        public ViewService(ILog log, IUnityContainer container, IDispatcherService dispatcherService)
         {
             _log = log;
             _container = container;
+            _dispatcherService = dispatcherService;
         }
 
         public IRegionBuilder RegionBuilder()
@@ -48,36 +50,39 @@ namespace Blitz.Client.Core.MVVM
 
         public void ShowModal(IViewModel viewModel)
         {
-            _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
-            var view = CreateView(viewModel.GetType());
-
-            _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
-            BindViewModel(view, viewModel);
-
-            var window = view as Window;
-            if (window != null)
+            _dispatcherService.ExecuteSyncOnUI(() =>
             {
-                ConnectUpClosing(viewModel, window);
+                _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
+                var view = CreateView(viewModel.GetType());
 
-                window.Owner = Application.Current.MainWindow;
-                window.ShowDialog();
-            }
-            else
-            {
-                window = new ModernWindow
+                _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
+                BindViewModel(view, viewModel);
+
+                var window = view as Window;
+                if (window != null)
                 {
-                    Content = view,
-                    Title = viewModel.DisplayName,
-                    SizeToContent = SizeToContent.WidthAndHeight,
-                    WindowStyle = WindowStyle.ToolWindow,
-                    Owner = Application.Current.MainWindow
-                };
+                    ConnectUpClosing(viewModel, window);
 
-                ConnectUpActivation(viewModel, window);
-                ConnectUpClosing(viewModel, window);
+                    window.Owner = Application.Current.MainWindow;
+                    window.ShowDialog();
+                }
+                else
+                {
+                    window = new ModernWindow
+                    {
+                        Content = view,
+                        Title = viewModel.DisplayName,
+                        SizeToContent = SizeToContent.WidthAndHeight,
+                        WindowStyle = WindowStyle.ToolWindow,
+                        Owner = Application.Current.MainWindow
+                    };
 
-                window.ShowDialog();
-            }
+                    ConnectUpActivation(viewModel, window);
+                    ConnectUpClosing(viewModel, window);
+
+                    window.ShowDialog();
+                }
+            });
         }
 
         private static void ConnectUpActivation(IViewModel viewModel, Window window)

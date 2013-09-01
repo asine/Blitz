@@ -9,9 +9,12 @@ namespace Blitz.Client.Core.MVVM
 {
     public class TabControlRegionAdapter : RegionAdapterBase<TabControl>
     {
-        public TabControlRegionAdapter(IRegionBehaviorFactory regionBehaviorFactory)
+        private readonly IDispatcherService _dispatcherService;
+
+        public TabControlRegionAdapter(IRegionBehaviorFactory regionBehaviorFactory, IDispatcherService dispatcherService)
             : base(regionBehaviorFactory)
         {
+            _dispatcherService = dispatcherService;
         }
 
         protected override void Adapt(IRegion region, TabControl regionTarget)
@@ -21,7 +24,7 @@ namespace Blitz.Client.Core.MVVM
             regionTarget.SelectionChanged += (s, e) => TabControlSelectionChanged(e);
         }
 
-        private static void RegionCollectionChanged(TabControl regionTarget, NotifyCollectionChangedEventArgs e)
+        private void RegionCollectionChanged(TabControl regionTarget, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -125,7 +128,7 @@ namespace Blitz.Client.Core.MVVM
             supportClosing.OnClosed += supportClosingOnClosed;
         }
 
-        private static void ConnectUpActivation(IViewModel viewModel, TabControl tabControl, TabItem tabItem)
+        private void ConnectUpActivation(IViewModel viewModel, TabControl tabControl, TabItem tabItem)
         {
             var supportActivationState = viewModel as ISupportActivationState;
             if (supportActivationState == null) return;
@@ -133,7 +136,7 @@ namespace Blitz.Client.Core.MVVM
             supportActivationState.OnActivationStateChanged += (s, e) =>
             {
                 if (supportActivationState.IsActive)
-                    tabControl.SelectedItem = tabItem;
+                    _dispatcherService.ExecuteSyncOnUI(() => tabControl.SelectedItem = tabItem);
             };
         }
     }

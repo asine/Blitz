@@ -12,36 +12,41 @@ namespace Blitz.Client.Core.MVVM
     {
         private readonly ILog _log;
         private readonly Func<IRegionManager> _regionManagerFactory;
+        private readonly IDispatcherService _dispatcherService;
 
-        public RegionBuilder(ILog log, Func<IRegionManager> regionManagerFactory)
+        public RegionBuilder(ILog log, Func<IRegionManager> regionManagerFactory, IDispatcherService dispatcherService)
         {
             _log = log;
             _regionManagerFactory = regionManagerFactory;
+            _dispatcherService = dispatcherService;
         }
 
         public void Clear(string regionName)
         {
             _log.Info("Clearing region {0}", regionName);
 
-            var regionManager = _regionManagerFactory();
-            var region = regionManager.Regions[regionName];
-
-            foreach (var obj in region.Views)
+            _dispatcherService.ExecuteSyncOnUI(() =>
             {
-                var view = obj as FrameworkElement;
-                if (view == null) continue;
+                var regionManager = _regionManagerFactory();
+                var region = regionManager.Regions[regionName];
 
-                var viewModel = view.DataContext as IViewModel;
-                if (viewModel == null) continue;
+                foreach (var obj in region.Views)
+                {
+                    var view = obj as FrameworkElement;
+                    if (view == null) continue;
 
-                view.DataContext = null;
+                    var viewModel = view.DataContext as IViewModel;
+                    if (viewModel == null) continue;
 
-                var closableViewModel = viewModel as ISupportClosing;
-                if (closableViewModel != null)
-                    closableViewModel.Close();
+                    view.DataContext = null;
 
-                region.Remove(obj);
-            }
+                    var closableViewModel = viewModel as ISupportClosing;
+                    if (closableViewModel != null)
+                        closableViewModel.Close();
+
+                    region.Remove(obj);
+                }
+            });
         }
     }
 
@@ -51,15 +56,17 @@ namespace Blitz.Client.Core.MVVM
         private readonly ILog _log;
         private readonly Func<IRegionManager> _regionManagerFactory;
         private readonly IUnityContainer _container;
+        private readonly IDispatcherService _dispatcherService;
 
         private bool _scope;
         private Action<TViewModel> _initialiseViewModel;
 
-        public RegionBuilder(ILog log, Func<IRegionManager> regionManagerFactory, IUnityContainer container)
+        public RegionBuilder(ILog log, Func<IRegionManager> regionManagerFactory, IUnityContainer container, IDispatcherService dispatcherService)
         {
             _log = log;
             _regionManagerFactory = regionManagerFactory;
             _container = container;
+            _dispatcherService = dispatcherService;
         }
 
         public IRegionBuilder<TViewModel> WithScope()
@@ -81,20 +88,23 @@ namespace Blitz.Client.Core.MVVM
             _log.Info("Scope = {0}", _scope);
             var container = ViewService.GetContainer(_container, _scope);
 
-            _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
-            var view = ViewService.CreateView(viewModel.GetType());
+            _dispatcherService.ExecuteSyncOnUI(() =>
+            {
+                _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
+                var view = ViewService.CreateView(viewModel.GetType());
 
-            _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
-            ViewService.BindViewModel(view, viewModel);
+                _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
+                ViewService.BindViewModel(view, viewModel);
 
-            if (_initialiseViewModel != null)
-                _initialiseViewModel(viewModel);
+                if (_initialiseViewModel != null)
+                    _initialiseViewModel(viewModel);
 
-            _log.Info("Adding View and ViewModel - {0} - to Region - {1}", viewModel.GetType().FullName, regionName);
-            var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
+                _log.Info("Adding View and ViewModel - {0} - to Region - {1}", viewModel.GetType().FullName, regionName);
+                var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
 
-            if (_scope)
-                container.RegisterInstance(regionManager);
+                if (_scope)
+                    container.RegisterInstance(regionManager);
+            });
         }
 
         public TViewModel Show(string regionName)
@@ -102,23 +112,26 @@ namespace Blitz.Client.Core.MVVM
             _log.Info("Scope = {0}", _scope);
             var container = ViewService.GetContainer(_container, _scope);
 
-            _log.Info("Creating View for ViewModel - {0}", typeof(TViewModel).FullName);
-            var view = ViewService.CreateView(typeof(TViewModel));
-
             _log.Info("Creating ViewModel - {0}", typeof(TViewModel).FullName);
             var viewModel = ViewService.CreateViewModel<TViewModel>(container);
 
-            _log.Info("Binding View and ViewModel - {0}", typeof(TViewModel).FullName);
-            ViewService.BindViewModel(view, viewModel);
+            _dispatcherService.ExecuteSyncOnUI(() =>
+            {
+                _log.Info("Creating View for ViewModel - {0}", typeof (TViewModel).FullName);
+                var view = ViewService.CreateView(typeof (TViewModel));
 
-            if (_initialiseViewModel != null)
-                _initialiseViewModel(viewModel);
+                _log.Info("Binding View and ViewModel - {0}", typeof (TViewModel).FullName);
+                ViewService.BindViewModel(view, viewModel);
 
-            _log.Info("Adding View and ViewModel - {0} - to Region - {1}", typeof(TViewModel).FullName, regionName);
-            var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
+                if (_initialiseViewModel != null)
+                    _initialiseViewModel(viewModel);
 
-            if (_scope)
-                container.RegisterInstance(regionManager);
+                _log.Info("Adding View and ViewModel - {0} - to Region - {1}", typeof (TViewModel).FullName, regionName);
+                var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
+
+                if (_scope)
+                    container.RegisterInstance(regionManager);
+            });
 
             return viewModel;
         }
