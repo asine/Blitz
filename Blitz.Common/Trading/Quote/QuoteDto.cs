@@ -1,14 +1,17 @@
-﻿namespace Blitz.Common.Trading.Quote
+﻿using System;
+
+namespace Blitz.Common.Trading.Quote
 {
     public class QuoteDto
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string QuoteReference { get; set; }
 
         public QuoteStatus Status { get; set; }
 
-        public string Instrument { get; set; }
+        public long InstrumentId { get; set; }
+        public string InstrumentName { get; set; }
 
         public decimal? BestBid { get; set; }
 

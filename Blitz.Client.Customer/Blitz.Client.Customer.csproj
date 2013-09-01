@@ -112,8 +112,8 @@
     <Compile Include="ReportLayout\ReportLayoutService.cs" />
     <Compile Include="ReportRunner\ReportRunnerService.cs" />
     <Compile Include="ReportRunner\ReportRunnerViewModel.cs" />
-    <Compile Include="Reportviewer\ReportViewerService.cs" />
-    <Compile Include="Reportviewer\ReportViewerViewModel.cs" />
+    <Compile Include="ReportViewer\ReportViewerService.cs" />
+    <Compile Include="ReportViewer\ReportViewerViewModel.cs" />
     <Compile Include="Report\ReportViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

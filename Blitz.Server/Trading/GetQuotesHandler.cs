@@ -1,32 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 using Blitz.Common.Core;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Blotter;
 using Blitz.Server.Core;
 
+using Raven.Client;
+
 namespace Blitz.Server.Trading
 {
     public class GetQuotesHandler : Handler<GetQuotesRequest, GetQuotesResponse>
     {
-        public GetQuotesHandler(ILog log)
+        private readonly IDocumentStore _documentStore;
+
+        public GetQuotesHandler(ILog log, IDocumentStore documentStore)
             : base(log)
         {
+            _documentStore = documentStore;
         }
 
         protected override GetQuotesResponse Execute(GetQuotesRequest request)
         {
             var response = CreateTypedResponse();
 
-            var results = new List<QuoteDto>();
-            for (var index = 0; index < 100; index++)
+            using (var session = _documentStore.OpenSession())
             {
-                var item = new QuoteDto();
-                item.Id = index;
-
-                results.Add(item);
+                var quotes = session.Query<QuoteDto>().ToList();
+                response.Results = quotes;
             }
-            response.Results = results;
 
             return response;
         }

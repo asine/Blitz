@@ -85,6 +85,8 @@
     <Compile Include="Trading\Quote\Edit\GetInitialisationDataRequest.cs" />
     <Compile Include="Trading\Quote\Edit\GetInitialisationDataResponse.cs" />
     <Compile Include="Trading\Quote\Edit\LookupValue.cs" />
+    <Compile Include="Trading\Quote\Edit\SaveQuoteRequest.cs" />
+    <Compile Include="Trading\Quote\Edit\SaveQuoteResponse.cs" />
     <Compile Include="Trading\Quote\QuoteDto.cs" />
     <Compile Include="Trading\Quote\QuoteStatus.cs" />
     <Compile Include="Trading\Quote\Edit\GetQuoteRequest.cs" />

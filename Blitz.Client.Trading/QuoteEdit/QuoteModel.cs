@@ -1,10 +1,12 @@
-﻿using Blitz.Common.Trading.Quote.Edit;
+﻿using System;
+
+using Blitz.Common.Trading.Quote.Edit;
 
 namespace Blitz.Client.Trading.QuoteEdit
 {
     public class QuoteModel : ModelWithValidation<QuoteModel, QuoteValidation>
     {
-        public long Id { get; private set; }
+        public Guid Id { get; private set; }
 
         public string QuoteReference { get; set; }
 
@@ -25,7 +27,7 @@ namespace Blitz.Client.Trading.QuoteEdit
 
         #endregion
 
-        public QuoteModel(long id)
+        public QuoteModel(Guid id)
         {
             Id = id;
         }

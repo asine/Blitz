@@ -15,6 +15,8 @@ namespace Blitz.Client.Trading.QuoteBlotter
     {
         Task<List<QuoteDto>> GetQuotes();
 
+        void NewQuote();
+
         void EditQuote(QuoteBlotterItemViewModel quoteBlotterItemViewModel);
     }
 
@@ -34,6 +36,12 @@ namespace Blitz.Client.Trading.QuoteBlotter
         public Task<List<QuoteDto>> GetQuotes()
         {
             return _requestTask.Get<GetQuotesRequest, GetQuotesResponse, List<QuoteDto>>(new GetQuotesRequest(), x => x.Results.ToList());
+        }
+
+        public void NewQuote()
+        {
+            var viewModel = _quoteEditViewModelFactory();
+            _viewService.ShowModal(viewModel);
         }
 
         public void EditQuote(QuoteBlotterItemViewModel quoteBlotterItemViewModel)

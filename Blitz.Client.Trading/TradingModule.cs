@@ -6,6 +6,7 @@ using Blitz.Client.Trading.QuoteBlotter;
 using Blitz.Client.Trading.QuoteEdit;
 using Blitz.Common.Core;
 using Blitz.Common.Trading.Quote;
+using Blitz.Common.Trading.Quote.Edit;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
@@ -33,9 +34,6 @@ namespace Blitz.Client.Trading
             _container
                 .RegisterTransient<IQuoteBlotterService, QuoteBlotterService>()
                 .RegisterTransient<IQuoteEditService, QuoteEditService>();
-
-            AutoMapper.Mapper.CreateMap<QuoteDto, QuoteBlotterItemViewModel>();
-            AutoMapper.Mapper.CreateMap<QuoteDto, QuoteModel>();
 
             CreateMenu();
         }

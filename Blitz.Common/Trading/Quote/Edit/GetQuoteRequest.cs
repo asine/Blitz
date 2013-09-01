@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using Blitz.Common.Agatha;
 
@@ -8,6 +9,6 @@ namespace Blitz.Common.Trading.Quote.Edit
     public class GetQuoteRequest : Request<GetQuoteResponse>
     {
         [DataMember]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

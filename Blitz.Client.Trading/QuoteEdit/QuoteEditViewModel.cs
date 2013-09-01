@@ -15,7 +15,7 @@ namespace Blitz.Client.Trading.QuoteEdit
         private readonly IViewService _viewService;
         private readonly IQuoteEditService _service;
 
-        private long _id;
+        private Guid? _id;
 
         public BindableCollection<IToolBarItem> ToolBarItems { get; private set; }
 
@@ -52,15 +52,35 @@ namespace Blitz.Client.Trading.QuoteEdit
             Instruments = bindableCollectionFactory.Get<LookupValue>();
         }
 
-        public void Initialise(long id)
+        public void Initialise(Guid id)
         {
             _id = id;
         }
 
         protected override void OnInitialise()
         {
+            if (_id.HasValue)
+                LoadQuote();
+            else
+                NewQuote();
+        }
+
+        private void NewQuote()
+        {
             BusyAsync("... Loading Quote ...")
-                .Then(_ => _service.GetQuote(_id))
+                .Then(_ => _service.GetInitialisationData())
+                .ThenDo(response => Instruments.AddRange(response.Instruments))
+                .Then(() => _service.NewQuote())
+                .ThenDo(model => Model = model)
+                .LogException(Log)
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"))
+                .Finally(Idle);
+        }
+
+        private void LoadQuote()
+        {
+            BusyAsync("... Loading Quote ...")
+                .Then(() => _service.GetQuote(_id.Value))
                 .ThenDo(quote => Model = quote)
                 .Then(_ => _service.GetInitialisationData())
                 .ThenDo(response => Instruments.AddRange(response.Instruments))

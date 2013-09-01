@@ -1,7 +1,4 @@
-﻿using System.Linq;
-
-using Blitz.Common.Core;
-using Blitz.Common.Trading.Quote;
+﻿using Blitz.Common.Core;
 using Blitz.Common.Trading.Quote.Edit;
 using Blitz.Server.Core;
 
@@ -9,24 +6,24 @@ using Raven.Client;
 
 namespace Blitz.Server.Trading
 {
-    public class GetQuoteHandler : Handler<GetQuoteRequest, GetQuoteResponse>
+    public class SaveQuoteHandler : Handler<SaveQuoteRequest, SaveQuoteResponse>
     {
         private readonly IDocumentStore _documentStore;
 
-        public GetQuoteHandler(ILog log, IDocumentStore documentStore)
+        public SaveQuoteHandler(ILog log, IDocumentStore documentStore)
             : base(log)
         {
             _documentStore = documentStore;
         }
 
-        protected override GetQuoteResponse Execute(GetQuoteRequest request)
+        protected override SaveQuoteResponse Execute(SaveQuoteRequest request)
         {
             var response = CreateTypedResponse();
 
             using (var session = _documentStore.OpenSession())
             {
-                var quote = session.Load<QuoteDto>(request.Id);
-                response.Result = quote;
+                session.Store(request.Quote);
+                session.SaveChanges();
             }
 
             return response;

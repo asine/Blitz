@@ -1,4 +1,6 @@
-﻿using Blitz.Common.Trading.Quote;
+﻿using System;
+
+using Blitz.Common.Trading.Quote;
 
 using Microsoft.Practices.Prism.ViewModel;
 
@@ -6,7 +8,7 @@ namespace Blitz.Client.Trading.QuoteBlotter
 {
     public class QuoteBlotterItemViewModel : NotificationObject
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string QuoteReference { get; set; }
 

@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
+using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
 
 namespace Blitz.Client.Trading.QuoteEdit
 {
     public interface IQuoteEditService
     {
-        Task<QuoteModel> GetQuote(long id);
+        Task<QuoteModel> NewQuote();
+
+        Task<QuoteModel> GetQuote(Guid id);
 
         Task<GetInitialisationDataResponse> GetInitialisationData();
 
@@ -25,13 +27,26 @@ namespace Blitz.Client.Trading.QuoteEdit
             _requestTask = requestTask;
         }
 
-        public Task<QuoteModel> GetQuote(long id)
+        public Task<QuoteModel> NewQuote()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var quoteModel = new QuoteModel(Guid.NewGuid());
+                return quoteModel;
+            });
+        }
+
+        public Task<QuoteModel> GetQuote(Guid id)
         {
             var request = new GetQuoteRequest{Id = id};
             return _requestTask.Get<GetQuoteRequest, GetQuoteResponse, QuoteModel>(request, x =>
             {
                 var quoteModel = new QuoteModel(id);
-                AutoMapper.Mapper.Map(x.Result, quoteModel);
+                quoteModel.Instrument = new LookupValue
+                {
+                    Id = x.Result.InstrumentId,
+                    Value = x.Result.InstrumentName
+                };
                 return quoteModel;
             });
         }
@@ -43,10 +58,13 @@ namespace Blitz.Client.Trading.QuoteEdit
 
         public Task SaveQuote(QuoteModel quoteModel)
         {
-            return Task.Factory.StartNew(() =>
+            var quote = new QuoteDto
             {
-                Thread.Sleep(TimeSpan.FromSeconds(5));
-            });
+                Id = quoteModel.Id,
+                InstrumentId = quoteModel.Instrument.Id,
+                InstrumentName = quoteModel.Instrument.Value
+            };
+            return _requestTask.Get<SaveQuoteRequest, SaveQuoteResponse>(new SaveQuoteRequest {Quote = quote});
         }
     }
 }

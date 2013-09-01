@@ -11,6 +11,9 @@ using Blitz.Server.Core;
 
 using Microsoft.Practices.Unity;
 
+using Raven.Client;
+using Raven.Client.Embedded;
+
 namespace Blitz.Server
 {
     public class Bootstrapper
@@ -24,6 +27,8 @@ namespace Blitz.Server
             container.RegisterType<ILog, ConsoleLogger>();
 
             InitialiseAgatha(container);
+
+            InitialiseRavenDB(container);
 
             Console.WriteLine("EndPoint - {0}", END_POINT);
 
@@ -42,6 +47,14 @@ namespace Blitz.Server
                 .Initialize();
 
             AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Common.AssemblyHook).Assembly);
+        }
+
+        private static void InitialiseRavenDB(IUnityContainer container)
+        {
+            var documentStore = new EmbeddableDocumentStore {DataDirectory = "~/DataDir"};
+            documentStore.Initialize();
+
+            container.RegisterSingletonInstance<IDocumentStore>(documentStore);
         }
     }
 }
