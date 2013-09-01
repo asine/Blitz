@@ -5,100 +5,104 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:reportLayout="clr-namespace:Blitz.Client.Customer.ReportLayout"
              xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              Padding="10,0"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance reportLayout:ReportLayoutViewModel}">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="10" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
+                        BusyContent="{Binding BusyMessage}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="10" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0"
-                   Grid.RowSpan="4"
-                   VerticalAlignment="Center"
-                   Text="Available"
-                   Style="{StaticResource Heading2}">
-            <TextBlock.LayoutTransform>
-                <RotateTransform Angle="-90" />
-            </TextBlock.LayoutTransform>
-        </TextBlock>
+            <TextBlock Grid.Column="0"
+                       Grid.RowSpan="4"
+                       VerticalAlignment="Center"
+                       Text="Available"
+                       Style="{StaticResource Heading2}">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform Angle="-90" />
+                </TextBlock.LayoutTransform>
+            </TextBlock>
 
-        <ListBox Grid.Column="1"
-                 Grid.RowSpan="4"
-                 ItemsSource="{Binding Available}"
-                 Style="{StaticResource ListBoxWithBorder}"
-                 dragDrop:DragDrop.IsDragSource="True"
-                 dragDrop:DragDrop.IsDropTarget="True"
-                 dragDrop:DragDrop.DropHandler="{Binding ToAvailableDropTarget}" />
+            <ListBox Grid.Column="1"
+                     Grid.RowSpan="4"
+                     ItemsSource="{Binding Available}"
+                     Style="{StaticResource ListBoxWithBorder}"
+                     dragDrop:DragDrop.IsDragSource="True"
+                     dragDrop:DragDrop.IsDropTarget="True"
+                     dragDrop:DragDrop.DropHandler="{Binding ToAvailableDropTarget}" />
 
-        <TextBlock Grid.Column="6"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   Text="Columns"
-                   Style="{StaticResource Heading2}">
-        </TextBlock>
+            <TextBlock Grid.Column="6"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       Text="Columns"
+                       Style="{StaticResource Heading2}">
+            </TextBlock>
 
-        <ListBox Grid.Column="6"
-                 Grid.Row="1"
-                 ItemsSource="{Binding Columns}"
-                 Style="{StaticResource ListBoxWithBorder}"
-                 dragDrop:DragDrop.IsDragSource="True"
-                 dragDrop:DragDrop.IsDropTarget="True"
-                 dragDrop:DragDrop.DropHandler="{Binding ToColumnsDropTarget}">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+            <ListBox Grid.Column="6"
+                     Grid.Row="1"
+                     ItemsSource="{Binding Columns}"
+                     Style="{StaticResource ListBoxWithBorder}"
+                     dragDrop:DragDrop.IsDragSource="True"
+                     dragDrop:DragDrop.IsDropTarget="True"
+                     dragDrop:DragDrop.DropHandler="{Binding ToColumnsDropTarget}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
 
-        <TextBlock Grid.Column="3"
-                   Grid.Row="3"
-                   VerticalAlignment="Center"
-                   Text="Rows"
-                   Style="{StaticResource Heading2}">
-            <TextBlock.LayoutTransform>
-                <RotateTransform Angle="-90" />
-            </TextBlock.LayoutTransform>
-        </TextBlock>
+            <TextBlock Grid.Column="3"
+                       Grid.Row="3"
+                       VerticalAlignment="Center"
+                       Text="Rows"
+                       Style="{StaticResource Heading2}">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform Angle="-90" />
+                </TextBlock.LayoutTransform>
+            </TextBlock>
 
-        <ListBox Grid.Column="4"
-                 Grid.Row="3"
-                 ItemsSource="{Binding Rows}"
-                 Style="{StaticResource ListBoxWithBorder}"
-                 dragDrop:DragDrop.IsDragSource="True"
-                 dragDrop:DragDrop.IsDropTarget="True"
-                 dragDrop:DragDrop.DropHandler="{Binding ToRowsDropTarget}" />
+            <ListBox Grid.Column="4"
+                     Grid.Row="3"
+                     ItemsSource="{Binding Rows}"
+                     Style="{StaticResource ListBoxWithBorder}"
+                     dragDrop:DragDrop.IsDragSource="True"
+                     dragDrop:DragDrop.IsDropTarget="True"
+                     dragDrop:DragDrop.DropHandler="{Binding ToRowsDropTarget}" />
 
-        <StackPanel Grid.ColumnSpan="7"
-                    Grid.Row="4"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right">
+            <StackPanel Grid.ColumnSpan="7"
+                        Grid.Row="4"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
 
-            <Button Content="Ok"
-                    Command="{Binding OkCommand}" />
+                <Button Content="Ok"
+                        Command="{Binding OkCommand}" />
 
-            <Button Content="Close"
-                    Command="{Binding ClosingCommand}" />
+                <Button Content="Close"
+                        Command="{Binding ClosingCommand}" />
 
-        </StackPanel>
+            </StackPanel>
 
-    </Grid>
+        </Grid>
+    </xctk:BusyIndicator>
 
 </UserControl>
