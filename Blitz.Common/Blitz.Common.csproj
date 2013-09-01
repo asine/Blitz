@@ -80,10 +80,15 @@
     <Compile Include="Customer\InitialiseParametersRequest.cs" />
     <Compile Include="Customer\InitialiseParametersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trading\QuoteBlotter\GetQuotesRequest.cs" />
-    <Compile Include="Trading\QuoteBlotter\GetQuotesResponse.cs" />
-    <Compile Include="Trading\QuoteBlotter\QuoteDto.cs" />
-    <Compile Include="Trading\QuoteBlotter\QuoteStatus.cs" />
+    <Compile Include="Trading\Quote\Blotter\GetQuotesRequest.cs" />
+    <Compile Include="Trading\Quote\Blotter\GetQuotesResponse.cs" />
+    <Compile Include="Trading\Quote\Edit\GetInitialisationDataRequest.cs" />
+    <Compile Include="Trading\Quote\Edit\GetInitialisationDataResponse.cs" />
+    <Compile Include="Trading\Quote\Edit\LookupValue.cs" />
+    <Compile Include="Trading\Quote\QuoteDto.cs" />
+    <Compile Include="Trading\Quote\QuoteStatus.cs" />
+    <Compile Include="Trading\Quote\Edit\GetQuoteRequest.cs" />
+    <Compile Include="Trading\Quote\Edit\GetQuoteResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-
-namespace Blitz.Common.Trading.QuoteBlotter
+﻿namespace Blitz.Common.Trading.Quote
 {
     public class QuoteDto
     {
         public long Id { get; set; }
 
-        public string QuoteRef { get; set; }
+        public string QuoteReference { get; set; }
 
         public QuoteStatus Status { get; set; }
 

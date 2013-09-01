@@ -3,8 +3,9 @@ using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Client.Trading.QuoteBlotter;
+using Blitz.Client.Trading.QuoteEdit;
 using Blitz.Common.Core;
-using Blitz.Common.Trading.QuoteBlotter;
+using Blitz.Common.Trading.Quote;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
@@ -30,9 +31,11 @@ namespace Blitz.Client.Trading
         public void Initialize()
         {
             _container
-                .RegisterTransient<IQuoteBlotterService, QuoteBlotterService>();
+                .RegisterTransient<IQuoteBlotterService, QuoteBlotterService>()
+                .RegisterTransient<IQuoteEditService, QuoteEditService>();
 
             AutoMapper.Mapper.CreateMap<QuoteDto, QuoteBlotterItemViewModel>();
+            AutoMapper.Mapper.CreateMap<QuoteDto, QuoteModel>();
 
             CreateMenu();
         }

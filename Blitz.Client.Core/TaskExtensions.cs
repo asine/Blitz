@@ -152,6 +152,62 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
+        public static Task Then<T1>(this Task<T1> first, Func<T1, Task> next)
+        {
+            // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
+
+            if (first == null) throw new ArgumentNullException("first");
+            if (next == null) throw new ArgumentNullException("next");
+
+            var tcs = new TaskCompletionSource<object>();
+            first.ContinueWith(_ =>
+            {
+                if (first.IsFaulted)
+                {
+                    tcs.TrySetException(first.Exception.InnerExceptions);
+                }
+                else if (first.IsCanceled)
+                {
+                    tcs.TrySetCanceled();
+                }
+                else
+                {
+                    try
+                    {
+                        var t = next(first.Result);
+                        if (t == null)
+                        {
+                            tcs.TrySetCanceled();
+                        }
+                        else
+                        {
+                            t.ContinueWith(__ =>
+                            {
+                                if (t.IsFaulted)
+                                {
+                                    tcs.TrySetException(t.Exception.InnerExceptions);
+                                }
+                                else if (t.IsCanceled)
+                                {
+                                    tcs.TrySetCanceled();
+                                }
+                                else
+                                {
+                                    tcs.TrySetResult(null);
+                                }
+                            }, TaskContinuationOptions.ExecuteSynchronously);
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        tcs.TrySetException(exc);
+                    }
+                }
+            }, TaskContinuationOptions.ExecuteSynchronously);
+
+            return tcs.Task;
+        }
+
         public static Task<T2> ThenDo<T1, T2>(this Task<T1> first, Func<T1, T2> next)
         {
             if (first == null) throw new ArgumentNullException("first");

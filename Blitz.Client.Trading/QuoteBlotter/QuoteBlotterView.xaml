@@ -4,28 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:quoteBlotter="clr-namespace:Blitz.Client.Trading.QuoteBlotter"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="300"
-             d:DesignWidth="300" d:DataContext="{d:DesignInstance quoteBlotter:QuoteBlotterViewModel}">
-    
-    <Grid x:Name="RootGrid">
+             d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance quoteBlotter:QuoteBlotterViewModel}">
 
-        <DataGrid ItemsSource="{Binding Items}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" />
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Open"
-                                    Command="{Binding ElementName=RootGrid, Path=DataContext.OpenCommand}"
-                                    CommandParameter="{Binding .}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        
-    </Grid>
-    
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
+                        BusyContent="{Binding BusyMessage}">
+        <Grid x:Name="RootGrid">
+
+            <DataGrid ItemsSource="{Binding Items}"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Open"
+                                        Command="{Binding ElementName=RootGrid, Path=DataContext.OpenCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </xctk:BusyIndicator>
+
 </UserControl>

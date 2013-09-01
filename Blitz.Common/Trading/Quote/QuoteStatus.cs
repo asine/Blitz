@@ -1,4 +1,4 @@
-﻿namespace Blitz.Common.Trading.QuoteBlotter
+﻿namespace Blitz.Common.Trading.Quote
 {
     public enum QuoteStatus
     {

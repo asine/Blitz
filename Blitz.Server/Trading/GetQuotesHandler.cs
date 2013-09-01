@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using Blitz.Common.Core;
-using Blitz.Common.Trading.QuoteBlotter;
+using Blitz.Common.Trading.Quote;
+using Blitz.Common.Trading.Quote.Blotter;
 using Blitz.Server.Core;
 
 namespace Blitz.Server.Trading

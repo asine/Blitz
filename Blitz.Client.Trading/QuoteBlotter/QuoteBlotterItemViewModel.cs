@@ -1,4 +1,4 @@
-﻿using Blitz.Common.Trading.QuoteBlotter;
+﻿using Blitz.Common.Trading.Quote;
 
 using Microsoft.Practices.Prism.ViewModel;
 
@@ -8,7 +8,7 @@ namespace Blitz.Client.Trading.QuoteBlotter
     {
         public long Id { get; set; }
 
-        public string QuoteRef { get; set; }
+        public string QuoteReference { get; set; }
 
         public QuoteStatus Status { get; set; }
 

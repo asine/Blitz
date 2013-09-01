@@ -3,7 +3,7 @@
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 using Blitz.Common.Core;
-using Blitz.Common.Trading.QuoteBlotter;
+using Blitz.Common.Trading.Quote;
 
 using Microsoft.Practices.Prism.Commands;
 
@@ -27,21 +27,14 @@ namespace Blitz.Client.Trading.QuoteBlotter
             DisplayName = "Blotter";
 
             Items = bindableCollectionFactory.Get<QuoteBlotterItemViewModel>();
-            OpenCommand = new DelegateCommand<QuoteBlotterItemViewModel>(quote =>
-            {
-                
-            });
+            OpenCommand = new DelegateCommand<QuoteBlotterItemViewModel>(quote => _service.EditQuote(quote));
         }
 
         protected override void OnInitialise()
         {
             BusyAsync("... Loading quotes ...")
                 .Then(_ => _service.GetQuotes())
-                .ThenDo(quotes =>
-                {
-                    var items = quotes.Select(AutoMapper.Mapper.Map<QuoteDto, QuoteBlotterItemViewModel>);
-                    Items.AddRange(items);
-                })
+                .ThenDo(quotes => Items.AddRange(quotes.Select(AutoMapper.Mapper.Map<QuoteDto, QuoteBlotterItemViewModel>)))
                 .LogException(Log)
                 .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"))
                 .Finally(Idle);

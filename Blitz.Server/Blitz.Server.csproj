@@ -77,6 +77,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Trading\GetInitialisationDataHandler.cs" />
+    <Compile Include="Trading\GetQuoteHandler.cs" />
     <Compile Include="Trading\GetQuotesHandler.cs" />
   </ItemGroup>
   <ItemGroup>

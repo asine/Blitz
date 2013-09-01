@@ -103,7 +103,7 @@ namespace Blitz.Client.Core.MVVM
             window.Loaded += windowOnLoaded;
         }
 
-        private static void ConnectUpClosing(IViewModel viewModel, Window window)
+        private void ConnectUpClosing(IViewModel viewModel, Window window)
         {
             var supportClosing = viewModel as ISupportClosing;
             if (supportClosing == null) return;
@@ -112,7 +112,7 @@ namespace Blitz.Client.Core.MVVM
             EventHandler supportClosingOnClosed = null;
             supportClosingOnClosed = (s, e) =>
             {
-                window.Close();
+                _dispatcherService.ExecuteSyncOnUI(window.Close);
 
                 if (supportClosingOnClosed != null)
                 {
