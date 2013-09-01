@@ -44,6 +44,13 @@
     <Reference Include="Agatha.Unity">
       <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -170,10 +177,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Blitz.Client.Blotter\Blitz.Client.Blotter.csproj">
-      <Project>{2f3c8247-4978-40fa-b04b-3053f88d5258}</Project>
-      <Name>Blitz.Client.Blotter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.Common\Blitz.Client.Common.csproj">
       <Project>{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}</Project>
       <Name>Blitz.Client.Common</Name>
@@ -193,6 +196,10 @@
     <ProjectReference Include="..\Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj">
       <Project>{1c3569b5-82a2-44c6-af2c-2961e79be218}</Project>
       <Name>Blitz.Client.ModernUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blitz.Client.Trading\Blitz.Client.Trading.csproj">
+      <Project>{2f3c8247-4978-40fa-b04b-3053f88d5258}</Project>
+      <Name>Blitz.Client.Trading</Name>
     </ProjectReference>
     <ProjectReference Include="..\Blitz.Common\Blitz.Common.csproj">
       <Project>{145a1613-aa64-42c1-9ba2-5965af05f0db}</Project>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Blitz.Client.Blotter.Properties {
+namespace Blitz.Client.Trading.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

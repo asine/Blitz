@@ -33,21 +33,6 @@ namespace Blitz.Client.Shell
 
             TitleLinks = new LinkCollection();
 
-            var toolBarButtonItem = toolBarService.CreateToolBarButtonItem();
-            toolBarButtonItem.DisplayName = "Dialog Test 1";
-            toolBarButtonItem.Command = new DelegateCommand(() =>
-            {
-                var answer = viewService.DialogBuilder()
-                    .WithDialogType(DialogType.Information)
-                    .WithAnswers(Answer.Ok, Answer.Cancel)
-                    .WithTitle("Something else interesting happened")
-                    .WithMessage("No really.....")
-                    .Show();
-
-                log.Info(string.Format("Dialog selection - {0}", answer));
-            });
-            ToolBarItems.Add(toolBarButtonItem);
-
             TitleLinks.Add(new Link
             {
                 DisplayName = "Appearance",

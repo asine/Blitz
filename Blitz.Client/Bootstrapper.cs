@@ -12,6 +12,7 @@ using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Shell;
+using Blitz.Client.Trading;
 using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 
@@ -72,7 +73,7 @@ namespace Blitz.Client
         {
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Customer.CustomerModule));
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Employee.EmployeeModule));
-            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Blotter.BlotterModule));
+            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(TradingModule));
         }
 
         private static void InitialiseAgatha(IUnityContainer container)
