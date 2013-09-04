@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>    
+    <Name>MVVM</Name>
+    <Description></Description>
+    <Icon>MVVMItemTemplate.ico</Icon>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem TargetFileName="$fileinputname$\$fileinputname$ViewModel.cs" ReplaceParameters="true">ViewModel.cs</ProjectItem>
+    <ProjectItem TargetFileName="$fileinputname$\$fileinputname$Service.cs" ReplaceParameters="true">Service.cs</ProjectItem>
+    <ProjectItem TargetFileName="$fileinputname$\$fileinputname$View.xaml" ReplaceParameters="true">View.xaml</ProjectItem>
+    <ProjectItem TargetFileName="$fileinputname$\$fileinputname$View.xaml.cs" ReplaceParameters="true">View.xaml.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>
