@@ -1,4 +1,6 @@
-﻿using Blitz.Common.Core;
+﻿using System;
+
+using Blitz.Common.Core;
 using Blitz.Common.Trading.Quote.Edit;
 using Blitz.Server.Core;
 
@@ -20,9 +22,16 @@ namespace Blitz.Server.Trading
         {
             var response = CreateTypedResponse();
 
+            var quote = request.Quote;
+            if (!quote.CreatedOn.HasValue)
+            {
+                quote.CreatedOn = DateTime.Now;
+                quote.CreatedBy = "xjpeter";
+            }
+
             using (var session = _documentStore.OpenSession())
             {
-                session.Store(request.Quote);
+                session.Store(quote);
                 session.SaveChanges();
             }
 

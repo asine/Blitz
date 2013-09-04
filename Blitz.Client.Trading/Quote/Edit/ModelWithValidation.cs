@@ -7,7 +7,7 @@ using FluentValidation.Results;
 
 using Microsoft.Practices.Prism.ViewModel;
 
-namespace Blitz.Client.Trading.QuoteEdit
+namespace Blitz.Client.Trading.Quote.Edit
 {
     public abstract class ModelWithValidation<TModel, TValidation> : NotificationObject, IDataErrorInfo
         where TModel : ModelWithValidation<TModel, TValidation>

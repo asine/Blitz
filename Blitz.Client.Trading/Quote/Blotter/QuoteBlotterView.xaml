@@ -1,14 +1,14 @@
-﻿<UserControl x:Class="Blitz.Client.Trading.QuoteBlotter.QuoteBlotterView"
+﻿<UserControl x:Class="Blitz.Client.Trading.Quote.Blotter.QuoteBlotterView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:quoteBlotter="clr-namespace:Blitz.Client.Trading.QuoteBlotter"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:blotter="clr-namespace:Blitz.Client.Trading.Quote.Blotter"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance quoteBlotter:QuoteBlotterViewModel}">
+             d:DataContext="{d:DesignInstance blotter:QuoteBlotterViewModel}">
 
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
                         BusyContent="{Binding BusyMessage}">
@@ -17,9 +17,13 @@
             <DataGrid ItemsSource="{Binding Items}"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" />
-                    <DataGridTextColumn Binding="{Binding Instrument}" />
-                    <DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Instrument" Binding="{Binding Instrument}" />
+                    <DataGridTextColumn Header="CreatedOn" Binding="{Binding CreatedOn}" />
+                    <DataGridTextColumn Header="CreatedBy" Binding="{Binding CreatedBy}" />
+                    <DataGridTextColumn Header="ModifiedOn" Binding="{Binding ModifiedOn}" />
+                    <DataGridTextColumn Header="ModifiedBy" Binding="{Binding ModifiedBy}" />
+                    <DataGridTemplateColumn Header="Action">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Open"

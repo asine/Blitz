@@ -4,7 +4,7 @@ using System.Text;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Blitz.Client.Trading.QuoteEdit
+namespace Blitz.Client.Trading.Quote.Edit
 {
     public static class ModelValidationHelper
     {

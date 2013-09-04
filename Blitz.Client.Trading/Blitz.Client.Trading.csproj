@@ -101,21 +101,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QuoteBlotter\QuoteBlotterItemViewModel.cs" />
-    <Compile Include="QuoteBlotter\QuoteBlotterService.cs" />
-    <Compile Include="QuoteBlotter\QuoteBlotterView.xaml.cs">
+    <Compile Include="Quote\Blotter\QuoteBlotterItemViewModel.cs" />
+    <Compile Include="Quote\Blotter\QuoteBlotterService.cs" />
+    <Compile Include="Quote\Blotter\QuoteBlotterView.xaml.cs">
       <DependentUpon>QuoteBlotterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="QuoteBlotter\QuoteBlotterViewModel.cs" />
-    <Compile Include="QuoteEdit\ModelValidationHelper.cs" />
-    <Compile Include="QuoteEdit\ModelWithValidation.cs" />
-    <Compile Include="QuoteEdit\QuoteModel.cs" />
-    <Compile Include="QuoteEdit\QuoteEditService.cs" />
-    <Compile Include="QuoteEdit\QuoteEditViewModel.cs" />
-    <Compile Include="QuoteEdit\QuoteEditView.xaml.cs">
+    <Compile Include="Quote\Blotter\QuoteBlotterViewModel.cs" />
+    <Compile Include="Quote\Edit\ModelValidationHelper.cs" />
+    <Compile Include="Quote\Edit\ModelWithValidation.cs" />
+    <Compile Include="Quote\Edit\QuoteModel.cs" />
+    <Compile Include="Quote\Edit\QuoteEditService.cs" />
+    <Compile Include="Quote\Edit\QuoteEditViewModel.cs" />
+    <Compile Include="Quote\Edit\QuoteEditView.xaml.cs">
       <DependentUpon>QuoteEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="QuoteEdit\QuoteValidation.cs" />
+    <Compile Include="Quote\Edit\QuoteValidation.cs" />
     <Compile Include="TradingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -160,11 +160,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="QuoteBlotter\QuoteBlotterView.xaml">
+    <Page Include="Quote\Blotter\QuoteBlotterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="QuoteEdit\QuoteEditView.xaml">
+    <Page Include="Quote\Edit\QuoteEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

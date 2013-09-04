@@ -5,7 +5,7 @@ using Blitz.Client.Core.Agatha;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
 
-namespace Blitz.Client.Trading.QuoteEdit
+namespace Blitz.Client.Trading.Quote.Edit
 {
     public interface IQuoteEditService
     {
@@ -41,11 +41,15 @@ namespace Blitz.Client.Trading.QuoteEdit
             var request = new GetQuoteRequest{Id = id};
             return _requestTask.Get<GetQuoteRequest, GetQuoteResponse, QuoteModel>(request, x =>
             {
-                var quoteModel = new QuoteModel(id);
-                quoteModel.Instrument = new LookupValue
+                var quoteDto = x.Result;
+                var quoteModel = new QuoteModel(id)
                 {
-                    Id = x.Result.InstrumentId,
-                    Value = x.Result.InstrumentName
+                    Instrument = new LookupValue
+                    {
+                        Id = quoteDto.InstrumentId,
+                        Value = quoteDto.InstrumentName
+                    },
+                    Notes = quoteDto.Notes
                 };
                 return quoteModel;
             });
@@ -62,7 +66,8 @@ namespace Blitz.Client.Trading.QuoteEdit
             {
                 Id = quoteModel.Id,
                 InstrumentId = quoteModel.Instrument.Id,
-                InstrumentName = quoteModel.Instrument.Value
+                InstrumentName = quoteModel.Instrument.Value,
+                Notes = quoteModel.Notes
             };
             return _requestTask.Get<SaveQuoteRequest, SaveQuoteResponse>(new SaveQuoteRequest {Quote = quote});
         }

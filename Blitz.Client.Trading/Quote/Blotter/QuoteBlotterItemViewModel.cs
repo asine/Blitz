@@ -4,7 +4,7 @@ using Blitz.Common.Trading.Quote;
 
 using Microsoft.Practices.Prism.ViewModel;
 
-namespace Blitz.Client.Trading.QuoteBlotter
+namespace Blitz.Client.Trading.Quote.Blotter
 {
     public class QuoteBlotterItemViewModel : NotificationObject
     {
@@ -25,6 +25,10 @@ namespace Blitz.Client.Trading.QuoteBlotter
         public decimal? BestOfferVol { get; set; }
 
         public string Notes { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         public string CreatedBy { get; set; }
 

@@ -8,7 +8,7 @@ using Blitz.Common.Trading.Quote.Edit;
 
 using Microsoft.Practices.Prism.Commands;
 
-namespace Blitz.Client.Trading.QuoteEdit
+namespace Blitz.Client.Trading.Quote.Edit
 {
     public class QuoteEditViewModel : Workspace
     {

@@ -2,7 +2,7 @@
 
 using Blitz.Common.Trading.Quote.Edit;
 
-namespace Blitz.Client.Trading.QuoteEdit
+namespace Blitz.Client.Trading.Quote.Edit
 {
     public class QuoteModel : ModelWithValidation<QuoteModel, QuoteValidation>
     {
@@ -22,6 +22,23 @@ namespace Blitz.Client.Trading.QuoteEdit
                 if (Equals(value, _instrument)) return;
                 _instrument = value;
                 RaisePropertyChanged(() => Instrument);
+            }
+        }
+
+        #endregion
+
+        #region Notes
+
+        private string _notes;
+
+        public string Notes
+        {
+            get { return _notes; }
+            set
+            {
+                if (value == _notes) return;
+                _notes = value;
+                RaisePropertyChanged(() => Notes);
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace Blitz.Client.Trading.QuoteBlotter
+﻿namespace Blitz.Client.Trading.Quote.Blotter
 {
     public partial class QuoteBlotterView
     {

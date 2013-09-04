@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
-using Blitz.Client.Trading.QuoteEdit;
+using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Blotter;
 
-namespace Blitz.Client.Trading.QuoteBlotter
+namespace Blitz.Client.Trading.Quote.Blotter
 {
     public interface IQuoteBlotterService
     {

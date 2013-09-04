@@ -2,11 +2,9 @@
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.ModernUI.Assets.Icons;
-using Blitz.Client.Trading.QuoteBlotter;
-using Blitz.Client.Trading.QuoteEdit;
+using Blitz.Client.Trading.Quote.Blotter;
+using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Common.Core;
-using Blitz.Common.Trading.Quote;
-using Blitz.Common.Trading.Quote.Edit;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;

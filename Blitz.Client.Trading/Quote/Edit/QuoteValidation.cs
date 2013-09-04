@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 
-namespace Blitz.Client.Trading.QuoteEdit
+namespace Blitz.Client.Trading.Quote.Edit
 {
     public class QuoteValidation : AbstractValidator<QuoteModel>
     {
         public QuoteValidation()
         {
-            RuleFor(customer => customer.Instrument).NotNull();
+            RuleFor(x => x.Instrument).NotNull();
+            RuleFor(x => x.Notes).NotEmpty();
         }
     }
 }

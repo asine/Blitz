@@ -17,11 +17,11 @@ namespace Blitz.Common.Trading.Quote
 
         public decimal? BestOffer { get; set; }
 
-        public decimal? BestBidVol { get; set; }
-
-        public decimal? BestOfferVol { get; set; }
-
         public string Notes { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         public string CreatedBy { get; set; }
 

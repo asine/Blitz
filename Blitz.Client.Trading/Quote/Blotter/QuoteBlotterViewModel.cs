@@ -3,11 +3,12 @@
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
 
-namespace Blitz.Client.Trading.QuoteBlotter
+namespace Blitz.Client.Trading.Quote.Blotter
 {
     public class QuoteBlotterViewModel : Workspace
     {
@@ -52,7 +53,11 @@ namespace Blitz.Client.Trading.QuoteBlotter
                     var items = quotes.Select(x => new QuoteBlotterItemViewModel
                     {
                         Id = x.Id,
-                        Instrument = x.InstrumentName
+                        Instrument = x.InstrumentName,
+                        CreatedBy = x.CreatedBy,
+                        CreatedOn = x.CreatedOn,
+                        ModifiedBy = x.ModifiedBy,
+                        ModifiedOn = x.ModifiedOn
                     });
                     Items.AddRange(items);
                 })
@@ -65,6 +70,7 @@ namespace Blitz.Client.Trading.QuoteBlotter
         {
             var newQuoteToolBarItem = toolBarService.CreateToolBarButtonItem();
             newQuoteToolBarItem.DisplayName = "New";
+            newQuoteToolBarItem.ImageName = IconNames.NEW;
             newQuoteToolBarItem.Command = new DelegateCommand(() =>
             {
                 _service.NewQuote();

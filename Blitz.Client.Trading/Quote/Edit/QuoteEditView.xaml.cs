@@ -1,4 +1,4 @@
-﻿namespace Blitz.Client.Trading.QuoteEdit
+﻿namespace Blitz.Client.Trading.Quote.Edit
 {
     public partial class QuoteEditView
     {
