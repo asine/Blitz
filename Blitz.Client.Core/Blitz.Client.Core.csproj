@@ -92,12 +92,14 @@
   <ItemGroup>
     <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
+    <Compile Include="TPL\DesktopTaskScheduler.cs" />
     <Compile Include="EPPlus\DataWriterModel.cs" />
     <Compile Include="EPPlus\ReflectionDataWriter.cs" />
     <Compile Include="EPPlus\ExcelPackageModel.cs" />
     <Compile Include="EPPlus\ExcelPackageWriter.cs" />
     <Compile Include="EPPlus\ExcelWorkSheetModel.cs" />
     <Compile Include="EPPlus\ExcelWorkSheetWriter.cs" />
+    <Compile Include="TPL\ITaskScheduler.cs" />
     <Compile Include="MVVM\AnonymousDisposable.cs" />
     <Compile Include="MVVM\BindableCollection.cs" />
     <Compile Include="MVVM\BindableCollectionFactory.cs" />
@@ -153,11 +155,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MVVM\TabControlRegionAdapter.cs" />
-    <Compile Include="TaskExtensions.cs" />
+    <Compile Include="TPL\TaskExtensions.cs" />
     <Compile Include="MVVM\UseViewAttribute.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="MVVM\ViewService.cs" />
-    <Compile Include="Unit.cs" />
+    <Compile Include="TPL\Unit.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

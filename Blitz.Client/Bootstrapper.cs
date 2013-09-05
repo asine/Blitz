@@ -6,11 +6,13 @@ using Agatha.Common;
 using Agatha.Unity;
 
 using Blitz.Client.Common.ExportToExcel;
+using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Dialog;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.Core.TPL;
 using Blitz.Client.Shell;
 using Blitz.Client.Trading;
 using Blitz.Common.Agatha;
@@ -47,6 +49,7 @@ namespace Blitz.Client
             base.ConfigureContainer();
 
             Container
+                .RegisterSingleton<ITaskScheduler, DesktopTaskScheduler>()
                 .RegisterTransient<IViewService, ViewService>()
                 .RegisterType(typeof(IDialogBuilder<>), typeof(DialogBuilder<>))
                 .RegisterTransient<IStandardDialogBuilder, StandardDialogBuilder>()

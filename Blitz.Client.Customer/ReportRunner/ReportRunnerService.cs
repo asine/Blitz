@@ -11,6 +11,7 @@ using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.Core.TPL;
 using Blitz.Client.Customer.ReportLayout;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;

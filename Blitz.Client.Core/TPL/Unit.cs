@@ -1,4 +1,4 @@
-﻿namespace Blitz.Client.Core
+﻿namespace Blitz.Client.Core.TPL
 {
     public class Unit
     {

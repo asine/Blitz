@@ -3,6 +3,7 @@ using System.Linq;
 
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.TPL;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
@@ -12,6 +13,7 @@ namespace Blitz.Client.Customer.ReportLayout
 {
     public class ReportLayoutViewModel : Workspace
     {
+        private readonly ITaskScheduler _taskScheduler;
         private readonly IReportLayoutService _service;
         private readonly IViewService _viewService;
         private readonly Func<ReportLayoutItemViewModel> _reportLayoutItemViewModelFactory;
@@ -30,11 +32,12 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public DelegateCommand OkCommand { get; private set; }
 
-        public ReportLayoutViewModel(ILog log, IDispatcherService dispatcherService,
+        public ReportLayoutViewModel(ILog log, IDispatcherService dispatcherService, ITaskScheduler taskScheduler,
             IReportLayoutService service, IViewService viewService, BindableCollectionFactory bindableCollectionFactory, 
             Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
             : base(log, dispatcherService)
         {
+            _taskScheduler = taskScheduler;
             _service = service;
             _viewService = viewService;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
@@ -62,8 +65,8 @@ namespace Blitz.Client.Customer.ReportLayout
                     Available.AddRange(response.Measures.Select(CreateMeasure));
                 })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"))
-                .Finally(Idle);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _taskScheduler.Default)
+                .Finally(Idle, _taskScheduler.Default);
         }
 
         private ReportLayoutItemViewModel CreateDimension(AttributeDto dimension)

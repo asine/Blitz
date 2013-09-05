@@ -3,6 +3,7 @@
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.Core.TPL;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Common.Core;
 
@@ -15,6 +16,7 @@ namespace Blitz.Client.Common.ReportRunner
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
         private readonly IViewService _viewService;
+        private readonly ITaskScheduler _taskScheduler;
 
         private readonly IToolBarService _toolBarService;
         private readonly List<IToolBarItem> _toolBarItems;
@@ -44,12 +46,13 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        protected ReportRunnerViewModel(ILog log, IViewService viewService, IDispatcherService dispatcherService, IToolBarService toolBarService,
+        protected ReportRunnerViewModel(ILog log, IViewService viewService, ITaskScheduler taskScheduler, IDispatcherService dispatcherService, IToolBarService toolBarService,
             TReportParameterViewModel reportParameterViewModel,
             TReportRunnerService reportRunnerService)
             : base(log, dispatcherService)
         {
             _viewService = viewService;
+            _taskScheduler = taskScheduler;
             _toolBarService = toolBarService;
             _reportParameterViewModel = reportParameterViewModel;
             _reportRunnerService = reportRunnerService;
@@ -70,8 +73,8 @@ namespace Blitz.Client.Common.ReportRunner
                 .ThenDo(() => _viewService.RegionBuilder<TReportParameterViewModel>()
                     .Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"))
-                .Finally(Idle);
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _taskScheduler.Default)
+                .Finally(Idle, _taskScheduler.Default);
         }
 
         private void GenerateReport()
@@ -92,7 +95,7 @@ namespace Blitz.Client.Common.ReportRunner
                         }
                     })
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"))
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"), _taskScheduler.Default)
                 .Finally(() =>
                 {
                     Idle();
@@ -100,7 +103,7 @@ namespace Blitz.Client.Common.ReportRunner
                     IsExpanded = false;
 
                     _exportToExcel.RaiseCanExecuteChanged();
-                });
+                }, _taskScheduler.Default);
         }
 
         protected virtual bool CanExecuteGenerateReport()
@@ -125,13 +128,13 @@ namespace Blitz.Client.Common.ReportRunner
             BusyAsync("... Exporting to Excel ...")
                 .ThenDo(_ => _reportRunnerService.ExportToExcel(_response))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"))
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _taskScheduler.Default)
                 .Finally(() =>
                 {
                     Idle();
 
                     IsExpanded = false;
-                });
+                }, _taskScheduler.Default);
         }
 
         protected virtual bool CanExportToExcel()

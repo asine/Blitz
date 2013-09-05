@@ -91,6 +91,9 @@
     <Compile Include="Trading\Quote\QuoteStatus.cs" />
     <Compile Include="Trading\Quote\Edit\GetQuoteRequest.cs" />
     <Compile Include="Trading\Quote\Edit\GetQuoteResponse.cs" />
+    <Compile Include="Trading\Security\Chart\GetHistoricDataRequest.cs" />
+    <Compile Include="Trading\Security\Chart\GetHistoricDataResponse.cs" />
+    <Compile Include="Trading\Security\Chart\HistoricalDataDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

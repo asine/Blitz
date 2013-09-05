@@ -1,49 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Blitz.Common.Core;
 
-namespace Blitz.Client.Core
+namespace Blitz.Client.Core.TPL
 {
     public static class TaskExtensions
     {
-        public static Task<T> ToTask<T>(this T t)
-        {
-            // http://stackoverflow.com/questions/7514375/chaining-two-functions-taska-and-a-taskb
-
-            return new Task<T>(() => t);
-        }
-
-        public static Task<U> SelectMany<T, U>(this Task<T> task, Func<T, Task<U>> f)
-        {
-            // http://stackoverflow.com/questions/7514375/chaining-two-functions-taska-and-a-taskb
-
-            return new Task<U>(() =>
-            {
-                task.Start();
-                var t = task.Result;
-                var ut = f(t);
-                ut.Start();
-                return ut.Result;
-            });
-        }
-
-        public static Task<V> SelectMany<T, U, V>(this Task<T> task, Func<T, Task<U>> f, Func<T, U, V> c)
-        {
-            // http://stackoverflow.com/questions/7514375/chaining-two-functions-taska-and-a-taskb
-
-            return new Task<V>(() =>
-            {
-                task.Start();
-                var t = task.Result;
-                var ut = f(t);
-                ut.Start();
-                var utr = ut.Result;
-                return c(t, utr);
-            });
-        }
-
         /// <summary>
         /// When first completes, pass the results to next.
         /// next is only called if first completed successfully.
@@ -51,7 +16,7 @@ namespace Blitz.Client.Core
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <returns></returns>
-        public static Task Then(this Task first, Func<Task> next)
+        public static System.Threading.Tasks.Task Then(this System.Threading.Tasks.Task first, Func<System.Threading.Tasks.Task> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
 
@@ -152,7 +117,7 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
-        public static Task<T1> Then<T1>(this Task first, Func<Task<T1>> next)
+        public static Task<T1> Then<T1>(this System.Threading.Tasks.Task first, Func<Task<T1>> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
 
@@ -208,7 +173,7 @@ namespace Blitz.Client.Core
             return tcs.Task;
         }
 
-        public static Task Then<T1>(this Task<T1> first, Func<T1, Task> next)
+        public static System.Threading.Tasks.Task Then<T1>(this Task<T1> first, Func<T1, System.Threading.Tasks.Task> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
 
@@ -305,7 +270,7 @@ namespace Blitz.Client.Core
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <returns></returns>
-        public static Task ThenDo<T1>(this Task<T1> first, Action<T1> next)
+        public static System.Threading.Tasks.Task ThenDo<T1>(this Task<T1> first, Action<T1> next)
         {
             if (first == null) throw new ArgumentNullException("first");
             if (next == null) throw new ArgumentNullException("next");
@@ -345,7 +310,7 @@ namespace Blitz.Client.Core
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <returns></returns>
-        public static Task ThenDo(this Task first, Action next)
+        public static System.Threading.Tasks.Task ThenDo(this System.Threading.Tasks.Task first, Action next)
         {
             if (first == null) throw new ArgumentNullException("first");
             if (next == null) throw new ArgumentNullException("next");
@@ -384,11 +349,11 @@ namespace Blitz.Client.Core
         /// </summary>
         /// <param name="task"></param>
         /// <param name="action"></param>
-        public static void Finally(this Task task, Action action)
+        public static void Finally(this System.Threading.Tasks.Task task, Action action, TaskScheduler scheduler)
         {
             if (action == null) throw new ArgumentNullException("action");
 
-            task.ContinueWith(t => action(), TaskContinuationOptions.ExecuteSynchronously);
+            task.ContinueWith(t => action(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, scheduler);
         }
 
         /// <summary>
@@ -398,7 +363,7 @@ namespace Blitz.Client.Core
         /// <param name="task"></param>
         /// <param name="exceptionHandler"></param>
         /// <returns></returns>
-        public static Task Catch<TException>(this Task task, Action<TException> exceptionHandler)
+        public static System.Threading.Tasks.Task Catch<TException>(this System.Threading.Tasks.Task task, Action<TException> exceptionHandler)
             where TException : Exception
         {
             if (task == null) throw new ArgumentNullException("task");
@@ -493,9 +458,9 @@ namespace Blitz.Client.Core
         /// <param name="task"></param>
         /// <param name="exceptionHandler"></param>
         /// <returns></returns>
-        public static Task CatchAndHandle(this Task task, Action<Exception> exceptionHandler)
+        public static System.Threading.Tasks.Task CatchAndHandle(this System.Threading.Tasks.Task task, Action<Exception> exceptionHandler, TaskScheduler scheduler)
         {
-            return CatchAndHandle<Exception>(task, exceptionHandler);
+            return CatchAndHandle<Exception>(task, exceptionHandler, scheduler);
         }
 
         /// <summary>
@@ -506,7 +471,7 @@ namespace Blitz.Client.Core
         /// <param name="task"></param>
         /// <param name="exceptionHandler"></param>
         /// <returns></returns>
-        public static Task CatchAndHandle<TException>(this Task task, Action<TException> exceptionHandler)
+        public static System.Threading.Tasks.Task CatchAndHandle<TException>(this System.Threading.Tasks.Task task, Action<TException> exceptionHandler, TaskScheduler scheduler)
             where TException : Exception
         {
             if (task == null) throw new ArgumentNullException("task");
@@ -541,7 +506,7 @@ namespace Blitz.Client.Core
 
                     tcs.TrySetResult(null);
                 }
-            }, TaskContinuationOptions.ExecuteSynchronously);
+            }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, scheduler);
 
             return tcs.Task;
         }
@@ -551,7 +516,7 @@ namespace Blitz.Client.Core
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        public static Task HandleExceptions(this Task task)
+        public static System.Threading.Tasks.Task HandleExceptions(this System.Threading.Tasks.Task task)
         {
             if (task == null) throw new ArgumentNullException("task");
 
@@ -611,7 +576,7 @@ namespace Blitz.Client.Core
         /// <param name="task"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public static Task LogException(this Task task, ILog logger)
+        public static System.Threading.Tasks.Task LogException(this System.Threading.Tasks.Task task, ILog logger)
         {
             task.ContinueWith(t =>
             {
@@ -627,10 +592,32 @@ namespace Blitz.Client.Core
         /// Task that immediately completes.
         /// </summary>
         /// <returns></returns>
-        public static Task Completed()
+        public static System.Threading.Tasks.Task Completed()
         {
             var tcs = new TaskCompletionSource<object>();
             tcs.TrySetResult(null);
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// Task that immediately completes.
+        /// </summary>
+        /// <returns></returns>
+        public static Task<T> Completed<T>()
+        {
+            var tcs = new TaskCompletionSource<T>();
+            tcs.TrySetResult(default(T));
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// Task that immediately return the value passed in.
+        /// </summary>
+        /// <returns></returns>
+        public static Task<T> Return<T>(T value)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            tcs.TrySetResult(value);
             return tcs.Task;
         }
     }

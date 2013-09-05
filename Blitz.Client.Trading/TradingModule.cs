@@ -4,6 +4,7 @@ using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Client.Trading.Quote.Blotter;
 using Blitz.Client.Trading.Quote.Edit;
+using Blitz.Client.Trading.Security.Chart;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
@@ -31,7 +32,8 @@ namespace Blitz.Client.Trading
         {
             _container
                 .RegisterTransient<IQuoteBlotterService, QuoteBlotterService>()
-                .RegisterTransient<IQuoteEditService, QuoteEditService>();
+                .RegisterTransient<IQuoteEditService, QuoteEditService>()
+                .RegisterTransient<IChartService, ChartService>();
 
             CreateMenu();
         }
@@ -40,6 +42,7 @@ namespace Blitz.Client.Trading
         {
             var tradingMenuItem = _menuService.CreateMenuGroupItem();
             tradingMenuItem.DisplayName = "Trading";
+            _menuService.Items.Add(tradingMenuItem);
 
             var newReportMenuItem = _menuService.CreateMenuButtonItem();
             newReportMenuItem.DisplayName = "New Blotter";
@@ -54,7 +57,18 @@ namespace Blitz.Client.Trading
             });
             tradingMenuItem.Items.Add(newReportMenuItem);
 
-            _menuService.Items.Add(tradingMenuItem);
+            var chartMenuItem = _menuService.CreateMenuButtonItem();
+            chartMenuItem.DisplayName = "Chart";
+            chartMenuItem.ImageName = IconNames.NEW;
+            chartMenuItem.Command = new DelegateCommand(() =>
+            {
+                _log.Info("Adding Chart to Main region");
+                var viewModel = _viewService.RegionBuilder<ChartViewModel>()
+                    .WithScope()
+                    .Show(RegionNames.MAIN);
+                ((ISupportActivationState)viewModel).Activate();
+            });
+            tradingMenuItem.Items.Add(chartMenuItem);
         }
     }
 }

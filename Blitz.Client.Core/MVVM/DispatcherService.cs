@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
+using Blitz.Client.Core.TPL;
+
 namespace Blitz.Client.Core.MVVM
 {
     public class DispatcherService : IDispatcherService

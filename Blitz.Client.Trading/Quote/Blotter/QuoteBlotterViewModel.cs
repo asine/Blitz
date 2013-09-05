@@ -3,6 +3,7 @@
 using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
+using Blitz.Client.Core.TPL;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Common.Core;
 
@@ -12,6 +13,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
 {
     public class QuoteBlotterViewModel : Workspace
     {
+        private readonly ITaskScheduler _taskScheduler;
         private readonly IViewService _viewService;
         private readonly IQuoteBlotterService _service;
 
@@ -19,10 +21,11 @@ namespace Blitz.Client.Trading.Quote.Blotter
 
         public DelegateCommand<QuoteBlotterItemViewModel> OpenCommand { get; private set; }
 
-        public QuoteBlotterViewModel(ILog log, IDispatcherService dispatcherService, IViewService viewService,
+        public QuoteBlotterViewModel(ILog log, IDispatcherService dispatcherService, ITaskScheduler taskScheduler, IViewService viewService,
             BindableCollectionFactory bindableCollectionFactory, IQuoteBlotterService service, IToolBarService toolBarService) 
             : base(log, dispatcherService)
         {
+            _taskScheduler = taskScheduler;
             _viewService = viewService;
             _service = service;
             DisplayName = "Blotter";
@@ -62,8 +65,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
                     Items.AddRange(items);
                 })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"))
-                .Finally(Idle);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"), _taskScheduler.Default)
+                .Finally(Idle, _taskScheduler.Default);
         }
 
         private void CreateToolBar(IToolBarService toolBarService)

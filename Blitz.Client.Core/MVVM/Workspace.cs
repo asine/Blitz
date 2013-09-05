@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using Blitz.Client.Core.TPL;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
