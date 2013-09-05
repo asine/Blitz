@@ -16,7 +16,7 @@ namespace Blitz.Client.Core.TPL
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task Then(this System.Threading.Tasks.Task first, Func<System.Threading.Tasks.Task> next)
+        public static Task Then(this Task first, Func<Task> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
 
@@ -117,7 +117,7 @@ namespace Blitz.Client.Core.TPL
             return tcs.Task;
         }
 
-        public static Task<T1> Then<T1>(this System.Threading.Tasks.Task first, Func<Task<T1>> next)
+        public static Task<T1> Then<T1>(this Task first, Func<Task<T1>> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
 
@@ -173,7 +173,7 @@ namespace Blitz.Client.Core.TPL
             return tcs.Task;
         }
 
-        public static System.Threading.Tasks.Task Then<T1>(this Task<T1> first, Func<T1, System.Threading.Tasks.Task> next)
+        public static Task Then<T1>(this Task<T1> first, Func<T1, Task> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
 
@@ -270,7 +270,7 @@ namespace Blitz.Client.Core.TPL
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task ThenDo<T1>(this Task<T1> first, Action<T1> next)
+        public static Task ThenDo<T1>(this Task<T1> first, Action<T1> next)
         {
             if (first == null) throw new ArgumentNullException("first");
             if (next == null) throw new ArgumentNullException("next");
@@ -310,7 +310,7 @@ namespace Blitz.Client.Core.TPL
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task ThenDo(this System.Threading.Tasks.Task first, Action next)
+        public static Task ThenDo(this Task first, Action next)
         {
             if (first == null) throw new ArgumentNullException("first");
             if (next == null) throw new ArgumentNullException("next");
@@ -349,7 +349,8 @@ namespace Blitz.Client.Core.TPL
         /// </summary>
         /// <param name="task"></param>
         /// <param name="action"></param>
-        public static void Finally(this System.Threading.Tasks.Task task, Action action, TaskScheduler scheduler)
+        /// <param name="scheduler"></param>
+        public static void Finally(this Task task, Action action, TaskScheduler scheduler)
         {
             if (action == null) throw new ArgumentNullException("action");
 
@@ -363,7 +364,7 @@ namespace Blitz.Client.Core.TPL
         /// <param name="task"></param>
         /// <param name="exceptionHandler"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task Catch<TException>(this System.Threading.Tasks.Task task, Action<TException> exceptionHandler)
+        public static Task Catch<TException>(this Task task, Action<TException> exceptionHandler)
             where TException : Exception
         {
             if (task == null) throw new ArgumentNullException("task");
@@ -457,8 +458,9 @@ namespace Blitz.Client.Core.TPL
         /// </summary>
         /// <param name="task"></param>
         /// <param name="exceptionHandler"></param>
+        /// <param name="scheduler"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task CatchAndHandle(this System.Threading.Tasks.Task task, Action<Exception> exceptionHandler, TaskScheduler scheduler)
+        public static Task CatchAndHandle(this Task task, Action<Exception> exceptionHandler, TaskScheduler scheduler)
         {
             return CatchAndHandle<Exception>(task, exceptionHandler, scheduler);
         }
@@ -470,8 +472,9 @@ namespace Blitz.Client.Core.TPL
         /// <typeparam name="TException"></typeparam>
         /// <param name="task"></param>
         /// <param name="exceptionHandler"></param>
+        /// <param name="scheduler"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task CatchAndHandle<TException>(this System.Threading.Tasks.Task task, Action<TException> exceptionHandler, TaskScheduler scheduler)
+        public static Task CatchAndHandle<TException>(this Task task, Action<TException> exceptionHandler, TaskScheduler scheduler)
             where TException : Exception
         {
             if (task == null) throw new ArgumentNullException("task");
@@ -516,7 +519,7 @@ namespace Blitz.Client.Core.TPL
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task HandleExceptions(this System.Threading.Tasks.Task task)
+        public static Task HandleExceptions(this Task task)
         {
             if (task == null) throw new ArgumentNullException("task");
 
@@ -576,7 +579,7 @@ namespace Blitz.Client.Core.TPL
         /// <param name="task"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task LogException(this System.Threading.Tasks.Task task, ILog logger)
+        public static Task LogException(this Task task, ILog logger)
         {
             task.ContinueWith(t =>
             {
@@ -592,7 +595,7 @@ namespace Blitz.Client.Core.TPL
         /// Task that immediately completes.
         /// </summary>
         /// <returns></returns>
-        public static System.Threading.Tasks.Task Completed()
+        public static Task Completed()
         {
             var tcs = new TaskCompletionSource<object>();
             tcs.TrySetResult(null);
