@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
+using Blitz.Client.Core.MVVM;
+
 using GongSolutions.Wpf.DragDrop;
 
 namespace Blitz.Client.Customer.ReportLayout
@@ -11,12 +13,12 @@ namespace Blitz.Client.Customer.ReportLayout
     public class ReportLayoutDropTarget : IDropTarget
     {
         private readonly Func<ReportLayoutItemViewModel, bool> _predicate;
-        private readonly ObservableCollection<ReportLayoutItemViewModel> _target;
-        private readonly List<ObservableCollection<ReportLayoutItemViewModel>> _sources;
+        private readonly BindableCollection<ReportLayoutItemViewModel> _target;
+        private readonly List<BindableCollection<ReportLayoutItemViewModel>> _sources;
 
-        public ReportLayoutDropTarget(Func<ReportLayoutItemViewModel, bool> predicate, 
-            ObservableCollection<ReportLayoutItemViewModel> target, 
-            params ObservableCollection<ReportLayoutItemViewModel>[] sources)
+        public ReportLayoutDropTarget(Func<ReportLayoutItemViewModel, bool> predicate,
+            BindableCollection<ReportLayoutItemViewModel> target,
+            params BindableCollection<ReportLayoutItemViewModel>[] sources)
         {
             _predicate = predicate;
             _target = target;

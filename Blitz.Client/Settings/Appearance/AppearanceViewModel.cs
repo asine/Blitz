@@ -54,7 +54,7 @@ namespace Blitz.Client.Settings.Appearance
             Color.FromRgb(0x87, 0x79, 0x4e),   // taupe
         };
 
-        public ObservableCollection<string> FontSizes { get; private set; }
+        public BindableCollection<string> FontSizes { get; private set; }
 
         #region SelectedFontSize
 
@@ -75,7 +75,7 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public ObservableCollection<Color> AccentColors { get; private set; }
+        public BindableCollection<Color> AccentColors { get; private set; }
 
         #region SelectedAccentColor
 
@@ -96,7 +96,7 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public ObservableCollection<ThemeItemViewModel> Themes { get; private set; }
+        public BindableCollection<ThemeItemViewModel> Themes { get; private set; }
 
         #region SelectedTheme
 
@@ -118,27 +118,29 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public AppearanceViewModel(ILog log)
+        public AppearanceViewModel(ILog log, BindableCollectionFactory bindableCollectionFactory)
             : base(log)
         {
             DisplayName = "Appearance";
 
-            FontSizes = new ObservableCollection<string> {FONT_SMALL, FONT_LARGE};
+            FontSizes = bindableCollectionFactory.Get<string>();
+            FontSizes.AddRange(new[] {FONT_SMALL, FONT_LARGE});
 
             SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FONT_LARGE : FONT_SMALL;
 
-            AccentColors = new ObservableCollection<Color>();
+            AccentColors = bindableCollectionFactory.Get<Color>();
             foreach (var accentColor in accentColors)
             {
                 AccentColors.Add(accentColor);
             }
 
             // add the default themes
-            Themes = new ObservableCollection<ThemeItemViewModel>
+            Themes = bindableCollectionFactory.Get<ThemeItemViewModel>();
+            Themes.AddRange(new[]
             {
                 new ThemeItemViewModel {DisplayName = "Dark", Source = AppearanceManager.DarkThemeSource},
                 new ThemeItemViewModel {DisplayName = "Light", Source = AppearanceManager.LightThemeSource}
-            };
+            });
 
             SyncThemeAndColor();
 

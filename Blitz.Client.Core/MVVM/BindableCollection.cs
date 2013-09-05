@@ -2,6 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Threading.Tasks;
+
+using Blitz.Client.Core.TPL;
 
 namespace Blitz.Client.Core.MVVM
 {
@@ -25,12 +28,19 @@ namespace Blitz.Client.Core.MVVM
 
         public void Refresh()
         {
-            _dispatcherService.ExecuteSyncOnUI(() =>
-            {
-                OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-                OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            });
+            _dispatcherService.ExecuteSyncOnUI(RefreshInternal);
+        }
+
+        public Task RefreshAsync()
+        {
+            return _dispatcherService.ExecuteAsyncOnUI(RefreshInternal);
+        }
+
+        private void RefreshInternal()
+        {
+            OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+            OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         protected override sealed void InsertItem(int index, T item)
@@ -99,46 +109,66 @@ namespace Blitz.Client.Core.MVVM
             }
         }
 
-        public virtual void AddRange(IEnumerable<T> items)
+        public void AddRange(IEnumerable<T> items)
         {
             _dispatcherService.ExecuteSyncOnUI(() =>
             {
-                var previousNotificationSetting = IsNotifying;
-                IsNotifying = false;
-                var index = Count;
-                foreach (var item in items)
-                {
-                    InsertItemBase(index, item);
-                    index++;
-                }
-                IsNotifying = previousNotificationSetting;
+                AddRangeInternal(items);
 
-                OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-                OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                RefreshInternal();
             });
         }
 
-        public virtual void RemoveRange(IEnumerable<T> items)
+        public Task AddRangeAsync(IEnumerable<T> items)
+        {
+            return _dispatcherService
+                .ExecuteAsyncOnUI(() => AddRangeInternal(items))
+                .Then(RefreshAsync);
+        }
+
+        private void AddRangeInternal(IEnumerable<T> items)
+        {
+            var previousNotificationSetting = IsNotifying;
+            IsNotifying = false;
+            var index = Count;
+            foreach (var item in items)
+            {
+                InsertItemBase(index, item);
+                index++;
+            }
+            IsNotifying = previousNotificationSetting;
+        }
+
+        public void RemoveRange(IEnumerable<T> items)
         {
             _dispatcherService.ExecuteSyncOnUI(() =>
             {
-                var previousNotificationSetting = IsNotifying;
-                IsNotifying = false;
-                foreach (var item in items)
-                {
-                    var index = IndexOf(item);
-                    if (index >= 0)
-                    {
-                        RemoveItemBase(index);
-                    }
-                }
-                IsNotifying = previousNotificationSetting;
+                RemoveRangeInternal(items);
 
-                OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-                OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                RefreshInternal();
             });
+        }
+
+        public Task RemoveRangeAsync(IEnumerable<T> items)
+        {
+            return _dispatcherService
+                .ExecuteAsyncOnUI(() => RemoveRangeInternal(items))
+                .Then(RefreshAsync);
+        }
+
+        private void RemoveRangeInternal(IEnumerable<T> items)
+        {
+            var previousNotificationSetting = IsNotifying;
+            IsNotifying = false;
+            foreach (var item in items)
+            {
+                var index = IndexOf(item);
+                if (index >= 0)
+                {
+                    RemoveItemBase(index);
+                }
+            }
+            IsNotifying = previousNotificationSetting;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.TPL;
 using Blitz.Common.Core;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 using Blitz.Common.Core;
@@ -11,7 +10,7 @@ namespace Blitz.Client.Core.MVVM.Dialog
     [UseView(typeof(DialogView))]
     public class DialogViewModel<T> : Workspace
     {
-        public ObservableCollection<DialogItemViewModel<T>> Answers { get; private set; }
+        public BindableCollection<DialogItemViewModel<T>> Answers { get; private set; }
 
         public T SelectedAnswer { get; private set; }
 
@@ -19,10 +18,10 @@ namespace Blitz.Client.Core.MVVM.Dialog
 
         public DelegateCommand<DialogItemViewModel<T>> ExecuteCommand { get; private set; } 
 
-        public DialogViewModel(ILog log, IDispatcherService dispatcherService) 
+        public DialogViewModel(ILog log, IDispatcherService dispatcherService, BindableCollectionFactory bindableCollectionFactory) 
             : base(log, dispatcherService)
         {
-            Answers = new ObservableCollection<DialogItemViewModel<T>>();
+            Answers = bindableCollectionFactory.Get<DialogItemViewModel<T>>();
 
             ExecuteCommand = new DelegateCommand<DialogItemViewModel<T>>(x =>
             {

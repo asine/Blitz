@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 
 using Blitz.Client.Core.MVVM;
 using Blitz.Common.Core;
@@ -8,7 +7,7 @@ namespace Blitz.Client.Common.ReportParameter.Simple
 {
     public class SimpleReportParameterViewModel : Workspace
     {
-        public ObservableCollection<DateTime> Dates { get; private set; } 
+        public BindableCollection<DateTime> Dates { get; private set; } 
 
         #region SelectedDate
 
@@ -27,10 +26,10 @@ namespace Blitz.Client.Common.ReportParameter.Simple
 
         #endregion
 
-        public SimpleReportParameterViewModel(ILog log, IDispatcherService dispatcherService) 
+        public SimpleReportParameterViewModel(ILog log, IDispatcherService dispatcherService, BindableCollectionFactory bindableCollectionFactory) 
             : base(log, dispatcherService)
         {
-            Dates = new ObservableCollection<DateTime>();
+            Dates = bindableCollectionFactory.Get<DateTime>();
         }
     }
 }

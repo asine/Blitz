@@ -117,6 +117,14 @@ namespace Blitz.Client.Core.TPL
             return tcs.Task;
         }
 
+        /// <summary>
+        /// When first completes.
+        /// next is only called if first completed successfully.
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task<T1> Then<T1>(this Task first, Func<Task<T1>> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
@@ -173,6 +181,14 @@ namespace Blitz.Client.Core.TPL
             return tcs.Task;
         }
 
+        /// <summary>
+        /// When first completes, pass the results to next.
+        /// next is only called if first completed successfully.
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task Then<T1>(this Task<T1> first, Func<T1, Task> next)
         {
             // http://blogs.msdn.com/b/pfxteam/archive/2010/11/21/10094564.aspx?Redirected=true
@@ -229,6 +245,15 @@ namespace Blitz.Client.Core.TPL
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Execute an Func, Task completes when it is finished.
+        /// next is only called if first completed successfully.
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public static Task<T2> ThenDo<T1, T2>(this Task<T1> first, Func<T1, T2> next)
         {
             if (first == null) throw new ArgumentNullException("first");
@@ -265,6 +290,7 @@ namespace Blitz.Client.Core.TPL
 
         /// <summary>
         /// Execute an Action, Task completes when it is finished.
+        /// next is only called if first completed successfully.
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <param name="first"></param>
