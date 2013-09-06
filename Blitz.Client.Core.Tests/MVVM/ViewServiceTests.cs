@@ -2,8 +2,7 @@
 
 using Blitz.Client.Core.MVVM;
 using Blitz.Common.Core;
-
-using Moq;
+using Blitz.Tests.UnityAutoMockContainer;
 
 using NUnit.Framework;
 
@@ -38,10 +37,12 @@ namespace Blitz.Client.Core.Tests.MVVM
         [Test]
         public void check_viewmodel_is_set_as_the_datacontext_of_the_view()
         {
+            var container = new UnityAutoMockContainer();
+
             var view = new UserControl();
             Assert.That(view.DataContext, Is.Null);
 
-            var viewModel = new StubViewModel(new Mock<ILog>().Object, new Mock<IDispatcherService>().Object);
+            var viewModel = container.Resolve<StubViewModel>();
 
             ViewService.BindViewModel(view, viewModel);
 
@@ -51,7 +52,9 @@ namespace Blitz.Client.Core.Tests.MVVM
         [Test]
         public void check_that_the_correct_view_is_resolved_from_the_viewmodel_convention()
         {
-            var viewModel = new StubViewModel(new Mock<ILog>().Object, new Mock<IDispatcherService>().Object);
+            var container = new UnityAutoMockContainer();
+
+            var viewModel = container.Resolve<StubViewModel>();
 
             var view = ViewService.CreateView(viewModel.GetType());
 
@@ -61,7 +64,9 @@ namespace Blitz.Client.Core.Tests.MVVM
         [Test]
         public void check_that_the_correct_view_is_resolved_from_the_viewmodel_UseViewAttribute()
         {
-            var viewModel = new StubViewModelWithUseViewAttribute(new Mock<ILog>().Object, new Mock<IDispatcherService>().Object);
+            var container = new UnityAutoMockContainer();
+
+            var viewModel = container.Resolve<StubViewModelWithUseViewAttribute>();
 
             var view = ViewService.CreateView(viewModel.GetType());
 

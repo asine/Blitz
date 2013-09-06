@@ -13,9 +13,7 @@ namespace Blitz.Client.Core.Tests.TPL
             TryExecuteTask(task);
         }
 
-        protected override bool TryExecuteTaskInline(
-           Task task,
-           bool taskWasPreviouslyQueued)
+        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
         {
             return TryExecuteTask(task);
         }
