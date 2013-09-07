@@ -34,6 +34,8 @@ namespace Blitz.Client.Common.DynamicReportData
                 viewService.ShowModal(viewModel);
             });
             toolBarService.Items.Add(columnEditToolBarItem);
+
+            Disposables.Add(this.SyncToolBarItemWithViewModelActivationState(columnEditToolBarItem));
         }
 
         public Task Initialise<T>(IEnumerable<T> items)

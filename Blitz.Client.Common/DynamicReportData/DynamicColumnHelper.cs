@@ -36,7 +36,8 @@ namespace Blitz.Client.Common.DynamicReportData
                 {
                     HeaderName = propertyInfo.Name,
                     PropertyName = propertyInfo.Name,
-                    Ordinal = index
+                    Ordinal = index,
+                    IsVisible = true
                 })
                 .ToList();
         }
