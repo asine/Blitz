@@ -18,7 +18,7 @@ namespace Blitz.Client.Customer.ReportRunner
 {
     public interface IReportRunnerService : IReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
     {
-        void ShowLayout();
+        Task ShowLayoutAsync();
     }
 
     public class ReportRunnerService : ReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>, IReportRunnerService
@@ -103,9 +103,9 @@ namespace Blitz.Client.Customer.ReportRunner
             _exportToExcel.ExportToExcel(sheets);
         }
 
-        public void ShowLayout()
+        public Task ShowLayoutAsync()
         {
-            _viewService.ShowModal(_reportLayoutViewModelFactory());
+            return _viewService.ShowModalAsync(_reportLayoutViewModelFactory());
         }
     }
 }

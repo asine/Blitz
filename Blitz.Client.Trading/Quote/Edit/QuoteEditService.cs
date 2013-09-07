@@ -10,13 +10,13 @@ namespace Blitz.Client.Trading.Quote.Edit
 {
     public interface IQuoteEditService
     {
-        Task<QuoteModel> NewQuote();
+        Task<QuoteModel> NewQuoteAsync();
 
-        Task<QuoteModel> GetQuote(Guid id);
+        Task<QuoteModel> GetQuoteAsync(Guid id);
 
-        Task<GetInitialisationDataResponse> GetInitialisationData();
+        Task<GetInitialisationDataResponse> GetInitialisationDataAsync();
 
-        Task SaveQuote(QuoteModel quoteModel);
+        Task SaveQuoteAsync(QuoteModel quoteModel);
     }
 
     public class QuoteEditService : IQuoteEditService
@@ -28,7 +28,7 @@ namespace Blitz.Client.Trading.Quote.Edit
             _requestTask = requestTask;
         }
 
-        public Task<QuoteModel> NewQuote()
+        public Task<QuoteModel> NewQuoteAsync()
         {
             return Task.Factory.StartNew(() =>
             {
@@ -37,7 +37,7 @@ namespace Blitz.Client.Trading.Quote.Edit
             });
         }
 
-        public Task<QuoteModel> GetQuote(Guid id)
+        public Task<QuoteModel> GetQuoteAsync(Guid id)
         {
             var request = new GetQuoteRequest{Id = id};
             return _requestTask
@@ -58,12 +58,12 @@ namespace Blitz.Client.Trading.Quote.Edit
                 });
         }
 
-        public Task<GetInitialisationDataResponse> GetInitialisationData()
+        public Task<GetInitialisationDataResponse> GetInitialisationDataAsync()
         {
             return _requestTask.Get<GetInitialisationDataRequest, GetInitialisationDataResponse>(new GetInitialisationDataRequest());
         }
 
-        public Task SaveQuote(QuoteModel quoteModel)
+        public Task SaveQuoteAsync(QuoteModel quoteModel)
         {
             var quote = new QuoteDto
             {

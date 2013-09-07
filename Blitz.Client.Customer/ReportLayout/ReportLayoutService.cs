@@ -7,7 +7,7 @@ namespace Blitz.Client.Customer.ReportLayout
 {
     public interface IReportLayoutService
     {
-        Task<GetAttributesResponse> GetAttributes();
+        Task<GetAttributesResponse> GetAttributesAsync();
     }
 
     public class ReportLayoutService : IReportLayoutService
@@ -19,7 +19,7 @@ namespace Blitz.Client.Customer.ReportLayout
             _requestTask = requestTask;
         }
 
-        public Task<GetAttributesResponse> GetAttributes()
+        public Task<GetAttributesResponse> GetAttributesAsync()
         {
             return _requestTask.Get<GetAttributesRequest, GetAttributesResponse>(new GetAttributesRequest());
         }

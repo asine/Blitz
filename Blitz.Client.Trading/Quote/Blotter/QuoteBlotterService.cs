@@ -14,11 +14,11 @@ namespace Blitz.Client.Trading.Quote.Blotter
 {
     public interface IQuoteBlotterService
     {
-        Task<List<QuoteDto>> GetQuotes();
+        Task<List<QuoteDto>> GetQuotesAsync();
 
-        void NewQuote();
+        Task NewQuoteAsync();
 
-        void EditQuote(QuoteBlotterItemViewModel quoteBlotterItemViewModel);
+        Task EditQuoteAsync(QuoteBlotterItemViewModel quoteBlotterItemViewModel);
     }
 
     public class QuoteBlotterService : IQuoteBlotterService
@@ -34,24 +34,24 @@ namespace Blitz.Client.Trading.Quote.Blotter
             _quoteEditViewModelFactory = quoteEditViewModelFactory;
         }
 
-        public Task<List<QuoteDto>> GetQuotes()
+        public Task<List<QuoteDto>> GetQuotesAsync()
         {
             return _requestTask
                 .Get<GetQuotesRequest, GetQuotesResponse>(new GetQuotesRequest())
                 .Select(x => x.Results.ToList());
         }
 
-        public void NewQuote()
+        public Task NewQuoteAsync()
         {
             var viewModel = _quoteEditViewModelFactory();
-            _viewService.ShowModal(viewModel);
+            return _viewService.ShowModalAsync(viewModel);
         }
 
-        public void EditQuote(QuoteBlotterItemViewModel quoteBlotterItemViewModel)
+        public Task EditQuoteAsync(QuoteBlotterItemViewModel quoteBlotterItemViewModel)
         {
             var viewModel = _quoteEditViewModelFactory();
             viewModel.Initialise(quoteBlotterItemViewModel.Id);
-            _viewService.ShowModal(viewModel);
+            return _viewService.ShowModalAsync(viewModel);
         }
     }
 }

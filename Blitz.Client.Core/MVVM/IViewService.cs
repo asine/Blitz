@@ -1,4 +1,6 @@
-﻿using Blitz.Client.Core.MVVM.Dialog;
+﻿using System.Threading.Tasks;
+
+using Blitz.Client.Core.MVVM.Dialog;
 
 namespace Blitz.Client.Core.MVVM
 {
@@ -14,6 +16,9 @@ namespace Blitz.Client.Core.MVVM
         IDialogBuilder<T> DialogBuilder<T>();
 
         void ShowModal(IViewModel viewModel);
+
+        Task ShowModalAsync(IViewModel viewModel);
+
         IStandardDialogBuilder StandardDialogBuilder();
     }
 }

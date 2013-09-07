@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 using Blitz.Client.Core.MVVM.Dialog;
@@ -50,39 +51,46 @@ namespace Blitz.Client.Core.MVVM
 
         public void ShowModal(IViewModel viewModel)
         {
-            _dispatcherService.ExecuteSyncOnUI(() =>
+            _dispatcherService.ExecuteSyncOnUI(() => ShowModalInternal(viewModel));
+        }
+
+        public Task ShowModalAsync(IViewModel viewModel)
+        {
+            return _dispatcherService.ExecuteAsyncOnUI(() => ShowModalInternal(viewModel));
+        }
+
+        private void ShowModalInternal(IViewModel viewModel)
+        {
+            _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
+            var view = CreateView(viewModel.GetType());
+
+            _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
+            BindViewModel(view, viewModel);
+
+            var window = view as Window;
+            if (window != null)
             {
-                _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
-                var view = CreateView(viewModel.GetType());
+                ConnectUpClosing(viewModel, window);
 
-                _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
-                BindViewModel(view, viewModel);
-
-                var window = view as Window;
-                if (window != null)
+                window.Owner = Application.Current.MainWindow;
+                window.ShowDialog();
+            }
+            else
+            {
+                window = new ModernWindow
                 {
-                    ConnectUpClosing(viewModel, window);
+                    Content = view,
+                    Title = viewModel.DisplayName,
+                    SizeToContent = SizeToContent.WidthAndHeight,
+                    WindowStyle = WindowStyle.ToolWindow,
+                    Owner = Application.Current.MainWindow
+                };
 
-                    window.Owner = Application.Current.MainWindow;
-                    window.ShowDialog();
-                }
-                else
-                {
-                    window = new ModernWindow
-                    {
-                        Content = view,
-                        Title = viewModel.DisplayName,
-                        SizeToContent = SizeToContent.WidthAndHeight,
-                        WindowStyle = WindowStyle.ToolWindow,
-                        Owner = Application.Current.MainWindow
-                    };
+                ConnectUpActivation(viewModel, window);
+                ConnectUpClosing(viewModel, window);
 
-                    ConnectUpActivation(viewModel, window);
-                    ConnectUpClosing(viewModel, window);
-
-                    window.ShowDialog();
-                }
-            });
+                window.ShowDialog();
+            }
         }
 
         private static void ConnectUpActivation(IViewModel viewModel, Window window)

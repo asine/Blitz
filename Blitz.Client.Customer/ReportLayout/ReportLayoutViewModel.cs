@@ -57,12 +57,9 @@ namespace Blitz.Client.Customer.ReportLayout
         protected override void OnInitialise()
         {
             BusyAsync("... Loading Attributes ...")
-                .SelectMany(_ => _service.GetAttributes())
-                .SelectMany(response =>
-                {
-                    Available.AddRange(response.Dimensions.Select(CreateDimension));
-                    Available.AddRange(response.Measures.Select(CreateMeasure));
-                })
+                .SelectMany(_ => _service.GetAttributesAsync())
+                .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)))
+                .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)))
                 .LogException(Log)
                 .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);

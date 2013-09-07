@@ -5,44 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Chart="clr-namespace:Blitz.Client.Trading.Security.Chart"
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Chart:ChartViewModel}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0"
-                 Grid.Column="0"
-                 Text="{Binding Ticker}" />
-        <Button Grid.Row="0"
-                Grid.Column="1"
-                Content="Go"
-                Command="{Binding GoCommand}" />
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
+                        BusyContent="{Binding BusyMessage}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <chartingToolkit:Chart Grid.ColumnSpan="2"
-                               Grid.Row="1">
-            <chartingToolkit:Chart.Series>
-                <chartingToolkit:LineSeries Title="Open"
-                                            Name="Open"
-                                            DependentValuePath="Open"
-                                            IndependentValuePath="Date"
-                                            ItemsSource="{Binding Items}" />
-            </chartingToolkit:Chart.Series>
-            <!--<chartingToolkit:Chart.Axes>
-                <chartingToolkit:LinearAxis BorderThickness="0"
-                                            Maximum="8500"
-                                            Minimum="0"
-                                            Orientation="Y"
-                                            ShowGridLines="False" />
-            </chartingToolkit:Chart.Axes>-->
-        </chartingToolkit:Chart>
-    </Grid>
+            <TextBox Grid.Row="0"
+                     Grid.Column="0"
+                     Text="{Binding Ticker}" />
+            <Button Grid.Row="0"
+                    Grid.Column="1"
+                    Content="Go"
+                    Command="{Binding GoCommand}" />
+
+            <chartingToolkit:Chart Grid.ColumnSpan="2"
+                                   Grid.Row="1">
+                <chartingToolkit:Chart.Series>
+                    <chartingToolkit:LineSeries Title="Open"
+                                                Name="Open"
+                                                DependentValuePath="Open"
+                                                IndependentValuePath="Date"
+                                                ItemsSource="{Binding Items}" />
+                </chartingToolkit:Chart.Series>
+            </chartingToolkit:Chart>
+        </Grid>
+    </xctk:BusyIndicator>
+
 </UserControl>

@@ -83,6 +83,11 @@ namespace Blitz.Client.Core.MVVM
             base.RemoveItem(index);
         }
 
+        public Task ClearAsync()
+        {
+            return _dispatcherService.ExecuteAsyncOnUI(Clear);
+        }
+
         protected override sealed void ClearItems()
         {
             _dispatcherService.ExecuteSyncOnUI(ClearItemsBase);

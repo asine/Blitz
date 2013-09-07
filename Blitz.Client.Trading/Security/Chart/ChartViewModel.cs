@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using Blitz.Client.Core;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.TPL;
 using Blitz.Common.Core;
@@ -61,11 +57,11 @@ namespace Blitz.Client.Trading.Security.Chart
         private void GetData()
         {
             BusyAsync(string.Format("... Loading {0} ...", _ticker))
-                .SelectMany(() => Items.Clear())
-                .SelectMany(() => _service.GetData(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
+                .SelectMany(() => Items.ClearAsync())
+                .SelectMany(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
                 .SelectMany(data => Items.AddRange(data))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _taskScheduler.Default)
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem getting chart data"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);
         }
     }

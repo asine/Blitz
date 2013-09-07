@@ -24,7 +24,7 @@ namespace Blitz.Client.Customer.ReportRunner
         {
             var showLayoutToolBarItem = ToolBarService.CreateToolBarButtonItem();
             showLayoutToolBarItem.DisplayName = "Layout";
-            showLayoutToolBarItem.Command = new DelegateCommand(() =>Service.ShowLayout());
+            showLayoutToolBarItem.Command = new DelegateCommand(() => Service.ShowLayoutAsync());
             showLayoutToolBarItem.IsVisible = false;
 
             ToolBarService.Items.Add(showLayoutToolBarItem);

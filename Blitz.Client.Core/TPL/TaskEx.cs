@@ -196,6 +196,103 @@ namespace Blitz.Client.Core.TPL
             return tcs.Task;
         }
 
+        public static Task<T1> Do<T1>(this Task<T1> first, Action next)
+        {
+            if (first == null) throw new ArgumentNullException("first");
+            if (next == null) throw new ArgumentNullException("next");
+
+            var tcs = new TaskCompletionSource<T1>();
+            first.ContinueWith(_ =>
+            {
+                if (first.IsFaulted)
+                {
+                    tcs.TrySetException(first.Exception.InnerExceptions);
+                }
+                else if (first.IsCanceled)
+                {
+                    tcs.TrySetCanceled();
+                }
+                else
+                {
+                    try
+                    {
+                        next();
+                        tcs.TrySetResult(first.Result);
+                    }
+                    catch (Exception exc)
+                    {
+                        tcs.TrySetException(exc);
+                    }
+                }
+            }, TaskContinuationOptions.ExecuteSynchronously);
+
+            return tcs.Task;
+        }
+
+        public static Task<T1> Do<T1>(this Task<T1> first, Func<Task> next)
+        {
+            if (first == null) throw new ArgumentNullException("first");
+            if (next == null) throw new ArgumentNullException("next");
+
+            var tcs = new TaskCompletionSource<T1>();
+            first.ContinueWith(_ =>
+            {
+                if (first.IsFaulted)
+                {
+                    tcs.TrySetException(first.Exception.InnerExceptions);
+                }
+                else if (first.IsCanceled)
+                {
+                    tcs.TrySetCanceled();
+                }
+                else
+                {
+                    try
+                    {
+                        next().SelectMany(() => tcs.TrySetResult(first.Result));
+                    }
+                    catch (Exception exc)
+                    {
+                        tcs.TrySetException(exc);
+                    }
+                }
+            }, TaskContinuationOptions.ExecuteSynchronously);
+
+            return tcs.Task;
+        }
+
+        public static Task<T1> Do<T1>(this Task<T1> first, Func<T1, Task> next)
+        {
+            if (first == null) throw new ArgumentNullException("first");
+            if (next == null) throw new ArgumentNullException("next");
+
+            var tcs = new TaskCompletionSource<T1>();
+            first.ContinueWith(_ =>
+            {
+                if (first.IsFaulted)
+                {
+                    tcs.TrySetException(first.Exception.InnerExceptions);
+                }
+                else if (first.IsCanceled)
+                {
+                    tcs.TrySetCanceled();
+                }
+                else
+                {
+                    try
+                    {
+                        next(first.Result).SelectMany(() => tcs.TrySetResult(first.Result));
+                    }
+                    catch (Exception exc)
+                    {
+                        tcs.TrySetException(exc);
+                    }
+                }
+            }, TaskContinuationOptions.ExecuteSynchronously);
+
+            return tcs.Task;
+        }
+
         /// <summary>
         /// ALWAYS execute the action.
         /// </summary>

@@ -13,7 +13,7 @@ namespace Blitz.Client.Trading.Security.Chart
 {
     public interface IChartService : IService
     {
-        Task<List<HistoricalDataDto>> GetData(string ticker, DateTime from, DateTime to);
+        Task<List<HistoricalDataDto>> GetDataAsync(string ticker, DateTime from, DateTime to);
     }
 
     public class ChartService : Service, IChartService
@@ -26,7 +26,7 @@ namespace Blitz.Client.Trading.Security.Chart
             _requestTask = requestTask;
         }
 
-        public Task<List<HistoricalDataDto>> GetData(string ticker, DateTime from, DateTime to)
+        public Task<List<HistoricalDataDto>> GetDataAsync(string ticker, DateTime from, DateTime to)
         {
             var request = new GetHistoricDataRequest
             {
