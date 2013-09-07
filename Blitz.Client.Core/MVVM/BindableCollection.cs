@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -122,8 +121,9 @@ namespace Blitz.Client.Core.MVVM
 
         public Task AddRangeAsync(IEnumerable<T> items)
         {
-            return TaskEx.SelectMany((Task) _dispatcherService
-                .ExecuteAsyncOnUI(() => AddRangeInternal(items)), (Func<Task>) RefreshAsync);
+            return _dispatcherService
+                .ExecuteAsyncOnUI(() => AddRangeInternal(items))
+                .SelectMany(() => RefreshAsync());
         }
 
         private void AddRangeInternal(IEnumerable<T> items)
@@ -151,8 +151,9 @@ namespace Blitz.Client.Core.MVVM
 
         public Task RemoveRangeAsync(IEnumerable<T> items)
         {
-            return TaskEx.SelectMany((Task) _dispatcherService
-                .ExecuteAsyncOnUI(() => RemoveRangeInternal(items)), (Func<Task>) RefreshAsync);
+            return _dispatcherService
+                .ExecuteAsyncOnUI(() => RemoveRangeInternal(items))
+                .SelectMany(() => RefreshAsync());
         }
 
         private void RemoveRangeInternal(IEnumerable<T> items)

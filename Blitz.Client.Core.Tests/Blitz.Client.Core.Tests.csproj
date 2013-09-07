@@ -84,7 +84,7 @@
     <Compile Include="MVVM\ViewServiceTests.cs" />
     <Compile Include="MVVM\WorkspaceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TPL\TaskExtensionsTests.cs" />
+    <Compile Include="TPL\TaskExTests.cs" />
     <Compile Include="TPL\CurrentThreadTaskScheduler.cs" />
     <Compile Include="TPL\TestTaskScheduler.cs" />
   </ItemGroup>

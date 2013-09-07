@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Blitz.Client.Core.Tests.TPL
 {
     [TestFixture]
-    public class TaskExtensionsTests
+    public class TaskExTests
     {
         [Test]
         public void catch_happens_before_finally_with_TaskScheduler()
