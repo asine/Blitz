@@ -81,6 +81,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
                 LoadQuotes();
             });
             toolBarService.Items.Add(newQuoteToolBarItem);
+
+            this.SyncToolBarItemWithViewModelActivationState(newQuoteToolBarItem);
         }
     }
 }
