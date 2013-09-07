@@ -8,7 +8,35 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance DynamicColumnEdit:DynamicColumnEditViewModel}">
-    <Grid>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Header"
+                   Style="{DynamicResource Heading2}"/>
+
+        <TextBox Grid.Row="0"
+                 Grid.Column="1"
+                 Text="{Binding Header}" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="IsVisible"
+                   Style="{DynamicResource Heading2}" />
+
+        <CheckBox Grid.Row="1"
+                  Grid.Column="1"
+                  IsChecked="{Binding IsVisible}" />
     </Grid>
+
 </UserControl>

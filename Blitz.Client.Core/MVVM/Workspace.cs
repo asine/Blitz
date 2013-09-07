@@ -84,8 +84,6 @@ namespace Blitz.Client.Core.MVVM
 
         #endregion
 
-        #region SupportAsyncOperations
-
         protected void Busy(string message)
         {
             IsBusy = true;
@@ -107,8 +105,6 @@ namespace Blitz.Client.Core.MVVM
         {
             return DispatcherService.ExecuteAsyncOnUI(() => Idle());
         }
-
-        #endregion
 
         #region SupportActivationState
 

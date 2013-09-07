@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Blitz.Client.Common.ReportData.Simple;
+using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Common.ReportViewer.History;
 using Blitz.Client.Core.Agatha;
@@ -17,10 +17,10 @@ namespace Blitz.Client.Customer.Reportviewer
     public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
         private readonly IRequestTask _requestTask;
-        private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
+        private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
 
         public ReportViewerService(IToolBarService toolBarService, ILog log, IRequestTask requestTask, 
-            Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory) 
+            Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
             : base(toolBarService, log)
         {
             _requestTask = requestTask;
@@ -69,11 +69,9 @@ namespace Blitz.Client.Customer.Reportviewer
                     var dataViewModel = _simpleReportDataViewModelFactory();
                     dataViewModel.DisplayName = "ReportData " + i;
 
-                    for (var index = 0; index < 100; index++)
-                    {
-                        var item = new ReportDto { Id = index };
-                        dataViewModel.Items.Add(item);
-                    }
+                    var items = Enumerable.Range(0, 100)
+                        .Select(index => new ReportDto { Id = index });
+                    dataViewModel.Initialise(items);
 
                     return dataViewModel;
                 })

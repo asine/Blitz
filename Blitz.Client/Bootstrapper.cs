@@ -5,6 +5,8 @@ using System.Windows.Threading;
 using Agatha.Common;
 using Agatha.Unity;
 
+using Blitz.Client.Common.DynamicColumnEdit;
+using Blitz.Client.Common.DynamicColumnManagement;
 using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
@@ -60,7 +62,9 @@ namespace Blitz.Client
                 .RegisterSingleton<IToolBarService, ToolBarService>()
                 .RegisterSingleton<IMenuService, MenuService>()
                 .RegisterSingletonInstance<IDispatcherService>(new DispatcherService(Dispatcher.CurrentDispatcher))
-                .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>();
+                .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()
+                .RegisterType<IDynamicColumnManagementService, DynamicColumnManagementService>()
+                .RegisterType<IDynamicColumnEditService, DynamicColumnEditService>();
 
             InitialiseAgatha(Container);
         }

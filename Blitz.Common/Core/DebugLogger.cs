@@ -22,9 +22,7 @@ namespace Blitz.Common.Core
 
         private static string CreateLogMessage(string format, params object[] args)
         {
-            return string.Format("[{0}] {1}",
-                DateTime.Now.ToString("o"),
-                string.Format(format, args));
+            return string.Format("[{0}] {1}", DateTime.Now.ToString("o"), string.Format(format, args));
         }
     }
 }

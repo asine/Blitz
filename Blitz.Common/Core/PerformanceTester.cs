@@ -7,8 +7,8 @@ namespace Blitz.Common.Core
     {
         // http://stackoverflow.com/questions/13681664/helper-class-for-peformance-tests-using-stopwatch-class
 
-        private Stopwatch _stopwatch = new Stopwatch();
-        private Action<TimeSpan> _callback;
+        private readonly Stopwatch _stopwatch = new Stopwatch();
+        private readonly Action<TimeSpan> _callback;
 
         public PerformanceTester()
         {

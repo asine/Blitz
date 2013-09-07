@@ -1,4 +1,4 @@
-﻿namespace Blitz.Client.Common.ReportData.Dynamic
+﻿namespace Blitz.Client.Common.DynamicReportData
 {
     public partial class DynamicReportDataView
     {

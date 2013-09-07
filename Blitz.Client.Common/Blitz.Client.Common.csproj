@@ -101,6 +101,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicColumnEdit\DynamicColumnEditService.cs" />
+    <Compile Include="DynamicColumnEdit\DynamicColumnEditView.xaml.cs">
+      <DependentUpon>DynamicColumnEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicColumnEdit\DynamicColumnEditViewModel.cs" />
+    <Compile Include="DynamicColumnManagement\DynamicColumnManagementService.cs" />
+    <Compile Include="DynamicColumnManagement\DynamicColumnManagementView.xaml.cs">
+      <DependentUpon>DynamicColumnManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicColumnManagement\DynamicColumnManagementViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -115,10 +125,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegionNames.cs" />
-    <Compile Include="ReportData\Simple\SimpleReportDataView.xaml.cs">
-      <DependentUpon>SimpleReportDataView.xaml</DependentUpon>
+    <Compile Include="DynamicReportData\DynamicColumn.cs" />
+    <Compile Include="DynamicReportData\DynamicColumnHelper.cs" />
+    <Compile Include="DynamicReportData\DynamicGridColumnBehavior.cs" />
+    <Compile Include="DynamicReportData\DynamicReportDataView.xaml.cs">
+      <DependentUpon>DynamicReportDataView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ReportData\Simple\SimpleReportDataViewModel.cs" />
+    <Compile Include="DynamicReportData\DynamicReportDataViewModel.cs" />
     <Compile Include="ReportParameter\Simple\SimpleReportParameterView.xaml.cs">
       <DependentUpon>SimpleReportParameterView.xaml</DependentUpon>
     </Compile>
@@ -159,6 +172,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DynamicColumnEdit\DynamicColumnEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicColumnManagement\DynamicColumnManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ReportViewer\History\HistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,7 +190,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ReportData\Simple\SimpleReportDataView.xaml">
+    <Page Include="DynamicReportData\DynamicReportDataView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

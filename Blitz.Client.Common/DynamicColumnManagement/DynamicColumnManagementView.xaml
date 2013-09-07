@@ -4,11 +4,50 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:DynamicColumnManagement="clr-namespace:Blitz.Client.Common.DynamicColumnManagement"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:mvvm="clr-namespace:Blitz.Client.Core.MVVM;assembly=Blitz.Client.Core"
+             xmlns:controls="clr-namespace:Blitz.Client.ModernUI.Windows.Controls;assembly=Blitz.Client.ModernUI"
+             xmlns:toolBar="clr-namespace:Blitz.Client.Core.MVVM.ToolBar;assembly=Blitz.Client.Core"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance DynamicColumnManagement:DynamicColumnManagementViewModel}">
+    
+    <UserControl.Resources>
+
+        <toolBar:ToolBarItemTemplateSelector x:Key="ToolBarItemTemplateSelector" />
+        
+    </UserControl.Resources>
+    
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ToolBarTray DockPanel.Dock="Top"
+                     IsLocked="True">
+            <ToolBar ItemsSource="{Binding ToolBarItems}"
+                     ItemTemplateSelector="{StaticResource ToolBarItemTemplateSelector}" />
+        </ToolBarTray>
+        
+        <ListBox Grid.Column="0"
+                 Grid.Row="1"
+                 ItemsSource="{Binding Columns}"
+                 SelectedItem="{Binding SelectedColumn}"
+                 DisplayMemberPath="PropertyName" />
+
+        <controls:TransitioningContentControl Grid.Column="1"
+                                              Grid.Row="1"
+                                              DataContext="{Binding EditViewModel}">
+            <i:Interaction.Behaviors>
+                <mvvm:ContentControlViewResolverBehavior />
+            </i:Interaction.Behaviors>
+        </controls:TransitioningContentControl>
 
     </Grid>
 </UserControl>

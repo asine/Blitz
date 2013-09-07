@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interactivity;
 
-namespace Blitz.Client.Common.ReportData.Dynamic
+namespace Blitz.Client.Common.DynamicReportData
 {
     public class DynamicGridColumnBehavior : Behavior<DataGrid>
     {
@@ -29,7 +30,7 @@ namespace Blitz.Client.Common.ReportData.Dynamic
         {
             AssociatedObject.Columns.Clear();
 
-            foreach (var column in Columns)
+            foreach (var column in Columns.Where(x => x.IsVisible))
             {
                 var dataGridColumn = new DataGridTextColumn
                 {

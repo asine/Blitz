@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
-using Blitz.Client.Common.ReportData.Simple;
 using Blitz.Client.Common.ReportParameter.Simple;
 using Blitz.Client.Common.ReportRunner;
 using Blitz.Client.Core;
@@ -19,11 +19,11 @@ namespace Blitz.Client.Employee.ReportRunner
 {
     public class ReportRunnerService : ReportRunnerService<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
     {
-        private readonly Func<SimpleReportDataViewModel> _simpleReportDataViewModelFactory;
+        private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
         private readonly IBasicExportToExcel _exportToExcel;
 
-        public ReportRunnerService(Func<SimpleReportDataViewModel> simpleReportDataViewModelFactory,
+        public ReportRunnerService(Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory,
             IRequestTask requestTask, IToolBarService toolBarService, ILog log, IBasicExportToExcel exportToExcel)
             : base(toolBarService, log)
         {
@@ -65,11 +65,9 @@ namespace Blitz.Client.Employee.ReportRunner
                     var dataViewModel = _simpleReportDataViewModelFactory();
                     dataViewModel.DisplayName = "ReportData " + i;
 
-                    for (var index = 0; index < 100; index++)
-                    {
-                        var item = new ReportDto { Id = index };
-                        dataViewModel.Items.Add(item);
-                    }
+                    var items = Enumerable.Range(0, 100)
+                        .Select(index => new ReportDto { Id = index });
+                    dataViewModel.Initialise(items);
 
                     return dataViewModel;
                 })

@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Linq;
 
-namespace Blitz.Client.Common.ReportData.Dynamic
+namespace Blitz.Client.Common.DynamicReportData
 {
     public static class DynamicColumnHelper
     {
@@ -32,10 +32,11 @@ namespace Blitz.Client.Common.ReportData.Dynamic
             var properties = typeof (T).GetProperties();
 
             return properties
-                .Select(propertyInfo => new DynamicColumn
+                .Select((propertyInfo, index) => new DynamicColumn
                 {
                     HeaderName = propertyInfo.Name,
-                    PropertyName = propertyInfo.Name
+                    PropertyName = propertyInfo.Name,
+                    Ordinal = index
                 })
                 .ToList();
         }

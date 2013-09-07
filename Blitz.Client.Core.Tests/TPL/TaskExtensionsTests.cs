@@ -22,15 +22,16 @@ namespace Blitz.Client.Core.Tests.TPL
 
             var scheduler = TaskScheduler.Default;
 
-            new TaskFactory(scheduler).StartNew(() =>
-            {
-                Assert.That(task1HasRun, Is.False);
-                Assert.That(task2HasRun, Is.False);
-                Assert.That(task3HasRun, Is.False);
-                task1HasRun = true;
+            new TaskFactory(scheduler)
+                .StartNew(() =>
+                {
+                    Assert.That(task1HasRun, Is.False);
+                    Assert.That(task2HasRun, Is.False);
+                    Assert.That(task3HasRun, Is.False);
+                    task1HasRun = true;
 
-                throw new Exception();
-            })
+                    throw new Exception();
+                })
                 .CatchAndHandle(_ =>
                 {
                     Assert.That(task1HasRun, Is.True);
@@ -64,15 +65,16 @@ namespace Blitz.Client.Core.Tests.TPL
 
             var scheduler = new CurrentThreadTaskScheduler();
 
-            new TaskFactory(scheduler).StartNew(() =>
-            {
-                Assert.That(task1HasRun, Is.False);
-                Assert.That(task2HasRun, Is.False);
-                Assert.That(task3HasRun, Is.False);
-                task1HasRun = true;
+            new TaskFactory(scheduler)
+                .StartNew(() =>
+                {
+                    Assert.That(task1HasRun, Is.False);
+                    Assert.That(task2HasRun, Is.False);
+                    Assert.That(task3HasRun, Is.False);
+                    task1HasRun = true;
 
-                throw new Exception();
-            })
+                    throw new Exception();
+                })
                 .CatchAndHandle(_ =>
                 {
                     Assert.That(task1HasRun, Is.True);
