@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.TPL;
 using Blitz.Common.Core;
 using Blitz.Common.Trading.Security.Chart;
 
@@ -34,7 +35,9 @@ namespace Blitz.Client.Trading.Security.Chart
                 To = to
             };
 
-            return _requestTask.Get<GetHistoricDataRequest, GetHistoricDataResponse, List<HistoricalDataDto>>(request, x => x.Results.ToList());
+            return _requestTask
+                .Get<GetHistoricDataRequest, GetHistoricDataResponse>(request)
+                .Select(x => x.Results.ToList());
         }
     }
 }

@@ -57,8 +57,8 @@ namespace Blitz.Client.Customer.ReportLayout
         protected override void OnInitialise()
         {
             BusyAsync("... Loading Attributes ...")
-                .Then(_ => _service.GetAttributes())
-                .ThenDo(response =>
+                .SelectMany(_ => _service.GetAttributes())
+                .SelectMany(response =>
                 {
                     Available.AddRange(response.Dimensions.Select(CreateDimension));
                     Available.AddRange(response.Measures.Select(CreateMeasure));

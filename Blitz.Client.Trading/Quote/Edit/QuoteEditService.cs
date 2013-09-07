@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
+using Blitz.Client.Core.TPL;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
 
@@ -39,20 +40,22 @@ namespace Blitz.Client.Trading.Quote.Edit
         public Task<QuoteModel> GetQuote(Guid id)
         {
             var request = new GetQuoteRequest{Id = id};
-            return _requestTask.Get<GetQuoteRequest, GetQuoteResponse, QuoteModel>(request, x =>
-            {
-                var quoteDto = x.Result;
-                var quoteModel = new QuoteModel(id)
+            return _requestTask
+                .Get<GetQuoteRequest, GetQuoteResponse>(request)
+                .Select(x =>
                 {
-                    Instrument = new LookupValue
+                    var quoteDto = x.Result;
+                    var quoteModel = new QuoteModel(id)
                     {
-                        Id = quoteDto.InstrumentId,
-                        Value = quoteDto.InstrumentName
-                    },
-                    Notes = quoteDto.Notes
-                };
-                return quoteModel;
-            });
+                        Instrument = new LookupValue
+                        {
+                            Id = quoteDto.InstrumentId,
+                            Value = quoteDto.InstrumentName
+                        },
+                        Notes = quoteDto.Notes
+                    };
+                    return quoteModel;
+                });
         }
 
         public Task<GetInitialisationDataResponse> GetInitialisationData()

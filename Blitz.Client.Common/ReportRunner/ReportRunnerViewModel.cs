@@ -69,8 +69,8 @@ namespace Blitz.Client.Common.ReportRunner
         protected override void OnInitialise()
         {
             BusyAsync("... Loading ...")
-                .Then(() => _reportRunnerService.ConfigureParameterViewModelAsync(_reportParameterViewModel))
-                .ThenDo(() => _viewService.RegionBuilder<TReportParameterViewModel>()
+                .SelectMany(() => _reportRunnerService.ConfigureParameterViewModelAsync(_reportParameterViewModel))
+                .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>()
                     .Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
                 .LogException(Log)
                 .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _taskScheduler.Default)
@@ -80,13 +80,13 @@ namespace Blitz.Client.Common.ReportRunner
         private void GenerateReport()
         {
             BusyAsync("... Loading ...")
-                .Then(_ => _reportRunnerService.GenerateAsync(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
-                .Then(response =>
+                .SelectMany(_ => _reportRunnerService.GenerateAsync(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
+                .SelectMany(response =>
                 {
                     _response = response;
                     return _reportRunnerService.GenerateDataViewModelsAsync(response);
                 })
-                .ThenDo(dataViewModels =>
+                .SelectMany(dataViewModels =>
                     {
                         _viewService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
                         foreach (var dataViewModel in dataViewModels)
@@ -126,7 +126,7 @@ namespace Blitz.Client.Common.ReportRunner
         private void ExportToExcel()
         {
             BusyAsync("... Exporting to Excel ...")
-                .ThenDo(_ => _reportRunnerService.ExportToExcel(_response))
+                .SelectMany(_ => _reportRunnerService.ExportToExcel(_response))
                 .LogException(Log)
                 .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _taskScheduler.Default)
                 .Finally(() =>

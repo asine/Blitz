@@ -93,6 +93,7 @@
     <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
     <Compile Include="MVVM\ContentControlViewResolverBehavior.cs" />
+    <Compile Include="TPL\CancellationTokenExtensions.cs" />
     <Compile Include="TPL\DesktopTaskScheduler.cs" />
     <Compile Include="EPPlus\DataWriterModel.cs" />
     <Compile Include="EPPlus\ReflectionDataWriter.cs" />
@@ -156,6 +157,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MVVM\TabControlRegionAdapter.cs" />
+    <Compile Include="TPL\TaskCompletionSourceExtensions.cs" />
     <Compile Include="TPL\TaskExtensions.cs" />
     <Compile Include="MVVM\UseViewAttribute.cs" />
     <Compile Include="MVVM\ViewModel.cs" />

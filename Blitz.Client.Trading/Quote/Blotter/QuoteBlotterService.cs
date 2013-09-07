@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
+using Blitz.Client.Core.TPL;
 using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Blotter;
@@ -35,7 +36,9 @@ namespace Blitz.Client.Trading.Quote.Blotter
 
         public Task<List<QuoteDto>> GetQuotes()
         {
-            return _requestTask.Get<GetQuotesRequest, GetQuotesResponse, List<QuoteDto>>(new GetQuotesRequest(), x => x.Results.ToList());
+            return _requestTask
+                .Get<GetQuotesRequest, GetQuotesResponse>(new GetQuotesRequest())
+                .Select(x => x.Results.ToList());
         }
 
         public void NewQuote()

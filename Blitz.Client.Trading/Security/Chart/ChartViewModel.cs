@@ -61,9 +61,9 @@ namespace Blitz.Client.Trading.Security.Chart
         private void GetData()
         {
             BusyAsync(string.Format("... Loading {0} ...", _ticker))
-                .ThenDo(() => Items.Clear())
-                .Then(() => _service.GetData(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
-                .ThenDo(data => Items.AddRange(data))
+                .SelectMany(() => Items.Clear())
+                .SelectMany(() => _service.GetData(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
+                .SelectMany(data => Items.AddRange(data))
                 .LogException(Log)
                 .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);

@@ -49,8 +49,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
         private void LoadQuotes()
         {
             BusyAsync("... Loading quotes ...")
-                .Then(_ => _service.GetQuotes())
-                .ThenDo(quotes =>
+                .SelectMany(_ => _service.GetQuotes())
+                .SelectMany(quotes =>
                 {
                     Items.Clear();
                     var items = quotes.Select(x => new QuoteBlotterItemViewModel

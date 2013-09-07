@@ -13,10 +13,6 @@ namespace Blitz.Client.Core.Agatha
         Task<TResponse> Get<TRequest, TResponse>(TRequest request)
             where TRequest : Request<TResponse>
             where TResponse : Response;
-
-        Task<TResult> Get<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> selector)
-            where TRequest : Request<TResponse>
-            where TResponse : Response;
     }
 
     public class RequestTask : IRequestTask
@@ -35,13 +31,6 @@ namespace Blitz.Client.Core.Agatha
             where TResponse : Response
         {
             return Task.Factory.StartNew(() => Execute<TRequest, TResponse>(request));
-        }
-
-        public Task<TResult> Get<TRequest, TResponse, TResult>(TRequest request, Func<TResponse, TResult> selector) 
-            where TRequest : Request<TResponse> 
-            where TResponse : Response
-        {
-            return Task.Factory.StartNew(() => selector(Execute<TRequest, TResponse>(request)));
         }
 
         private TResponse Execute<TRequest, TResponse>(TRequest request)

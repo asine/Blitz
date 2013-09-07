@@ -44,9 +44,9 @@ namespace Blitz.Client.Common.ReportViewer
         private void Open(object sender, DataEventArgs<long> e)
         {
             BusyAsync("... Opening Historic Report ...")
-                .Then(_ => _reportViewerService.GenerateReportAsync(_reportViewerService.CreateReportRequest(e.Value)))
-                .Then(response => _reportViewerService.GenerateReportViewModelsAsync(response))
-                .ThenDo(dataViewModels =>
+                .SelectMany(_ => _reportViewerService.GenerateReportAsync(_reportViewerService.CreateReportRequest(e.Value)))
+                .SelectMany(response => _reportViewerService.GenerateReportViewModelsAsync(response))
+                .SelectMany(dataViewModels =>
                 {
                     _viewService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
                     foreach (var dataViewModel in dataViewModels)
@@ -62,9 +62,9 @@ namespace Blitz.Client.Common.ReportViewer
         protected override void OnInitialise()
         {
             BusyAsync("... Loading ...")
-                .Then(_ => _reportViewerService.GetHistoryAsync(_reportViewerService.CreateHistoryRequest()))
-                .Then(response => _reportViewerService.GenerateHistoryItemViewModelsAsync(response))
-                .ThenDo(dataViewModels =>
+                .SelectMany(_ => _reportViewerService.GetHistoryAsync(_reportViewerService.CreateHistoryRequest()))
+                .SelectMany(response => _reportViewerService.GenerateHistoryItemViewModelsAsync(response))
+                .SelectMany(dataViewModels =>
                     {
                         foreach (var dataViewModel in dataViewModels)
                         {

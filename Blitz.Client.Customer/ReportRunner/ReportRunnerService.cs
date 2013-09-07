@@ -48,7 +48,7 @@ namespace Blitz.Client.Customer.ReportRunner
         public override Task ConfigureParameterViewModelAsync(SimpleReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
-                .ThenDo(x =>
+                .SelectMany(x =>
                 {
                     var availableDates = x.AvailableDates.OrderByDescending(d => d);
                     foreach (var availableDate in availableDates)

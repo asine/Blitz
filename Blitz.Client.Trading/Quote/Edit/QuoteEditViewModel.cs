@@ -71,10 +71,10 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void NewQuote()
         {
             BusyAsync("... Loading Quote ...")
-                .Then(_ => _service.GetInitialisationData())
-                .ThenDo(response => Instruments.AddRange(response.Instruments))
-                .Then(() => _service.NewQuote())
-                .ThenDo(model => Model = model)
+                .SelectMany(_ => _service.GetInitialisationData())
+                .SelectMany(response => Instruments.AddRange(response.Instruments))
+                .SelectMany(() => _service.NewQuote())
+                .SelectMany(model => Model = model)
                 .LogException(Log)
                 .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);
@@ -83,10 +83,10 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void LoadQuote()
         {
             BusyAsync("... Loading Quote ...")
-                .Then(() => _service.GetQuote(_id.Value))
-                .ThenDo(quote => Model = quote)
-                .Then(_ => _service.GetInitialisationData())
-                .ThenDo(response => Instruments.AddRange(response.Instruments))
+                .SelectMany(() => _service.GetQuote(_id.Value))
+                .SelectMany(quote => Model = quote)
+                .SelectMany(_ => _service.GetInitialisationData())
+                .SelectMany(response => Instruments.AddRange(response.Instruments))
                 .LogException(Log)
                 .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);
@@ -108,7 +108,7 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void Save()
         {
             BusyAsync("... Saving Quote ...")
-                .Then(_ => _service.SaveQuote(Model))
+                .SelectMany(_ => _service.SaveQuote(Model))
                 .LogException(Log)
                 .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _taskScheduler.Default)
                 .Finally(() =>
