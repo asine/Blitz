@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Agatha\RequestException.cs" />
     <Compile Include="Agatha\RequestTask.cs" />
+    <Compile Include="MVVM\ContentControlViewResolverBehavior.cs" />
     <Compile Include="TPL\DesktopTaskScheduler.cs" />
     <Compile Include="EPPlus\DataWriterModel.cs" />
     <Compile Include="EPPlus\ReflectionDataWriter.cs" />
