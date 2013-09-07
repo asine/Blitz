@@ -132,10 +132,6 @@
       <DependentUpon>DynamicReportDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicReportData\DynamicReportDataViewModel.cs" />
-    <Compile Include="ReportParameter\Simple\SimpleReportParameterView.xaml.cs">
-      <DependentUpon>SimpleReportParameterView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ReportParameter\Simple\SimpleReportParameterViewModel.cs" />
     <Compile Include="ExportToExcel\BasicExportToExcel.cs" />
     <Compile Include="ExportToExcel\IBasicExportToExcel.cs" />
     <Compile Include="ExportToExcel\IExportToExcel.cs" />
@@ -191,12 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="DynamicReportData\DynamicReportDataView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="ReportParameter\Simple\SimpleReportParameterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

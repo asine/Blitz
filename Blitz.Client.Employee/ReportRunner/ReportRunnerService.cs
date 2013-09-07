@@ -5,34 +5,36 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
-using Blitz.Client.Common.ReportParameter.Simple;
 using Blitz.Client.Common.ReportRunner;
-using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Core.TPL;
+using Blitz.Client.Employee.ReportParameters;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Employee.ReportRunner
 {
-    public class ReportRunnerService : ReportRunnerService<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
+    public interface IReportRunnerService : IReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
+    {
+    }
+
+    public class ReportRunnerService : ReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>, IReportRunnerService
     {
         private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
         private readonly IBasicExportToExcel _exportToExcel;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService, ILog log, IBasicExportToExcel exportToExcel)
-            : base(toolBarService, log)
+            IRequestTask requestTask, ILog log, IBasicExportToExcel exportToExcel)
+            : base(log)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
             _exportToExcel = exportToExcel;
         }
 
-        public override Task ConfigureParameterViewModelAsync(SimpleReportParameterViewModel viewModel)
+        public override Task ConfigureParameterViewModelAsync(ReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
                 .SelectMany(x =>
@@ -47,7 +49,7 @@ namespace Blitz.Client.Employee.ReportRunner
                 });
         }
 
-        public override ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
+        public override ReportRunnerRequest CreateRequest(ReportParameterViewModel reportParameterViewModel)
         {
             return new ReportRunnerRequest { ReportDate = reportParameterViewModel.SelectedDate };
         }

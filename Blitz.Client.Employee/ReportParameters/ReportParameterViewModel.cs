@@ -3,9 +3,9 @@
 using Blitz.Client.Core.MVVM;
 using Blitz.Common.Core;
 
-namespace Blitz.Client.Common.ReportParameter.Simple
+namespace Blitz.Client.Employee.ReportParameters
 {
-    public class SimpleReportParameterViewModel : Workspace
+    public class ReportParameterViewModel : Workspace
     {
         public BindableCollection<DateTime> Dates { get; private set; } 
 
@@ -26,7 +26,7 @@ namespace Blitz.Client.Common.ReportParameter.Simple
 
         #endregion
 
-        public SimpleReportParameterViewModel(ILog log, IDispatcherService dispatcherService, BindableCollectionFactory bindableCollectionFactory) 
+        public ReportParameterViewModel(ILog log, IDispatcherService dispatcherService, BindableCollectionFactory bindableCollectionFactory) 
             : base(log, dispatcherService)
         {
             Dates = bindableCollectionFactory.Get<DateTime>();

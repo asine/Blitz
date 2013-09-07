@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-
-using Blitz.Client.Common.ReportViewer.History;
-using Blitz.Client.Core;
+﻿using Blitz.Client.Common.ReportViewer.History;
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Core.TPL;
@@ -14,38 +11,34 @@ namespace Blitz.Client.Common.ReportViewer
     public abstract class ReportViewerViewModel<TReportViewerService, THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : Workspace
         where TReportViewerService : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
-        private readonly TReportViewerService _reportViewerService;
+        protected readonly TReportViewerService Service;
         private readonly ITaskScheduler _taskScheduler;
         private readonly IViewService _viewService;
         private readonly HistoryViewModel _historyViewModel;
 
-        private readonly IToolBarService _toolBarService;
-        private readonly List<IToolBarItem> _toolBarItems;
+        protected readonly IToolBarService ToolBarService;
 
-        protected ReportViewerViewModel(ILog log, TReportViewerService reportViewerService, ITaskScheduler taskScheduler, IDispatcherService dispatcherService,
+        protected ReportViewerViewModel(ILog log, TReportViewerService service, ITaskScheduler taskScheduler, IDispatcherService dispatcherService,
             IViewService viewService, IToolBarService toolBarService, HistoryViewModel historyViewModel)
             : base(log, dispatcherService)
         {
-            _reportViewerService = reportViewerService;
+            Service = service;
             _taskScheduler = taskScheduler;
             _viewService = viewService;
-            _toolBarService = toolBarService;
+            ToolBarService = toolBarService;
             _historyViewModel = historyViewModel;
 
             DisplayName = "Viewer";
 
             _historyViewModel.Open += Open;
             Disposables.Add(AnonymousDisposable.Create(() => _historyViewModel.Open -= Open));
-
-            _toolBarItems = new List<IToolBarItem>();
-            _toolBarItems.ForEach(toolBarItem => _toolBarService.Items.Add(toolBarItem));
         }
 
         private void Open(object sender, DataEventArgs<long> e)
         {
             BusyAsync("... Opening Historic Report ...")
-                .SelectMany(_ => _reportViewerService.GenerateReportAsync(_reportViewerService.CreateReportRequest(e.Value)))
-                .SelectMany(response => _reportViewerService.GenerateReportViewModelsAsync(response))
+                .SelectMany(_ => Service.GenerateReportAsync(Service.CreateReportRequest(e.Value)))
+                .SelectMany(response => Service.GenerateReportViewModelsAsync(response))
                 .SelectMany(dataViewModels =>
                 {
                     _viewService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
@@ -62,8 +55,8 @@ namespace Blitz.Client.Common.ReportViewer
         protected override void OnInitialise()
         {
             BusyAsync("... Loading ...")
-                .SelectMany(_ => _reportViewerService.GetHistoryAsync(_reportViewerService.CreateHistoryRequest()))
-                .SelectMany(response => _reportViewerService.GenerateHistoryItemViewModelsAsync(response))
+                .SelectMany(_ => Service.GetHistoryAsync(Service.CreateHistoryRequest()))
+                .SelectMany(response => Service.GenerateHistoryItemViewModelsAsync(response))
                 .SelectMany(dataViewModels =>
                     {
                         foreach (var dataViewModel in dataViewModels)
@@ -82,32 +75,17 @@ namespace Blitz.Client.Common.ReportViewer
 
         protected override void OnActivate()
         {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = true;
-            }
-
-            _reportViewerService.OnActivate();
+            Service.OnActivate();
         }
 
         protected override void OnDeActivate()
         {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = false;
-            }
-
-            _reportViewerService.OnDeActivate();
+            Service.OnDeActivate();
         }
 
         protected override void CleanUp()
         {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Remove(toolBarItem);
-            }
-
-            _reportViewerService.CleanUp();
+            Service.CleanUp();
         }
     }
 }

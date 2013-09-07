@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-
-using Blitz.Client.Core;
-using Blitz.Client.Core.MVVM;
+﻿using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Core.TPL;
 using Blitz.Client.ModernUI.Assets.Icons;
@@ -18,11 +15,10 @@ namespace Blitz.Client.Common.ReportRunner
         private readonly IViewService _viewService;
         private readonly ITaskScheduler _taskScheduler;
 
-        private readonly IToolBarService _toolBarService;
-        private readonly List<IToolBarItem> _toolBarItems;
+        protected readonly IToolBarService ToolBarService;
 
         private readonly TReportParameterViewModel _reportParameterViewModel;
-        private readonly TReportRunnerService _reportRunnerService;
+        protected readonly TReportRunnerService Service;
 
         private DelegateCommand _exportToExcel;
         private TResponse _response;
@@ -46,32 +42,29 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        protected ReportRunnerViewModel(ILog log, IViewService viewService, ITaskScheduler taskScheduler, IDispatcherService dispatcherService, IToolBarService toolBarService,
-            TReportParameterViewModel reportParameterViewModel,
-            TReportRunnerService reportRunnerService)
+        protected ReportRunnerViewModel(ILog log, IViewService viewService, ITaskScheduler taskScheduler, IDispatcherService dispatcherService, 
+            IToolBarService toolBarService, TReportParameterViewModel reportParameterViewModel, TReportRunnerService service)
             : base(log, dispatcherService)
         {
             _viewService = viewService;
             _taskScheduler = taskScheduler;
-            _toolBarService = toolBarService;
+            ToolBarService = toolBarService;
             _reportParameterViewModel = reportParameterViewModel;
-            _reportRunnerService = reportRunnerService;
+            Service = service;
             IsExpanded = true;
 
             DisplayName = "Runner";
 
             GenerateReportCommand = new DelegateCommand(GenerateReport, CanExecuteGenerateReport);
 
-            _toolBarItems = new List<IToolBarItem> {CreateExportToExcelToolBarItem()};
-            _toolBarItems.ForEach(toolBarItem => _toolBarService.Items.Add(toolBarItem));
+            CreateExportToExcelToolBarItem();
         }
 
         protected override void OnInitialise()
         {
             BusyAsync("... Loading ...")
-                .SelectMany(() => _reportRunnerService.ConfigureParameterViewModelAsync(_reportParameterViewModel))
-                .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>()
-                    .Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
+                .SelectMany(() => Service.ConfigureParameterViewModelAsync(_reportParameterViewModel))
+                .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>().Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
                 .LogException(Log)
                 .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);
@@ -80,11 +73,11 @@ namespace Blitz.Client.Common.ReportRunner
         private void GenerateReport()
         {
             BusyAsync("... Loading ...")
-                .SelectMany(_ => _reportRunnerService.GenerateAsync(_reportRunnerService.CreateRequest(_reportParameterViewModel)))
+                .SelectMany(_ => Service.GenerateAsync(Service.CreateRequest(_reportParameterViewModel)))
                 .SelectMany(response =>
                 {
                     _response = response;
-                    return _reportRunnerService.GenerateDataViewModelsAsync(response);
+                    return Service.GenerateDataViewModelsAsync(response);
                 })
                 .SelectMany(dataViewModels =>
                     {
@@ -111,22 +104,23 @@ namespace Blitz.Client.Common.ReportRunner
             return true;
         }
 
-        private ToolBarButtonItem CreateExportToExcelToolBarItem()
+        private void CreateExportToExcelToolBarItem()
         {
             _exportToExcel = new DelegateCommand(ExportToExcel, CanExportToExcel);
 
-            var exportToExcelToolBarItem = _toolBarService.CreateToolBarButtonItem();
+            var exportToExcelToolBarItem = ToolBarService.CreateToolBarButtonItem();
             exportToExcelToolBarItem.DisplayName = "Excel Export";
             exportToExcelToolBarItem.Command = _exportToExcel;
             exportToExcelToolBarItem.IsVisible = false;
             exportToExcelToolBarItem.ImageName = IconNames.EXCEL;
-            return exportToExcelToolBarItem;
+
+            this.SyncToolBarItemWithViewModelActivationState(exportToExcelToolBarItem);
         }
 
         private void ExportToExcel()
         {
             BusyAsync("... Exporting to Excel ...")
-                .SelectMany(_ => _reportRunnerService.ExportToExcel(_response))
+                .SelectMany(_ => Service.ExportToExcel(_response))
                 .LogException(Log)
                 .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _taskScheduler.Default)
                 .Finally(() =>
@@ -144,32 +138,17 @@ namespace Blitz.Client.Common.ReportRunner
 
         protected override void OnActivate()
         {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = true;
-            }
-
-            _reportRunnerService.OnActivate();
+            Service.OnActivate();
         }
 
         protected override void OnDeActivate()
         {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                toolBarItem.IsVisible = false;
-            }
-
-            _reportRunnerService.OnDeActivate();
+            Service.OnDeActivate();
         }
 
         protected override void CleanUp()
         {
-            foreach (var toolBarItem in _toolBarItems)
-            {
-                _toolBarService.Items.Remove(toolBarItem);
-            }
-
-            _reportRunnerService.CleanUp();
+            Service.CleanUp();
         }
     }
 }

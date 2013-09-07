@@ -2,11 +2,13 @@
 using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.Employee.Report;
+using Blitz.Client.Employee.ReportRunner;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Unity;
 
 namespace Blitz.Client.Employee
 {
@@ -14,17 +16,22 @@ namespace Blitz.Client.Employee
     {
         private readonly ILog _log;
         private readonly IViewService _viewService;
+        private readonly IUnityContainer _container;
         private readonly IMenuService _menuService;
 
-        public EmployeeModule(ILog log, IViewService viewService, IMenuService menuService)
+        public EmployeeModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService)
         {
             _log = log;
             _viewService = viewService;
+            _container = container;
             _menuService = menuService;
         }
 
         public void Initialize()
         {
+            _container
+                .RegisterTransient<IReportRunnerService, ReportRunnerService>();
+
             CreateMenu();
         }
 

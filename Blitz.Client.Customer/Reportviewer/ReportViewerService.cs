@@ -8,20 +8,22 @@ using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Common.ReportViewer.History;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer.Reportviewer
 {
-    public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
+    public interface IReportViewerService : IReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
+    {
+    }
+
+    public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>, IReportViewerService
     {
         private readonly IRequestTask _requestTask;
         private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
 
-        public ReportViewerService(IToolBarService toolBarService, ILog log, IRequestTask requestTask, 
-            Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
-            : base(toolBarService, log)
+        public ReportViewerService(ILog log, IRequestTask requestTask, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
+            : base(log)
         {
             _requestTask = requestTask;
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;

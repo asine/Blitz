@@ -3,6 +3,8 @@ using Blitz.Client.Core.MVVM;
 using Blitz.Client.Core.MVVM.Menu;
 using Blitz.Client.Customer.Report;
 using Blitz.Client.Customer.ReportLayout;
+using Blitz.Client.Customer.ReportRunner;
+using Blitz.Client.Customer.Reportviewer;
 using Blitz.Client.ModernUI.Assets.Icons;
 using Blitz.Common.Core;
 
@@ -30,7 +32,9 @@ namespace Blitz.Client.Customer
         public void Initialize()
         {
             _container
-                .RegisterTransient<IReportLayoutService, ReportLayoutService>();
+                .RegisterTransient<IReportLayoutService, ReportLayoutService>()
+                .RegisterTransient<IReportRunnerService, ReportRunnerService>()
+                .RegisterTransient<IReportViewerService, ReportViewerService>();
 
             CreateMenu();
         }

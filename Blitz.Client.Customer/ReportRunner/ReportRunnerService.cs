@@ -5,22 +5,23 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
-using Blitz.Client.Common.ReportParameter.Simple;
 using Blitz.Client.Common.ReportRunner;
-using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
 using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
 using Blitz.Client.Core.TPL;
 using Blitz.Client.Customer.ReportLayout;
+using Blitz.Client.Customer.ReportParameters;
 using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
-using Microsoft.Practices.Prism.Commands;
-
 namespace Blitz.Client.Customer.ReportRunner
 {
-    public class ReportRunnerService : ReportRunnerService<SimpleReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
+    public interface IReportRunnerService : IReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>
+    {
+        void ShowLayout();
+    }
+
+    public class ReportRunnerService : ReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>, IReportRunnerService
     {
         private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
@@ -29,9 +30,9 @@ namespace Blitz.Client.Customer.ReportRunner
         private readonly IBasicExportToExcel _exportToExcel;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory,
-            IRequestTask requestTask, IToolBarService toolBarService, IViewService viewService, ILog log,
+            IRequestTask requestTask, IViewService viewService, ILog log,
             Func<ReportLayoutViewModel> reportLayoutViewModelFactory, IBasicExportToExcel exportToExcel)
-            : base(toolBarService, log)
+            : base(log)
         {
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
             _requestTask = requestTask;
@@ -40,12 +41,7 @@ namespace Blitz.Client.Customer.ReportRunner
             _exportToExcel = exportToExcel;
         }
 
-        protected override IEnumerable<IToolBarItem> AddToolBarItems()
-        {
-            yield return CreateShowLayoutToolBarItem();
-        }
-
-        public override Task ConfigureParameterViewModelAsync(SimpleReportParameterViewModel viewModel)
+        public override Task ConfigureParameterViewModelAsync(ReportParameterViewModel viewModel)
         {
             return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
                 .SelectMany(x =>
@@ -60,7 +56,7 @@ namespace Blitz.Client.Customer.ReportRunner
                 });
         }
 
-        public override ReportRunnerRequest CreateRequest(SimpleReportParameterViewModel reportParameterViewModel)
+        public override ReportRunnerRequest CreateRequest(ReportParameterViewModel reportParameterViewModel)
         {
             return new ReportRunnerRequest { ReportDate = reportParameterViewModel.SelectedDate };
         }
@@ -107,16 +103,7 @@ namespace Blitz.Client.Customer.ReportRunner
             _exportToExcel.ExportToExcel(sheets);
         }
 
-        private ToolBarButtonItem CreateShowLayoutToolBarItem()
-        {
-            var showLayoutToolBarItem = ToolBarService.CreateToolBarButtonItem();
-            showLayoutToolBarItem.DisplayName = "Layout";
-            showLayoutToolBarItem.Command = new DelegateCommand(ShowLayout);
-            showLayoutToolBarItem.IsVisible = false;
-            return showLayoutToolBarItem;
-        }
-
-        private void ShowLayout()
+        public void ShowLayout()
         {
             _viewService.ShowModal(_reportLayoutViewModelFactory());
         }
