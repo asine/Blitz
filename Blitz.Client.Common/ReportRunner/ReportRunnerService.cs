@@ -6,7 +6,8 @@ using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportRunner
 {
-    public abstract class ReportRunnerService<TReportParameterViewModel, TRequest, TResponse> : Service, IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
+    public abstract class ReportRunnerService<TReportParameterViewModel, TRequest, TResponse> 
+        : Service, IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
         protected ReportRunnerService(ILog log)
             : base(log)

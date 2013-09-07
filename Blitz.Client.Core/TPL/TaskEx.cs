@@ -15,7 +15,7 @@ using Blitz.Common.Core;
 
 namespace Blitz.Client.Core.TPL
 {
-    public static class TaskExtensions
+    public static class TaskEx
     {
         /// <summary>
         /// Catch exceptions ONLY of type TException and allow an Action to be performed on it.

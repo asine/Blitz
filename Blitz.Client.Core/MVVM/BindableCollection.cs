@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Core.TPL;
 
-using TaskExtensions = Blitz.Client.Core.TPL.TaskExtensions;
-
 namespace Blitz.Client.Core.MVVM
 {
     public class BindableCollection<T> : ObservableCollection<T>
@@ -124,7 +122,7 @@ namespace Blitz.Client.Core.MVVM
 
         public Task AddRangeAsync(IEnumerable<T> items)
         {
-            return TaskExtensions.SelectMany((Task) _dispatcherService
+            return TaskEx.SelectMany((Task) _dispatcherService
                 .ExecuteAsyncOnUI(() => AddRangeInternal(items)), (Func<Task>) RefreshAsync);
         }
 
@@ -153,7 +151,7 @@ namespace Blitz.Client.Core.MVVM
 
         public Task RemoveRangeAsync(IEnumerable<T> items)
         {
-            return TaskExtensions.SelectMany((Task) _dispatcherService
+            return TaskEx.SelectMany((Task) _dispatcherService
                 .ExecuteAsyncOnUI(() => RemoveRangeInternal(items)), (Func<Task>) RefreshAsync);
         }
 

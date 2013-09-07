@@ -64,8 +64,7 @@ namespace Blitz.Client.Common.ReportViewer
                             _historyViewModel.Items.Add(dataViewModel);
                         }
 
-                        _viewService.RegionBuilder<HistoryViewModel>()
-                            .Show(RegionNames.HISTORY_DATA, _historyViewModel);
+                        _viewService.RegionBuilder<HistoryViewModel>().Show(RegionNames.HISTORY_DATA, _historyViewModel);
                         ((ISupportActivationState)_historyViewModel).Activate();
                     })
                 .LogException(Log)

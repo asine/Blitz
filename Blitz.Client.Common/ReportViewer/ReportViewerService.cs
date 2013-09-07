@@ -7,7 +7,8 @@ using Blitz.Common.Core;
 
 namespace Blitz.Client.Common.ReportViewer
 {
-    public abstract class ReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : Service, IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
+    public abstract class ReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> 
+        : Service, IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
         protected ReportViewerService(ILog log)
             : base(log)

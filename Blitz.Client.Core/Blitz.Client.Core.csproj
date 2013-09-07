@@ -158,7 +158,7 @@
     </Compile>
     <Compile Include="MVVM\TabControlRegionAdapter.cs" />
     <Compile Include="TPL\TaskCompletionSourceExtensions.cs" />
-    <Compile Include="TPL\TaskExtensions.cs" />
+    <Compile Include="TPL\TaskEx.cs" />
     <Compile Include="MVVM\UseViewAttribute.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="MVVM\ViewService.cs" />

@@ -64,7 +64,7 @@ namespace Blitz.Client.Common.ReportRunner
         {
             BusyAsync("... Loading ...")
                 .SelectMany(() => Service.ConfigureParameterViewModelAsync(_reportParameterViewModel))
-                .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>().Show(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
+                .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>().ShowAsync(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
                 .LogException(Log)
                 .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _taskScheduler.Default)
                 .Finally(Idle, _taskScheduler.Default);

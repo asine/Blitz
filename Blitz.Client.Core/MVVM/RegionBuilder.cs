@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 
+using Blitz.Client.Core.TPL;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Regions;
@@ -25,28 +27,37 @@ namespace Blitz.Client.Core.MVVM
         {
             _log.Info("Clearing region {0}", regionName);
 
-            _dispatcherService.ExecuteSyncOnUI(() =>
+            _dispatcherService.ExecuteSyncOnUI(() => ClearInternal(regionName));
+        }
+
+        public Task ClearAsync(string regionName)
+        {
+            _log.Info("Clearing region {0}", regionName);
+
+            return _dispatcherService.ExecuteAsyncOnUI(() => ClearInternal(regionName));
+        }
+
+        private void ClearInternal(string regionName)
+        {
+            var regionManager = _regionManagerFactory();
+            var region = regionManager.Regions[regionName];
+
+            foreach (var obj in region.Views)
             {
-                var regionManager = _regionManagerFactory();
-                var region = regionManager.Regions[regionName];
+                var view = obj as FrameworkElement;
+                if (view == null) continue;
 
-                foreach (var obj in region.Views)
-                {
-                    var view = obj as FrameworkElement;
-                    if (view == null) continue;
+                var viewModel = view.DataContext as IViewModel;
+                if (viewModel == null) continue;
 
-                    var viewModel = view.DataContext as IViewModel;
-                    if (viewModel == null) continue;
+                view.DataContext = null;
 
-                    view.DataContext = null;
+                var closableViewModel = viewModel as ISupportClosing;
+                if (closableViewModel != null)
+                    closableViewModel.Close();
 
-                    var closableViewModel = viewModel as ISupportClosing;
-                    if (closableViewModel != null)
-                        closableViewModel.Close();
-
-                    region.Remove(obj);
-                }
-            });
+                region.Remove(obj);
+            }
         }
     }
 
@@ -88,23 +99,15 @@ namespace Blitz.Client.Core.MVVM
             _log.Info("Scope = {0}", _scope);
             var container = ViewService.GetContainer(_container, _scope);
 
-            _dispatcherService.ExecuteSyncOnUI(() =>
-            {
-                _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
-                var view = ViewService.CreateView(viewModel.GetType());
+            _dispatcherService.ExecuteSyncOnUI(() => ShowInternal(regionName, viewModel, container));
+        }
 
-                _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
-                ViewService.BindViewModel(view, viewModel);
+        public Task ShowAsync(string regionName, TViewModel viewModel)
+        {
+            _log.Info("Scope = {0}", _scope);
+            var container = ViewService.GetContainer(_container, _scope);
 
-                if (_initialiseViewModel != null)
-                    _initialiseViewModel(viewModel);
-
-                _log.Info("Adding View and ViewModel - {0} - to Region - {1}", viewModel.GetType().FullName, regionName);
-                var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
-
-                if (_scope)
-                    container.RegisterInstance(regionManager);
-            });
+            return _dispatcherService.ExecuteAsyncOnUI(() => ShowInternal(regionName, viewModel, container));
         }
 
         public TViewModel Show(string regionName)
@@ -115,25 +118,38 @@ namespace Blitz.Client.Core.MVVM
             _log.Info("Creating ViewModel - {0}", typeof(TViewModel).FullName);
             var viewModel = ViewService.CreateViewModel<TViewModel>(container);
 
-            _dispatcherService.ExecuteSyncOnUI(() =>
-            {
-                _log.Info("Creating View for ViewModel - {0}", typeof (TViewModel).FullName);
-                var view = ViewService.CreateView(typeof (TViewModel));
-
-                _log.Info("Binding View and ViewModel - {0}", typeof (TViewModel).FullName);
-                ViewService.BindViewModel(view, viewModel);
-
-                if (_initialiseViewModel != null)
-                    _initialiseViewModel(viewModel);
-
-                _log.Info("Adding View and ViewModel - {0} - to Region - {1}", typeof (TViewModel).FullName, regionName);
-                var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
-
-                if (_scope)
-                    container.RegisterInstance(regionManager);
-            });
+            _dispatcherService.ExecuteSyncOnUI(() => ShowInternal(regionName, viewModel, container));
 
             return viewModel;
+        }
+
+        public Task<TViewModel> ShowAsync(string regionName)
+        {
+            _log.Info("Scope = {0}", _scope);
+            var container = ViewService.GetContainer(_container, _scope);
+
+            _log.Info("Creating ViewModel - {0}", typeof(TViewModel).FullName);
+            var viewModel = ViewService.CreateViewModel<TViewModel>(container);
+
+            return _dispatcherService.ExecuteAsyncOnUI(() => ShowInternal(regionName, viewModel, container)).Select(_ => viewModel);
+        }
+
+        private void ShowInternal(string regionName, TViewModel viewModel, IUnityContainer container)
+        {
+            _log.Info("Creating View for ViewModel - {0}", viewModel.GetType().FullName);
+            var view = ViewService.CreateView(viewModel.GetType());
+
+            _log.Info("Binding View and ViewModel - {0}", viewModel.GetType().FullName);
+            ViewService.BindViewModel(view, viewModel);
+
+            if (_initialiseViewModel != null)
+                _initialiseViewModel(viewModel);
+
+            _log.Info("Adding View and ViewModel - {0} - to Region - {1}", viewModel.GetType().FullName, regionName);
+            var regionManager = AddToRegion(_regionManagerFactory, regionName, view, _scope);
+
+            if (_scope)
+                container.RegisterInstance(regionManager);
         }
 
         private static IRegionManager AddToRegion(Func<IRegionManager> regionManagerFactory, string regionName, FrameworkElement view, bool scoped = false)
