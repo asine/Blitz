@@ -4,9 +4,11 @@ using System.Dynamic;
 using System.Threading.Tasks;
 
 using Blitz.Client.Common.DynamicColumnManagement;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Common.Core;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.ToolBar;
 
 using Microsoft.Practices.Prism.Commands;
 

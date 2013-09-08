@@ -1,11 +1,14 @@
 using System;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.TPL;
-using Blitz.Common.Core;
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+
 using Blitz.Common.Trading.Security.Chart;
 
 using Microsoft.Practices.Prism.Commands;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Security.Chart
 {
@@ -57,7 +60,7 @@ namespace Blitz.Client.Trading.Security.Chart
         private void GetData()
         {
             BusyAsync(string.Format("... Loading {0} ...", _ticker))
-                .SelectMany(() => Items.ClearAsync())
+                .Do(() => Items.ClearAsync())
                 .SelectMany(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
                 .SelectMany(data => Items.AddRange(data))
                 .LogException(Log)

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Common.Core;
+using Common.Logging;
+
+using Naru.WPF.MVVM;
 
 namespace Blitz.Client.Common.ReportRunner
 {

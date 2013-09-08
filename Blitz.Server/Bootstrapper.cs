@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.ServiceModel;
 
 using Agatha.ServiceLayer;
@@ -8,6 +9,10 @@ using Agatha.Unity;
 using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 using Blitz.Server.Core;
+
+using Common.Logging;
+
+using ILogInject.Unity;
 
 using Microsoft.Practices.Unity;
 
@@ -24,9 +29,15 @@ namespace Blitz.Server
         {
             var container = new UnityContainer();
 
-            container.RegisterType<ILog, ConsoleLogger>();
+            // Configure Logging
+            container
+                .AddNewExtension<BuildTracking>()
+                .AddNewExtension<CommonLoggingLogCreationExtension>()
+                .RegisterInstance<ILog4NetConfiguration>(new Log4NetConfiguration("ILogInject.UnityCommonLogging.Blitz.Server"));
 
             InitialiseAgatha(container);
+
+            ConfigureLog4Net(container);
 
             InitialiseRavenDB(container);
 
@@ -55,6 +66,17 @@ namespace Blitz.Server
             documentStore.Initialize();
 
             container.RegisterSingletonInstance<IDocumentStore>(documentStore);
+        }
+
+        private static void ConfigureLog4Net(IUnityContainer container)
+        {
+            var configuration = container.Resolve<ILog4NetConfiguration>();
+            if (!Directory.Exists(configuration.LogDirectoryPath))
+            {
+                Directory.CreateDirectory(configuration.LogDirectoryPath);
+            }
+            log4net.GlobalContext.Properties["LogFile"] = Path.Combine(configuration.LogDirectoryPath, configuration.LogFileName);
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile));
         }
     }
 }

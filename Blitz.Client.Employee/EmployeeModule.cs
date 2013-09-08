@@ -1,9 +1,12 @@
 ﻿using Blitz.Client.Common;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.Menu;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.Menu;
 using Blitz.Client.Employee.Report;
 using Blitz.Client.Employee.ReportRunner;
-using Blitz.Client.ModernUI.Assets.Icons;
+using Naru.WPF.ModernUI.Assets.Icons;
 using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
@@ -45,7 +48,7 @@ namespace Blitz.Client.Employee
             newReportMenuItem.ImageName = IconNames.NEW;
             newReportMenuItem.Command = new DelegateCommand(() =>
             {
-                _log.Info("Adding Employee Report to Main region");
+                _log.Debug("Adding Employee Report to Main region");
                 var viewModel = _viewService.RegionBuilder<ReportViewModel>()
                     .WithScope()
                     .WithInitialisation(x => x.DisplayName = "Employee Report")

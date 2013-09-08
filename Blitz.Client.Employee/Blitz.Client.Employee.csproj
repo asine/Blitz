@@ -41,6 +41,9 @@
     <Reference Include="Agatha.Unity">
       <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -131,6 +134,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Naru\Naru.WPF.ModernUI\Naru.WPF.ModernUI.csproj">
+      <Project>{ca857197-fc3d-4185-a4ca-cb8b78828b48}</Project>
+      <Name>Naru.WPF.ModernUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.WPF\Naru.WPF.csproj">
+      <Project>{6da2b9ad-0810-4c8c-a886-edbd8130c89b}</Project>
+      <Name>Naru.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.Common\Blitz.Client.Common.csproj">
       <Project>{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}</Project>
       <Name>Blitz.Client.Common</Name>
@@ -138,10 +149,6 @@
     <ProjectReference Include="..\Blitz.Client.Core\Blitz.Client.Core.csproj">
       <Project>{41AFE43B-1E42-40DF-B66E-A1ED04456652}</Project>
       <Name>Blitz.Client.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj">
-      <Project>{1C3569B5-82A2-44C6-AF2C-2961E79BE218}</Project>
-      <Name>Blitz.Client.ModernUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Blitz.Common\Blitz.Common.csproj">
       <Project>{145A1613-AA64-42C1-9BA2-5965AF05F0DB}</Project>

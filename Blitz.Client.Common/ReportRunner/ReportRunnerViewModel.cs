@@ -1,10 +1,12 @@
-﻿using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Core.TPL;
-using Blitz.Client.ModernUI.Assets.Icons;
-using Blitz.Common.Core;
+﻿using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.ToolBar;
+using Naru.WPF.ModernUI.Assets.Icons;
 
 using Microsoft.Practices.Prism.Commands;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Common.ReportRunner
 {
@@ -85,6 +87,12 @@ namespace Blitz.Client.Common.ReportRunner
                         foreach (var dataViewModel in dataViewModels)
                         {
                             _viewService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
+
+                            var supportActivationState = dataViewModel as ISupportActivationState;
+                            if (supportActivationState != null)
+                            {
+                                this.SyncViewModelActivationStates(supportActivationState);
+                            }
                         }
                     })
                 .LogException(Log)

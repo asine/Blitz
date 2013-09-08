@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Linq;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.TPL;
-using Blitz.Common.Core;
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+
 using Blitz.Common.Customer;
 
 using Microsoft.Practices.Prism.Commands;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Customer.ReportLayout
 {

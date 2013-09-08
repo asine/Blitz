@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.TPL;
+using Naru.WPF.MVVM;
+
 using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Blotter;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Quote.Blotter
 {

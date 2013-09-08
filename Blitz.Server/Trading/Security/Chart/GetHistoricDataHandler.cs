@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 
-using Blitz.Common.Core;
 using Blitz.Common.Trading.Security.Chart;
 using Blitz.Server.Core;
+
+using Common.Logging;
 
 namespace Blitz.Server.Trading.Security.Chart
 {
@@ -30,7 +29,7 @@ namespace Blitz.Server.Trading.Security.Chart
                           request.From.AddMonths(-1).Month + "&b=" + request.From.Day + "&c=" + request.From.Year +
                           "&ignore=.csv";
 
-                Log.Info("URL - {0}", url);
+                Log.Debug(string.Format("URL - {0}", url));
 
                 var data = web.DownloadString(url);
 

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Common.Logging;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Common.Core;
+using Naru.WPF.MVVM;
 
 namespace Blitz.Client.Common.DynamicColumnEdit
 {

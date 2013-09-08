@@ -6,6 +6,8 @@ using Agatha.Common;
 using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 
+using Common.Logging;
+
 namespace Blitz.Client.Core.Agatha
 {
     public interface IRequestTask
@@ -41,17 +43,17 @@ namespace Blitz.Client.Core.Agatha
             {
                 request.Id = Guid.NewGuid().ToString();
 
-                _log.Info("Start RequestTask {0}, Id - {1}", typeof (TRequest), request.Id);
+                _log.Debug(string.Format("Start RequestTask {0}, Id - {1}", typeof (TRequest), request.Id));
 
                 var response = _requestDispatcher().Get<TResponse>(request);
 
                 if(response.Exception != null)
                     throw new RequestException(response.Exception.Message);
 
-                _log.Info("Finished RequestTask {0}, Id - {1}. Duration {2}",
+                _log.Debug(string.Format("Finished RequestTask {0}, Id - {1}. Duration {2}",
                     typeof (TRequest),
                     request.Id,
-                    performanceTester.Result.Milliseconds);
+                    performanceTester.Result.Milliseconds));
 
                 return response;
             }

@@ -1,13 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Core.TPL;
-using Blitz.Client.ModernUI.Assets.Icons;
-using Blitz.Common.Core;
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.ToolBar;
+using Naru.WPF.ModernUI.Assets.Icons;
 
 using Microsoft.Practices.Prism.Commands;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Quote.Blotter
 {

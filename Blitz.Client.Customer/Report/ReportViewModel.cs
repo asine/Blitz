@@ -1,9 +1,11 @@
 ﻿using Blitz.Client.Common;
 using Blitz.Client.Common.Report;
-using Blitz.Client.Core.MVVM;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
 using Blitz.Client.Customer.ReportRunner;
 using Blitz.Client.Customer.Reportviewer;
-using Blitz.Common.Core;
 
 namespace Blitz.Client.Customer.Report
 {

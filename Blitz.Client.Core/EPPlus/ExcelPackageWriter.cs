@@ -2,6 +2,8 @@
 
 using Blitz.Common.Core;
 
+using Common.Logging;
+
 using OfficeOpenXml;
 
 namespace Blitz.Client.Core.EPPlus
@@ -21,12 +23,12 @@ namespace Blitz.Client.Core.EPPlus
 
             if (string.IsNullOrEmpty(excelPackageModel.TemplatePath))
             {
-                _log.Info(string.Format("Creating ExcelPackage"));
+                _log.Debug(string.Format("Creating ExcelPackage"));
                 excelPackage = new ExcelPackage();
             }
             else
             {
-                _log.Info(string.Format("Creating ExcelPackage using template {0}", excelPackageModel.TemplatePath));
+                _log.Debug(string.Format("Creating ExcelPackage using template {0}", excelPackageModel.TemplatePath));
                 var fileInfo = new FileInfo(excelPackageModel.TemplatePath);
                 excelPackage = new ExcelPackage(fileInfo);
             }
@@ -36,7 +38,7 @@ namespace Blitz.Client.Core.EPPlus
 
         public void Save(ExcelPackage excelPackage, ExcelPackageModel excelPackageModel)
         {
-            _log.Info(string.Format("Saving ExcelPackage to {0}", excelPackageModel.SaveFilePath));
+            _log.Debug(string.Format("Saving ExcelPackage to {0}", excelPackageModel.SaveFilePath));
 
             var fileInfo = File.Create(excelPackageModel.SaveFilePath);
 

@@ -4,10 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.TPL;
-using Blitz.Common.Core;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+
 using Blitz.Common.Trading.Security.Chart;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Security.Chart
 {

@@ -4,11 +4,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Blitz.Client.ModernUI;component/Assets/ModernUI.xaml" />
-                <ResourceDictionary Source="/Blitz.Client.ModernUI;component/Assets/ModernUI.Dark.xaml" />
+                <ResourceDictionary Source="/Naru.WPF.ModernUI;component/Assets/ModernUI.xaml" />
+                <ResourceDictionary Source="/Naru.WPF.ModernUI;component/Assets/ModernUI.Dark.xaml" />
 
-                <ResourceDictionary Source="/Blitz.Client.Core;component/MVVM/ToolBar/ToolBarItemTemplates.xaml" />
-                <ResourceDictionary Source="/Blitz.Client.Core;component/MVVM/Menu/MenuItemTemplates.xaml" />
+                <ResourceDictionary Source="/Naru.WPF;component/MVVM/ToolBar/ToolBarItemTemplates.xaml" />
+                <ResourceDictionary Source="/Naru.WPF;component/MVVM/Menu/MenuItemTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

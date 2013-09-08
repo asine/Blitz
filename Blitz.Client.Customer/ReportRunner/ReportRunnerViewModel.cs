@@ -1,12 +1,16 @@
 ﻿using Blitz.Client.Common.ReportRunner;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Core.TPL;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.ToolBar;
+
 using Blitz.Client.Customer.ReportParameters;
-using Blitz.Common.Core;
 using Blitz.Common.Customer;
 
 using Microsoft.Practices.Prism.Commands;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Customer.ReportRunner
 {

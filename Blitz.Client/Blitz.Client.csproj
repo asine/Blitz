@@ -44,12 +44,17 @@
     <Reference Include="Agatha.Unity">
       <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\packages\Common.Logging.Log4Net.2.0.1\lib\net20\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ILogInject.Unity">
+      <HintPath>..\packages\ILogInject.Unity.1.0.13176.19\lib\net40\ILogInject.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
@@ -78,11 +83,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell">
       <HintPath>..\lib\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
@@ -177,6 +189,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Naru\Naru.WPF.ModernUI\Naru.WPF.ModernUI.csproj">
+      <Project>{ca857197-fc3d-4185-a4ca-cb8b78828b48}</Project>
+      <Name>Naru.WPF.ModernUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.WPF\Naru.WPF.csproj">
+      <Project>{6da2b9ad-0810-4c8c-a886-edbd8130c89b}</Project>
+      <Name>Naru.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.Common\Blitz.Client.Common.csproj">
       <Project>{BDCE3E56-89DD-47C5-9D70-1FC759DD43C1}</Project>
       <Name>Blitz.Client.Common</Name>
@@ -192,10 +212,6 @@
     <ProjectReference Include="..\Blitz.Client.Employee\Blitz.Client.Employee.csproj">
       <Project>{3b0c3300-db6e-4eaf-b543-232a4f163644}</Project>
       <Name>Blitz.Client.Employee</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Blitz.Client.ModernUI\Blitz.Client.ModernUI.csproj">
-      <Project>{1c3569b5-82a2-44c6-af2c-2961e79be218}</Project>
-      <Name>Blitz.Client.ModernUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.Trading\Blitz.Client.Trading.csproj">
       <Project>{2f3c8247-4978-40fa-b04b-3053f88d5258}</Project>

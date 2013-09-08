@@ -1,10 +1,14 @@
 ﻿using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Common.ReportViewer.History;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Core.TPL;
-using Blitz.Common.Core;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.ToolBar;
+
 using Blitz.Common.Customer;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Customer.Reportviewer
 {

@@ -1,13 +1,14 @@
 ﻿using System;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.Dialog;
-using Blitz.Client.Core.MVVM.Menu;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.ModernUI.Presentation;
-using Blitz.Client.ModernUI.Windows.Controls;
+using Common.Logging;
+
+using Naru.WPF.ModernUI.Presentation;
+using Naru.WPF.ModernUI.Windows.Controls;
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.Menu;
+using Naru.WPF.MVVM.ToolBar;
+
 using Blitz.Client.Settings.Appearance;
-using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
 

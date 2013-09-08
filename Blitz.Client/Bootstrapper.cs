@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -8,13 +10,17 @@ using Agatha.Unity;
 using Blitz.Client.Common.DynamicColumnEdit;
 using Blitz.Client.Common.DynamicColumnManagement;
 using Blitz.Client.Common.ExportToExcel;
-using Blitz.Client.Core;
 using Blitz.Client.Core.Agatha;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.Dialog;
-using Blitz.Client.Core.MVVM.Menu;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Core.TPL;
+
+using Common.Logging;
+
+using ILogInject.Unity;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.Dialog;
+using Naru.WPF.MVVM.Menu;
+using Naru.WPF.MVVM.ToolBar;
+
 using Blitz.Client.Shell;
 using Blitz.Client.Trading;
 using Blitz.Common.Agatha;
@@ -24,6 +30,8 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client
 {
@@ -50,6 +58,14 @@ namespace Blitz.Client
         {
             base.ConfigureContainer();
 
+            Container.RegisterInstance(Container);
+
+            // Configure Logging
+            Container
+                .AddNewExtension<BuildTracking>()
+                .AddNewExtension<CommonLoggingLogCreationExtension>()
+                .RegisterInstance<ILog4NetConfiguration>(new Log4NetConfiguration("ILogInject.UnityCommonLogging.Blitz.Client"));
+
             Container
                 .RegisterSingleton<ITaskScheduler, DesktopTaskScheduler>()
                 .RegisterTransient<IViewService, ViewService>()
@@ -57,7 +73,6 @@ namespace Blitz.Client
                 .RegisterTransient<IStandardDialogBuilder, StandardDialogBuilder>()
                 .RegisterTransient<IRegionBuilder, RegionBuilder>()
                 .RegisterType(typeof (IRegionBuilder<>), typeof (RegionBuilder<>))
-                .RegisterTransient<ILog, DebugLogger>()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()
                 .RegisterSingleton<IMenuService, MenuService>()
@@ -67,6 +82,8 @@ namespace Blitz.Client
                 .RegisterType<IDynamicColumnEditService, DynamicColumnEditService>();
 
             InitialiseAgatha(Container);
+
+            ConfigureLog4Net(Container);
         }
 
         protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
@@ -90,6 +107,17 @@ namespace Blitz.Client
                 .Initialize();
 
             AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Blitz.Common.AssemblyHook).Assembly);
+        }
+
+        private static void ConfigureLog4Net(IUnityContainer container)
+        {
+            var configuration = container.Resolve<ILog4NetConfiguration>();
+            if (!Directory.Exists(configuration.LogDirectoryPath))
+            {
+                Directory.CreateDirectory(configuration.LogDirectoryPath);
+            }
+            log4net.GlobalContext.Properties["LogFile"] = Path.Combine(configuration.LogDirectoryPath, configuration.LogFileName);
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile));
         }
     }
 }

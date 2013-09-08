@@ -4,6 +4,8 @@ using Agatha.ServiceLayer;
 using Blitz.Common.Agatha;
 using Blitz.Common.Core;
 
+using Common.Logging;
+
 namespace Blitz.Server.Core
 {
     public abstract class Handler<TRequest, TResponse> : RequestHandler<TRequest, TResponse> 
@@ -21,14 +23,14 @@ namespace Blitz.Server.Core
         {
             using (var performanceTester = new PerformanceTester())
             {
-                Log.Info("Started processing request {0}, Id - {1}", typeof (TRequest).FullName, request.Id);
+                Log.Debug(string.Format("Started processing request {0}, Id - {1}", typeof(TRequest).FullName, request.Id));
 
                 var response = Execute(request);
 
-                Log.Info("Finished processing request {0}, Id - {1}. Duration {2}", 
+                Log.Debug(string.Format("Finished processing request {0}, Id - {1}. Duration {2}", 
                     typeof (TRequest).FullName,
                     request.Id,
-                    performanceTester.Result.Milliseconds);
+                    performanceTester.Result.Milliseconds));
 
                 return response;
             }

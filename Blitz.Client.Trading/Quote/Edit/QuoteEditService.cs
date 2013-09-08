@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 
 using Blitz.Client.Core.Agatha;
-using Blitz.Client.Core.TPL;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {

@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 
-using Blitz.Common.Core;
 using Blitz.Common.Customer;
 using Blitz.Server.Core;
+
+using Common.Logging;
 
 namespace Blitz.Server.Customer
 {

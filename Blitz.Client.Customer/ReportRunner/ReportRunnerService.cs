@@ -7,12 +7,16 @@ using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Common.ReportRunner;
 using Blitz.Client.Core.Agatha;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.TPL;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+
 using Blitz.Client.Customer.ReportLayout;
 using Blitz.Client.Customer.ReportParameters;
-using Blitz.Common.Core;
 using Blitz.Common.Customer;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Customer.ReportRunner
 {

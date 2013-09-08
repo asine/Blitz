@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.ModernUI.Presentation;
-using Blitz.Common.Core;
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.ModernUI.Presentation;
 
 namespace Blitz.Client.Settings.Appearance
 {
@@ -31,7 +31,8 @@ namespace Blitz.Client.Settings.Appearance
         };*/
 
         // 20 accent colors from Windows Phone 8
-        private Color[] accentColors = new Color[]{
+        private readonly Color[] _accentColors =
+        {
             Color.FromRgb(0xa4, 0xc4, 0x00),   // lime
             Color.FromRgb(0x60, 0xa9, 0x17),   // green
             Color.FromRgb(0x00, 0x8a, 0x00),   // emerald
@@ -51,7 +52,7 @@ namespace Blitz.Client.Settings.Appearance
             Color.FromRgb(0x6d, 0x87, 0x64),   // olive
             Color.FromRgb(0x64, 0x76, 0x87),   // steel
             Color.FromRgb(0x76, 0x60, 0x8a),   // mauve
-            Color.FromRgb(0x87, 0x79, 0x4e),   // taupe
+            Color.FromRgb(0x87, 0x79, 0x4e) // taupe
         };
 
         public BindableCollection<string> FontSizes { get; private set; }
@@ -129,7 +130,7 @@ namespace Blitz.Client.Settings.Appearance
             SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FONT_LARGE : FONT_SMALL;
 
             AccentColors = bindableCollectionFactory.Get<Color>();
-            foreach (var accentColor in accentColors)
+            foreach (var accentColor in _accentColors)
             {
                 AccentColors.Add(accentColor);
             }

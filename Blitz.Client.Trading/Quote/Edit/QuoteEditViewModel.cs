@@ -1,12 +1,15 @@
 ﻿using System;
 
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.ToolBar;
-using Blitz.Client.Core.TPL;
-using Blitz.Common.Core;
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.ToolBar;
+
 using Blitz.Common.Trading.Quote.Edit;
 
 using Microsoft.Practices.Prism.Commands;
+
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {

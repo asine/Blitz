@@ -1,7 +1,10 @@
 ﻿using Blitz.Client.Common;
-using Blitz.Client.Core.MVVM;
-using Blitz.Client.Core.MVVM.Menu;
-using Blitz.Client.ModernUI.Assets.Icons;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+using Naru.WPF.MVVM.Menu;
+using Naru.WPF.ModernUI.Assets.Icons;
 using Blitz.Client.Trading.Quote.Blotter;
 using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Client.Trading.Security.Chart;
@@ -49,7 +52,7 @@ namespace Blitz.Client.Trading
             newReportMenuItem.ImageName = IconNames.NEW;
             newReportMenuItem.Command = new DelegateCommand(() =>
             {
-                _log.Info("Adding Blotter to Main region");
+                _log.Debug("Adding Blotter to Main region");
                 var viewModel = _viewService.RegionBuilder<QuoteBlotterViewModel>()
                     .WithScope()
                     .Show(RegionNames.MAIN);
@@ -62,7 +65,7 @@ namespace Blitz.Client.Trading
             chartMenuItem.ImageName = IconNames.NEW;
             chartMenuItem.Command = new DelegateCommand(() =>
             {
-                _log.Info("Adding Chart to Main region");
+                _log.Debug("Adding Chart to Main region");
                 var viewModel = _viewService.RegionBuilder<ChartViewModel>()
                     .WithScope()
                     .Show(RegionNames.MAIN);

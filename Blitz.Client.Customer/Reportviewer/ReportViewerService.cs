@@ -7,8 +7,11 @@ using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Common.ReportViewer.History;
 using Blitz.Client.Core.Agatha;
-using Blitz.Client.Core.MVVM;
-using Blitz.Common.Core;
+
+using Common.Logging;
+
+using Naru.WPF.MVVM;
+
 using Blitz.Common.Customer;
 
 namespace Blitz.Client.Customer.Reportviewer

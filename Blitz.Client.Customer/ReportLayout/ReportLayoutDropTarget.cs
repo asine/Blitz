@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-using Blitz.Client.Core.MVVM;
+using Naru.WPF.MVVM;
 
 using GongSolutions.Wpf.DragDrop;
 
