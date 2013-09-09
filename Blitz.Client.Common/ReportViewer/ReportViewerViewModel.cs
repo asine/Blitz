@@ -15,18 +15,18 @@ namespace Blitz.Client.Common.ReportViewer
         where TReportViewerService : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
         protected readonly TReportViewerService Service;
-        private readonly ITaskScheduler _taskScheduler;
+        private readonly IScheduler _scheduler;
         private readonly IViewService _viewService;
         private readonly HistoryViewModel _historyViewModel;
 
         protected readonly IToolBarService ToolBarService;
 
-        protected ReportViewerViewModel(ILog log, TReportViewerService service, ITaskScheduler taskScheduler, IDispatcherService dispatcherService,
+        protected ReportViewerViewModel(ILog log, TReportViewerService service, IScheduler scheduler, 
             IViewService viewService, IToolBarService toolBarService, HistoryViewModel historyViewModel)
-            : base(log, dispatcherService)
+            : base(log, scheduler)
         {
             Service = service;
-            _taskScheduler = taskScheduler;
+            _scheduler = scheduler;
             _viewService = viewService;
             ToolBarService = toolBarService;
             _historyViewModel = historyViewModel;
@@ -51,8 +51,8 @@ namespace Blitz.Client.Common.ReportViewer
                     }
                 })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), _taskScheduler.Default)
-                .Finally(Idle, _taskScheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), _scheduler.Default)
+                .Finally(Idle, _scheduler.Default);
         }
 
         protected override void OnInitialise()
@@ -71,8 +71,8 @@ namespace Blitz.Client.Common.ReportViewer
                         ((ISupportActivationState)_historyViewModel).Activate();
                     })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History"), _taskScheduler.Default)
-                .Finally(Idle, _taskScheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History"), _scheduler.Default)
+                .Finally(Idle, _scheduler.Default);
         }
 
         protected override void OnActivate()

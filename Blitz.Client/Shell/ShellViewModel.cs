@@ -12,6 +12,8 @@ using Blitz.Client.Settings.Appearance;
 
 using Microsoft.Practices.Prism.Commands;
 
+using Naru.WPF.TPL;
+
 namespace Blitz.Client.Shell
 {
     public class ShellViewModel : Workspace, IWindowViewModel
@@ -24,9 +26,9 @@ namespace Blitz.Client.Shell
 
         public LinkCollection TitleLinks { get; private set; } 
 
-        public ShellViewModel(ILog log, IToolBarService toolBarService, IMenuService menuService, IDispatcherService dispatcherService, 
+        public ShellViewModel(ILog log, IToolBarService toolBarService, IMenuService menuService, IScheduler scheduler, 
             IViewService viewService, Func<AppearanceViewModel> appearanceViewModelFactory) 
-            : base(log, dispatcherService)
+            : base(log, scheduler)
         {
             _viewService = viewService;
             ToolBarItems = toolBarService.Items;

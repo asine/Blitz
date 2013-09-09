@@ -15,7 +15,7 @@ namespace Blitz.Client.Trading.Quote.Edit
 {
     public class QuoteEditViewModel : Workspace
     {
-        private readonly ITaskScheduler _taskScheduler;
+        private readonly IScheduler _scheduler;
         private readonly IViewService _viewService;
         private readonly IQuoteEditService _service;
 
@@ -42,11 +42,11 @@ namespace Blitz.Client.Trading.Quote.Edit
 
         public BindableCollection<LookupValue> Instruments { get; private set; }
 
-        public QuoteEditViewModel(ILog log, IDispatcherService dispatcherService, ITaskScheduler taskScheduler, IViewService viewService, 
-            IQuoteEditService service, BindableCollectionFactory bindableCollectionFactory, Func<ToolBarButtonItem> toolBarButtonItemFactory) 
-            : base(log, dispatcherService)
+        public QuoteEditViewModel(ILog log, IScheduler scheduler, IViewService viewService, 
+            IQuoteEditService service, BindableCollectionFactory bindableCollectionFactory, Func<ToolBarButtonItem> toolBarButtonItemFactory)
+            : base(log, scheduler)
         {
-            _taskScheduler = taskScheduler;
+            _scheduler = scheduler;
             _viewService = viewService;
             _service = service;
 
@@ -82,8 +82,8 @@ namespace Blitz.Client.Trading.Quote.Edit
                 .SelectMany(() => _service.NewQuoteAsync())
                 .SelectMany(model => Model = model)
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _taskScheduler.Default)
-                .Finally(Idle, _taskScheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _scheduler.Default)
+                .Finally(Idle, _scheduler.Default);
         }
 
         private void LoadQuote()
@@ -94,8 +94,8 @@ namespace Blitz.Client.Trading.Quote.Edit
                 .SelectMany(_ => _service.GetInitialisationDataAsync())
                 .SelectMany(response => Instruments.AddRange(response.Instruments))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _taskScheduler.Default)
-                .Finally(Idle, _taskScheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _scheduler.Default)
+                .Finally(Idle, _scheduler.Default);
         }
 
         private void CreateToolBar(Func<ToolBarButtonItem> toolBarButtonItemFactory)
@@ -116,12 +116,12 @@ namespace Blitz.Client.Trading.Quote.Edit
             BusyAsync("... Saving Quote ...")
                 .SelectMany(_ => _service.SaveQuoteAsync(Model))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem saving quote"), _taskScheduler.Default)
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem saving quote"), _scheduler.Default)
                 .Finally(() =>
                 {
                     Idle();
                     Close();
-                }, _taskScheduler.Default);
+                }, _scheduler.Default);
         }
     }
 }

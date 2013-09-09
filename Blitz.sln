@@ -49,6 +49,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.WPF.ModernUI", "..\Nar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.Core", "Blitz.Client.Core\Blitz.Client.Core.csproj", "{41AFE43B-1E42-40DF-B66E-A1ED04456652}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.Tests", "..\Naru\Naru.Tests\Naru.Tests.csproj", "{28BFF6B4-12E5-4F81-851F-BA40DB9C900B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.WPF.Tests", "..\Naru\Naru.WPF.Tests\Naru.WPF.Tests.csproj", "{79909CE6-28AC-404D-AB05-C3BAFE84C164}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41AFE43B-1E42-40DF-B66E-A1ED04456652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BFF6B4-12E5-4F81-851F-BA40DB9C900B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28BFF6B4-12E5-4F81-851F-BA40DB9C900B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28BFF6B4-12E5-4F81-851F-BA40DB9C900B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28BFF6B4-12E5-4F81-851F-BA40DB9C900B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79909CE6-28AC-404D-AB05-C3BAFE84C164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79909CE6-28AC-404D-AB05-C3BAFE84C164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79909CE6-28AC-404D-AB05-C3BAFE84C164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79909CE6-28AC-404D-AB05-C3BAFE84C164}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +127,8 @@ Global
 		{0419088D-FB73-4662-8B1D-6FBAEEA7766E} = {933AB69A-9C11-4F13-9679-CD425205A39C}
 		{6DA2B9AD-0810-4C8C-A886-EDBD8130C89B} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 		{CA857197-FC3D-4185-A4CA-CB8B78828B48} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
+		{28BFF6B4-12E5-4F81-851F-BA40DB9C900B} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
+		{79909CE6-28AC-404D-AB05-C3BAFE84C164} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 using Agatha.Common;
 using Agatha.Unity;
@@ -11,8 +10,6 @@ using Blitz.Client.Common.DynamicColumnEdit;
 using Blitz.Client.Common.DynamicColumnManagement;
 using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Core.Agatha;
-
-using Common.Logging;
 
 using ILogInject.Unity;
 
@@ -67,7 +64,7 @@ namespace Blitz.Client
                 .RegisterInstance<ILog4NetConfiguration>(new Log4NetConfiguration("ILogInject.UnityCommonLogging.Blitz.Client"));
 
             Container
-                .RegisterSingleton<ITaskScheduler, DesktopTaskScheduler>()
+                .RegisterSingleton<IScheduler, DesktopScheduler>()
                 .RegisterTransient<IViewService, ViewService>()
                 .RegisterType(typeof(IDialogBuilder<>), typeof(DialogBuilder<>))
                 .RegisterTransient<IStandardDialogBuilder, StandardDialogBuilder>()
@@ -76,10 +73,12 @@ namespace Blitz.Client
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterSingleton<IToolBarService, ToolBarService>()
                 .RegisterSingleton<IMenuService, MenuService>()
-                .RegisterSingletonInstance<IDispatcherService>(new DispatcherService(Dispatcher.CurrentDispatcher))
                 .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()
                 .RegisterType<IDynamicColumnManagementService, DynamicColumnManagementService>()
                 .RegisterType<IDynamicColumnEditService, DynamicColumnEditService>();
+
+            // This must be done here, so the correct Dispatcher is created
+            Container.Resolve<IScheduler>();
 
             InitialiseAgatha(Container);
 

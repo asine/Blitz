@@ -12,6 +12,8 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Microsoft.Practices.Prism.Commands;
 
+using Naru.WPF.TPL;
+
 namespace Blitz.Client.Common.DynamicReportData
 {
     public class DynamicReportDataViewModel : Workspace
@@ -20,9 +22,9 @@ namespace Blitz.Client.Common.DynamicReportData
 
         public BindableCollection<DynamicColumn> Columns { get; private set; }
 
-        public DynamicReportDataViewModel(ILog log, IDispatcherService dispatcherService, BindableCollectionFactory bindableCollectionFactory,
+        public DynamicReportDataViewModel(ILog log, IScheduler scheduler, BindableCollectionFactory bindableCollectionFactory,
                                           IToolBarService toolBarService, IViewService viewService, Func<DynamicColumnManagementViewModel> dynamicColumnManagementViewModelFactory)
-            : base(log, dispatcherService)
+            : base(log, scheduler)
         {
             Items = bindableCollectionFactory.Get<ExpandoObject>();
             Columns = bindableCollectionFactory.Get<DynamicColumn>();

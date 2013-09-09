@@ -15,9 +15,9 @@ namespace Blitz.Client.Employee.ReportRunner
     [UseView(typeof(ReportRunnerView))]
     public class ReportRunnerViewModel : ReportRunnerViewModel<ReportParameterViewModel, IReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>
     {
-        public ReportRunnerViewModel(ILog log, IViewService viewService, ITaskScheduler taskScheduler, IDispatcherService dispatcherService, IToolBarService toolBarService,
+        public ReportRunnerViewModel(ILog log, IViewService viewService, IScheduler scheduler, IToolBarService toolBarService,
             ReportParameterViewModel reportParameterViewModel, IReportRunnerService service)
-            : base(log, viewService, taskScheduler, dispatcherService, toolBarService, reportParameterViewModel, service)
+            : base(log, viewService, scheduler, toolBarService, reportParameterViewModel, service)
         {
         }
     }

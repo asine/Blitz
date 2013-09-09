@@ -12,6 +12,8 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Microsoft.Practices.Prism.Commands;
 
+using Naru.WPF.TPL;
+
 namespace Blitz.Client.Common.DynamicColumnManagement
 {
     public class DynamicColumnManagementViewModel : Workspace
@@ -61,10 +63,10 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
         #endregion
 
-        public DynamicColumnManagementViewModel(ILog log, IDispatcherService dispatcherService, IDynamicColumnManagementService service,
+        public DynamicColumnManagementViewModel(ILog log, IScheduler scheduler, IDynamicColumnManagementService service,
                                                 BindableCollectionFactory bindableCollectionFactory, Func<DynamicColumnEditViewModel> editViewModelFactory,
                                                 IToolBarService toolBarService)
-            : base(log, dispatcherService)
+            : base(log, scheduler)
         {
             _service = service;
             _editViewModelFactory = editViewModelFactory;

@@ -15,7 +15,7 @@ namespace Blitz.Client.Customer.ReportLayout
 {
     public class ReportLayoutViewModel : Workspace
     {
-        private readonly ITaskScheduler _taskScheduler;
+        private readonly IScheduler _scheduler;
         private readonly IReportLayoutService _service;
         private readonly IViewService _viewService;
         private readonly Func<ReportLayoutItemViewModel> _reportLayoutItemViewModelFactory;
@@ -34,12 +34,12 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public DelegateCommand OkCommand { get; private set; }
 
-        public ReportLayoutViewModel(ILog log, IDispatcherService dispatcherService, ITaskScheduler taskScheduler,
+        public ReportLayoutViewModel(ILog log, IScheduler scheduler,
             IReportLayoutService service, IViewService viewService, BindableCollectionFactory bindableCollectionFactory, 
             Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
-            : base(log, dispatcherService)
+            : base(log, scheduler)
         {
-            _taskScheduler = taskScheduler;
+            _scheduler = scheduler;
             _service = service;
             _viewService = viewService;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
@@ -64,8 +64,8 @@ namespace Blitz.Client.Customer.ReportLayout
                 .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)))
                 .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _taskScheduler.Default)
-                .Finally(Idle, _taskScheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _scheduler.Default)
+                .Finally(Idle, _scheduler.Default);
         }
 
         private ReportLayoutItemViewModel CreateDimension(AttributeDto dimension)

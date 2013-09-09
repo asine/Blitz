@@ -15,9 +15,9 @@ namespace Blitz.Client.Customer.Reportviewer
     [UseView(typeof(ReportViewerView))]
     public class ReportViewerViewModel : ReportViewerViewModel<IReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
-        public ReportViewerViewModel(ILog log, IReportViewerService service, ITaskScheduler taskScheduler, IDispatcherService dispatcherService, IViewService viewService, 
+        public ReportViewerViewModel(ILog log, IReportViewerService service, IScheduler scheduler, IViewService viewService, 
             IToolBarService toolBarService, HistoryViewModel historyViewModel) 
-            : base(log, service, taskScheduler, dispatcherService, viewService, toolBarService, historyViewModel)
+            : base(log, service, scheduler, viewService, toolBarService, historyViewModel)
         {
         }
     }

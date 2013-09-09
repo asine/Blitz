@@ -7,6 +7,8 @@ using Naru.WPF.MVVM;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 
+using Naru.WPF.TPL;
+
 namespace Blitz.Client.Common.ReportViewer.History
 {
     public class HistoryViewModel : Workspace
@@ -17,8 +19,8 @@ namespace Blitz.Client.Common.ReportViewer.History
 
         public event EventHandler<DataEventArgs<long>> Open; 
 
-        public HistoryViewModel(ILog log, IDispatcherService dispatcherService, BindableCollectionFactory bindableCollectionFactory) 
-            : base(log, dispatcherService)
+        public HistoryViewModel(ILog log, IScheduler scheduler, BindableCollectionFactory bindableCollectionFactory) 
+            : base(log, scheduler)
         {
             Items = bindableCollectionFactory.Get<HistoryItemViewModel>();
 
