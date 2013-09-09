@@ -51,8 +51,8 @@ namespace Blitz.Client.Common.ReportViewer
                     }
                 })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         protected override void OnInitialise()
@@ -71,8 +71,8 @@ namespace Blitz.Client.Common.ReportViewer
                         ((ISupportActivationState)_historyViewModel).Activate();
                     })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         protected override void OnActivate()

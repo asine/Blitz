@@ -68,8 +68,8 @@ namespace Blitz.Client.Common.ReportRunner
                 .SelectMany(() => Service.ConfigureParameterViewModelAsync(_reportParameterViewModel))
                 .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>().ShowAsync(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         private void GenerateReport()
@@ -96,7 +96,7 @@ namespace Blitz.Client.Common.ReportRunner
                         }
                     })
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"), _scheduler.Default)
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"), _scheduler.Task)
                 .Finally(() =>
                 {
                     Idle();
@@ -104,7 +104,7 @@ namespace Blitz.Client.Common.ReportRunner
                     IsExpanded = false;
 
                     _exportToExcel.RaiseCanExecuteChanged();
-                }, _scheduler.Default);
+                }, _scheduler.Task);
         }
 
         protected virtual bool CanExecuteGenerateReport()
@@ -130,13 +130,13 @@ namespace Blitz.Client.Common.ReportRunner
             BusyAsync("... Exporting to Excel ...")
                 .SelectMany(_ => Service.ExportToExcel(_response))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _scheduler.Default)
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _scheduler.Task)
                 .Finally(() =>
                 {
                     Idle();
 
                     IsExpanded = false;
-                }, _scheduler.Default);
+                }, _scheduler.Task);
         }
 
         protected virtual bool CanExportToExcel()

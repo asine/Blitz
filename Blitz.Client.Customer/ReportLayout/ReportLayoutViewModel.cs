@@ -64,8 +64,8 @@ namespace Blitz.Client.Customer.ReportLayout
                 .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)))
                 .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         private ReportLayoutItemViewModel CreateDimension(AttributeDto dimension)

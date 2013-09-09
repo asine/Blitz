@@ -64,8 +64,8 @@ namespace Blitz.Client.Trading.Security.Chart
                 .SelectMany(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
                 .SelectMany(data => Items.AddRange(data))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem getting chart data"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem getting chart data"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
     }
 }

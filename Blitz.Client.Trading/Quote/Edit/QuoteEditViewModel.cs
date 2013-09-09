@@ -80,22 +80,22 @@ namespace Blitz.Client.Trading.Quote.Edit
                 .SelectMany(_ => _service.GetInitialisationDataAsync())
                 .SelectMany(response => Instruments.AddRange(response.Instruments))
                 .SelectMany(() => _service.NewQuoteAsync())
-                .SelectMany(model => Model = model)
+                .Do(model => Model = model)
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         private void LoadQuote()
         {
             BusyAsync("... Loading Quote ...")
                 .SelectMany(() => _service.GetQuoteAsync(_id.Value))
-                .SelectMany(quote => Model = quote)
+                .Do(quote => Model = quote)
                 .SelectMany(_ => _service.GetInitialisationDataAsync())
                 .SelectMany(response => Instruments.AddRange(response.Instruments))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quote"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         private void CreateToolBar(Func<ToolBarButtonItem> toolBarButtonItemFactory)
@@ -116,12 +116,12 @@ namespace Blitz.Client.Trading.Quote.Edit
             BusyAsync("... Saving Quote ...")
                 .SelectMany(_ => _service.SaveQuoteAsync(Model))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem saving quote"), _scheduler.Default)
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem saving quote"), _scheduler.Task)
                 .Finally(() =>
                 {
                     Idle();
                     Close();
-                }, _scheduler.Default);
+                }, _scheduler.Task);
         }
     }
 }

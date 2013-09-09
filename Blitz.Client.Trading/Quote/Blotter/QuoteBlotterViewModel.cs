@@ -37,8 +37,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
                 _service.EditQuoteAsync(quote)
                     .SelectMany(() => BusyAsync("... Refreshing quotes ..."))
                     .SelectMany(() => RefreshQuotesAsync())
-                    .CatchAndHandle( _ => _viewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), _scheduler.Default)
-                    .Finally(Idle, _scheduler.Default));
+                    .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), _scheduler.Task)
+                    .Finally(Idle, _scheduler.Task));
 
             CreateToolBar(toolBarService);
         }
@@ -47,8 +47,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
         {
             BusyAsync("... Loading quotes ...")
                 .SelectMany(_ => RefreshQuotesAsync())
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"), _scheduler.Default)
-                .Finally(Idle, _scheduler.Default);
+                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"), _scheduler.Task)
+                .Finally(Idle, _scheduler.Task);
         }
 
         private Task RefreshQuotesAsync()
@@ -80,8 +80,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
                 _service.NewQuoteAsync()
                     .SelectMany(() => BusyAsync("... Refreshing quotes ..."))
                     .SelectMany(() => RefreshQuotesAsync())
-                    .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), _scheduler.Default)
-                    .Finally(Idle, _scheduler.Default));
+                    .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), _scheduler.Task)
+                    .Finally(Idle, _scheduler.Task));
             toolBarService.Items.Add(newQuoteToolBarItem);
 
             this.SyncToolBarItemWithViewModelActivationState(newQuoteToolBarItem);
