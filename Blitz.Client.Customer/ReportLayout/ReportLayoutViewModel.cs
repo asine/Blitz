@@ -44,7 +44,7 @@ namespace Blitz.Client.Customer.ReportLayout
             _viewService = viewService;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
 
-            DisplayName = "Layout";
+            Header = this.CreateHeaderViewModel("Layout");
 
             Available = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();
             Rows = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();
@@ -71,7 +71,7 @@ namespace Blitz.Client.Customer.ReportLayout
         private ReportLayoutItemViewModel CreateDimension(AttributeDto dimension)
         {
             var item = _reportLayoutItemViewModelFactory();
-            item.DisplayName = dimension.Name;
+            item.Name = dimension.Name;
             item.Type = AttributeType.Dimension;
             return item;
         }
@@ -79,7 +79,7 @@ namespace Blitz.Client.Customer.ReportLayout
         private ReportLayoutItemViewModel CreateMeasure(AttributeDto measure)
         {
             var item = _reportLayoutItemViewModelFactory();
-            item.DisplayName = measure.Name;
+            item.Name = measure.Name;
             item.Type = AttributeType.Measure;
             return item;
         }

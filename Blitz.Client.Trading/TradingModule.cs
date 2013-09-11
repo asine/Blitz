@@ -2,13 +2,13 @@
 
 using Common.Logging;
 
+using Naru.WPF;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.Menu;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Blitz.Client.Trading.Quote.Blotter;
 using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Client.Trading.Security.Chart;
-using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;

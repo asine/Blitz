@@ -48,5 +48,10 @@ namespace Blitz.Client.Common.DynamicReportData
 
             return Items.AddRangeAsync(DynamicColumnHelper.ConvertToExpando(items));
         }
+
+        public void SetDisplayName(string displayName)
+        {
+            Header = this.CreateHeaderViewModel(displayName);
+        }
     }
 }

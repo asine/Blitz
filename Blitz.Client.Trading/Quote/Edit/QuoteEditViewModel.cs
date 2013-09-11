@@ -57,9 +57,18 @@ namespace Blitz.Client.Trading.Quote.Edit
             Instruments = bindableCollectionFactory.Get<LookupValue>();
         }
 
-        public void Initialise(Guid id)
+        public void Initialise(Guid id = default(Guid))
         {
-            _id = id;
+            if (id == default(Guid))
+            {
+                Header = this.CreateHeaderViewModel("Create Quote");
+            }
+            else
+            {
+                _id = id;
+
+                Header = this.CreateHeaderViewModel(_id.ToString());
+            }
         }
 
         protected override void OnInitialise()

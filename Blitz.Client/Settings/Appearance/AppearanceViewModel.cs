@@ -6,13 +6,14 @@ using Common.Logging;
 
 using Naru.WPF.MVVM;
 using Naru.WPF.ModernUI.Presentation;
+using Naru.WPF.TPL;
 
 namespace Blitz.Client.Settings.Appearance
 {
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.
     /// </summary>
-    public class AppearanceViewModel : ViewModel
+    public class AppearanceViewModel : Workspace
     {
         private const string FONT_SMALL = "small";
         private const string FONT_LARGE = "large";
@@ -119,10 +120,10 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public AppearanceViewModel(ILog log, BindableCollectionFactory bindableCollectionFactory)
-            : base(log)
+        public AppearanceViewModel(ILog log, IScheduler scheduler, BindableCollectionFactory bindableCollectionFactory)
+            : base(log, scheduler)
         {
-            DisplayName = "Appearance";
+            Header = this.CreateHeaderViewModel("Appearance");
 
             FontSizes = bindableCollectionFactory.Get<string>();
             FontSizes.AddRange(new[] {FONT_SMALL, FONT_LARGE});
@@ -139,8 +140,8 @@ namespace Blitz.Client.Settings.Appearance
             Themes = bindableCollectionFactory.Get<ThemeItemViewModel>();
             Themes.AddRange(new[]
             {
-                new ThemeItemViewModel {DisplayName = "Dark", Source = AppearanceManager.DarkThemeSource},
-                new ThemeItemViewModel {DisplayName = "Light", Source = AppearanceManager.LightThemeSource}
+                new ThemeItemViewModel {Name = "Dark", Source = AppearanceManager.DarkThemeSource},
+                new ThemeItemViewModel {Name = "Light", Source = AppearanceManager.LightThemeSource}
             });
 
             SyncThemeAndColor();

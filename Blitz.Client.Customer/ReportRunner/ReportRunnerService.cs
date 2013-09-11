@@ -27,18 +27,18 @@ namespace Blitz.Client.Customer.ReportRunner
 
     public class ReportRunnerService : ReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>, IReportRunnerService
     {
-        private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
+        private readonly Func<DynamicReportDataViewModel> _dynamicReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
         private readonly IViewService _viewService;
         private readonly Func<ReportLayoutViewModel> _reportLayoutViewModelFactory;
         private readonly IBasicExportToExcel _exportToExcel;
 
-        public ReportRunnerService(Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory,
+        public ReportRunnerService(Func<DynamicReportDataViewModel> dynamicReportDataViewModelFactory,
             IRequestTask requestTask, IViewService viewService, ILog log,
             Func<ReportLayoutViewModel> reportLayoutViewModelFactory, IBasicExportToExcel exportToExcel)
             : base(log)
         {
-            _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
+            _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;
             _requestTask = requestTask;
             _viewService = viewService;
             _reportLayoutViewModelFactory = reportLayoutViewModelFactory;
@@ -75,8 +75,8 @@ namespace Blitz.Client.Customer.ReportRunner
             return Task.Factory.StartNew(() => new List<IViewModel>(response.Results
                 .Select((x, i) =>
                 {
-                    var dataViewModel = _simpleReportDataViewModelFactory();
-                    dataViewModel.DisplayName = "ReportData " + i;
+                    var dataViewModel = _dynamicReportDataViewModelFactory();
+                    dataViewModel.SetDisplayName("ReportData " + i);
 
                     var items = Enumerable.Range(0, 100)
                         .Select(index => new ReportDto {Id = index, Name = "Name " + index});

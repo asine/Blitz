@@ -64,7 +64,6 @@
     <Compile Include="Core\EnumerableEx.cs" />
     <Compile Include="Core\Log4NetConfiguration.cs" />
     <Compile Include="Core\PerformanceTester.cs" />
-    <Compile Include="Core\UnityExtensions.cs" />
     <Compile Include="Customer\AttributeDto.cs" />
     <Compile Include="Customer\GetHistoryListRequest.cs" />
     <Compile Include="Customer\GetHistoryListResponse.cs" />

@@ -3,13 +3,14 @@ using Blitz.Client.Customer.Report;
 using Blitz.Client.Customer.ReportLayout;
 using Blitz.Client.Customer.ReportRunner;
 using Blitz.Client.Customer.Reportviewer;
-using Blitz.Common.Core;
 
 using Common.Logging;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
+
+using Naru.WPF;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.Menu;
@@ -54,7 +55,7 @@ namespace Blitz.Client.Customer
                 _log.Debug("Adding Customer Report to Main region");
                 var viewModel = _viewService.RegionBuilder<ReportViewModel>()
                     .WithScope()
-                    .WithInitialisation(x => x.DisplayName = "Customer Report")
+                    .WithInitialisation(x => x.SetDisplayName("Customer Report"))
                     .Show(RegionNames.MAIN);
                 ((ISupportActivationState)viewModel).Activate();
             });

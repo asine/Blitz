@@ -30,7 +30,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
             _scheduler = scheduler;
             _viewService = viewService;
             _service = service;
-            DisplayName = "Blotter";
+
+            Header = this.CreateHeaderViewModel("Blotter");
 
             Items = bindableCollectionFactory.Get<QuoteBlotterItemViewModel>();
             OpenCommand = new DelegateCommand<QuoteBlotterItemViewModel>(quote =>

@@ -13,10 +13,8 @@ using Blitz.Client.Core.Agatha;
 
 using ILogInject.Unity;
 
+using Naru.WPF;
 using Naru.WPF.MVVM;
-using Naru.WPF.MVVM.Dialog;
-using Naru.WPF.MVVM.Menu;
-using Naru.WPF.MVVM.ToolBar;
 
 using Blitz.Client.Shell;
 using Blitz.Client.Trading;
@@ -28,8 +26,6 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
-using Naru.WPF.TPL;
-
 namespace Blitz.Client
 {
     public class Bootstrapper : UnityBootstrapper
@@ -37,8 +33,7 @@ namespace Blitz.Client
         protected override DependencyObject CreateShell()
         {
             var shellViewModel = Container.Resolve<ShellViewModel>();
-            var shellView = new ShellView();
-
+            var shellView = ViewService.CreateView(shellViewModel.GetType());
             ViewService.BindViewModel(shellView, shellViewModel);
 
             return shellView;
@@ -64,21 +59,11 @@ namespace Blitz.Client
                 .RegisterInstance<ILog4NetConfiguration>(new Log4NetConfiguration("ILogInject.UnityCommonLogging.Blitz.Client"));
 
             Container
-                .RegisterSingleton<IScheduler, DesktopScheduler>()
-                .RegisterTransient<IViewService, ViewService>()
-                .RegisterType(typeof(IDialogBuilder<>), typeof(DialogBuilder<>))
-                .RegisterTransient<IStandardDialogBuilder, StandardDialogBuilder>()
-                .RegisterTransient<IRegionBuilder, RegionBuilder>()
-                .RegisterType(typeof (IRegionBuilder<>), typeof (RegionBuilder<>))
+                .ConfigureNaru()
                 .RegisterTransient<IRequestTask, RequestTask>()
-                .RegisterSingleton<IToolBarService, ToolBarService>()
-                .RegisterSingleton<IMenuService, MenuService>()
                 .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()
                 .RegisterType<IDynamicColumnManagementService, DynamicColumnManagementService>()
                 .RegisterType<IDynamicColumnEditService, DynamicColumnEditService>();
-
-            // This must be done here, so the correct Dispatcher is created
-            Container.Resolve<IScheduler>();
 
             InitialiseAgatha(Container);
 

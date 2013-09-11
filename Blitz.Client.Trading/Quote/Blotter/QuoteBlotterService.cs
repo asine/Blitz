@@ -46,6 +46,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         public Task NewQuoteAsync()
         {
             var viewModel = _quoteEditViewModelFactory();
+            viewModel.Initialise();
             return _viewService.ShowModalAsync(viewModel);
         }
 

@@ -10,6 +10,8 @@ namespace Blitz.Client.Customer.ReportLayout
     {
         public Guid Id { get; private set; }
 
+        public string Name { get; set; }
+
         public AttributeType Type { get; set; }
 
         public ReportLayoutItemViewModel(ILog log)
@@ -20,7 +22,7 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}", Type, DisplayName);
+            return string.Format("{0} - {1}", Type, Name);
         }
     }
 

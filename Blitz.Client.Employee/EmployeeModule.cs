@@ -2,12 +2,12 @@
 
 using Common.Logging;
 
+using Naru.WPF;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.Menu;
 using Blitz.Client.Employee.Report;
 using Blitz.Client.Employee.ReportRunner;
 using Naru.WPF.ModernUI.Assets.Icons;
-using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
@@ -51,7 +51,7 @@ namespace Blitz.Client.Employee
                 _log.Debug("Adding Employee Report to Main region");
                 var viewModel = _viewService.RegionBuilder<ReportViewModel>()
                     .WithScope()
-                    .WithInitialisation(x => x.DisplayName = "Employee Report")
+                    .WithInitialisation(x => x.SetDisplayName("Employee Report"))
                     .Show(RegionNames.MAIN);
                 ((ISupportActivationState)viewModel).Activate();
             });

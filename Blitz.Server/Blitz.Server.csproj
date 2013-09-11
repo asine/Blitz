@@ -128,6 +128,7 @@
     <Compile Include="Trading\GetQuotesHandler.cs" />
     <Compile Include="Trading\SaveQuoteHandler.cs" />
     <Compile Include="Trading\Security\Chart\GetHistoricDataHandler.cs" />
+    <Compile Include="UnityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
