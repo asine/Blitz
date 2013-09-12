@@ -24,7 +24,7 @@ namespace Blitz.Client.Common.ReportViewer.History
         {
             Items = bindableCollectionFactory.Get<HistoryItemViewModel>();
 
-            Header = this.CreateHeaderViewModel("History");
+            this.SetupHeader("History");
 
             OpenCommand = new DelegateCommand<HistoryItemViewModel>(x => Open.SafeInvoke(this, new DataEventArgs<long>(x.Id)));
         }

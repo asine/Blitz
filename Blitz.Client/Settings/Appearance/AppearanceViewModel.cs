@@ -123,7 +123,7 @@ namespace Blitz.Client.Settings.Appearance
         public AppearanceViewModel(ILog log, IScheduler scheduler, BindableCollectionFactory bindableCollectionFactory)
             : base(log, scheduler)
         {
-            Header = this.CreateHeaderViewModel("Appearance");
+            this.SetupHeader("Appearance");
 
             FontSizes = bindableCollectionFactory.Get<string>();
             FontSizes.AddRange(new[] {FONT_SMALL, FONT_LARGE});

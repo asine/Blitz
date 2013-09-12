@@ -26,6 +26,8 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
+using Naru.WPF.MVVM.Prism;
+
 namespace Blitz.Client
 {
     public class Bootstrapper : UnityBootstrapper

@@ -55,7 +55,7 @@ namespace Blitz.Client.Customer
                 _log.Debug("Adding Customer Report to Main region");
                 var viewModel = _viewService.RegionBuilder<ReportViewModel>()
                     .WithScope()
-                    .WithInitialisation(x => x.SetDisplayName("Customer Report"))
+                    .WithInitialisation(x => x.SetupHeader("Customer Report"))
                     .Show(RegionNames.MAIN);
                 ((ISupportActivationState)viewModel).Activate();
             });

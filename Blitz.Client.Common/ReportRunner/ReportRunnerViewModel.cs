@@ -55,7 +55,7 @@ namespace Blitz.Client.Common.ReportRunner
             Service = service;
             IsExpanded = true;
 
-            Header = this.CreateHeaderViewModel("Runner", IconNames.EXCEL);
+            this.SetupHeader("Runner", IconNames.EXCEL);
 
             GenerateReportCommand = new DelegateCommand(GenerateReport, CanExecuteGenerateReport);
 

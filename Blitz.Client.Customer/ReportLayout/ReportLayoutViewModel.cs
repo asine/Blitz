@@ -44,7 +44,7 @@ namespace Blitz.Client.Customer.ReportLayout
             _viewService = viewService;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
 
-            Header = this.CreateHeaderViewModel("Layout");
+            this.SetupHeader("Layout");
 
             Available = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();
             Rows = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();

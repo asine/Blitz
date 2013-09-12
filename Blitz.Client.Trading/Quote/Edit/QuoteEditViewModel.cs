@@ -61,13 +61,13 @@ namespace Blitz.Client.Trading.Quote.Edit
         {
             if (id == default(Guid))
             {
-                Header = this.CreateHeaderViewModel("Create Quote");
+                this.SetupHeader("Create Quote");
             }
             else
             {
                 _id = id;
 
-                Header = this.CreateHeaderViewModel(_id.ToString());
+                this.SetupHeader(_id.ToString());
             }
         }
 

@@ -31,7 +31,7 @@ namespace Blitz.Client.Common.ReportViewer
             ToolBarService = toolBarService;
             _historyViewModel = historyViewModel;
 
-            Header = this.CreateHeaderViewModel("Viewer");
+            this.SetupHeader("Viewer");
 
             _historyViewModel.Open += Open;
             Disposables.Add(AnonymousDisposable.Create(() => _historyViewModel.Open -= Open));

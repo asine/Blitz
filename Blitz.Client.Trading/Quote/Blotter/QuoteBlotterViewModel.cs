@@ -31,7 +31,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
             _viewService = viewService;
             _service = service;
 
-            Header = this.CreateHeaderViewModel("Blotter");
+            this.SetupHeader("Blotter");
 
             Items = bindableCollectionFactory.Get<QuoteBlotterItemViewModel>();
             OpenCommand = new DelegateCommand<QuoteBlotterItemViewModel>(quote =>
@@ -50,6 +50,11 @@ namespace Blitz.Client.Trading.Quote.Blotter
                 .SelectMany(_ => RefreshQuotesAsync())
                 .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"), _scheduler.Task)
                 .Finally(Idle, _scheduler.Task);
+        }
+
+        public override bool CanClose()
+        {
+            return true;
         }
 
         private Task RefreshQuotesAsync()

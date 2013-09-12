@@ -24,10 +24,5 @@ namespace Blitz.Client.Employee.Report
                 .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)))
                 .Show(RegionNames.REPORT);
         }
-
-        public void SetDisplayName(string displayName)
-        {
-            Header = this.CreateHeaderViewModel(displayName);
-        }
     }
 }

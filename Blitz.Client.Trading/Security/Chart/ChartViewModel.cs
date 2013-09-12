@@ -51,7 +51,7 @@ namespace Blitz.Client.Trading.Security.Chart
             _service = service;
             Disposables.Add(service);
 
-            Header = this.CreateHeaderViewModel("Chart");
+            this.SetupHeader("Chart");
 
             Items = bindableCollectionFactory.Get<HistoricalDataDto>();
             GoCommand = new DelegateCommand(GetData,() => !string.IsNullOrEmpty(Ticker));

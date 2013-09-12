@@ -72,7 +72,7 @@ namespace Blitz.Client.Customer.Reportviewer
                 .Select((x, i) =>
                 {
                     var dataViewModel = _simpleReportDataViewModelFactory();
-                    dataViewModel.SetDisplayName("ReportData " + i);
+                    dataViewModel.SetupHeader("ReportData " + i);
 
                     var items = Enumerable.Range(0, 100)
                         .Select(index => new ReportDto { Id = index });

@@ -51,7 +51,7 @@ namespace Blitz.Client.Employee
                 _log.Debug("Adding Employee Report to Main region");
                 var viewModel = _viewService.RegionBuilder<ReportViewModel>()
                     .WithScope()
-                    .WithInitialisation(x => x.SetDisplayName("Employee Report"))
+                    .WithInitialisation(x => x.SetupHeader("Employee Report"))
                     .Show(RegionNames.MAIN);
                 ((ISupportActivationState)viewModel).Activate();
             });
