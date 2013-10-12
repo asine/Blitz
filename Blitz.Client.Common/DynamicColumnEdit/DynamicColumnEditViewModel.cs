@@ -3,7 +3,7 @@ using Blitz.Client.Common.DynamicReportData;
 using Common.Logging;
 
 using Naru.WPF.MVVM;
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.DynamicColumnEdit
 {
@@ -45,8 +45,8 @@ namespace Blitz.Client.Common.DynamicColumnEdit
 
         #endregion
 
-        public DynamicColumnEditViewModel(ILog log, IScheduler scheduler, IDynamicColumnEditService service)
-            : base(log, scheduler)
+        public DynamicColumnEditViewModel(ILog log, IScheduler scheduler, IViewService viewService, IDynamicColumnEditService service)
+            : base(log, scheduler, viewService)
         {
             _service = service;
 

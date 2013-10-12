@@ -13,6 +13,8 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
+using Naru.WPF.Prism.Region;
+
 namespace Blitz.Client.Employee
 {
     public class EmployeeModule : IModule
@@ -21,13 +23,15 @@ namespace Blitz.Client.Employee
         private readonly IViewService _viewService;
         private readonly IUnityContainer _container;
         private readonly IMenuService _menuService;
+        private readonly IRegionService _regionService;
 
-        public EmployeeModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService)
+        public EmployeeModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService, IRegionService regionService)
         {
             _log = log;
             _viewService = viewService;
             _container = container;
             _menuService = menuService;
+            _regionService = regionService;
         }
 
         public void Initialize()
@@ -49,7 +53,7 @@ namespace Blitz.Client.Employee
             newReportMenuItem.Command = new DelegateCommand(() =>
             {
                 _log.Debug("Adding Employee Report to Main region");
-                var viewModel = _viewService.RegionBuilder<ReportViewModel>()
+                var viewModel = _regionService.RegionBuilder<ReportViewModel>()
                     .WithScope()
                     .WithInitialisation(x => x.SetupHeader("Employee Report"))
                     .Show(RegionNames.MAIN);

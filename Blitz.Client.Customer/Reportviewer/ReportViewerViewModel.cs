@@ -8,16 +8,17 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Blitz.Common.Customer;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Prism.Region;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Customer.Reportviewer
 {
     [UseView(typeof(ReportViewerView))]
     public class ReportViewerViewModel : ReportViewerViewModel<IReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
-        public ReportViewerViewModel(ILog log, IReportViewerService service, IScheduler scheduler, IViewService viewService, 
+        public ReportViewerViewModel(ILog log, IScheduler scheduler, IViewService viewService, IRegionService regionService, IReportViewerService service, 
             IToolBarService toolBarService, HistoryViewModel historyViewModel) 
-            : base(log, service, scheduler, viewService, toolBarService, historyViewModel)
+            : base(log, scheduler, viewService, regionService, service, toolBarService, historyViewModel)
         {
         }
     }

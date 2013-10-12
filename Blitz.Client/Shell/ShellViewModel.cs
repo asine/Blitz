@@ -12,25 +12,22 @@ using Blitz.Client.Settings.Appearance;
 
 using Microsoft.Practices.Prism.Commands;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Shell
 {
     public class ShellViewModel : Workspace, IWindowViewModel
     {
-        private readonly IViewService _viewService;
-
         public BindableCollection<IMenuItem> MenuItems { get; private set; }
 
         public BindableCollection<IToolBarItem> ToolBarItems { get; private set; }
 
         public LinkCollection TitleLinks { get; private set; } 
 
-        public ShellViewModel(ILog log, IToolBarService toolBarService, IMenuService menuService, IScheduler scheduler, 
-            IViewService viewService, Func<AppearanceViewModel> appearanceViewModelFactory) 
-            : base(log, scheduler)
+        public ShellViewModel(ILog log, IScheduler scheduler, IViewService viewService, IToolBarService toolBarService, IMenuService menuService, 
+            Func<AppearanceViewModel> appearanceViewModelFactory) 
+            : base(log, scheduler, viewService)
         {
-            _viewService = viewService;
             ToolBarItems = toolBarService.Items;
             MenuItems = menuService.Items;
 
@@ -42,7 +39,7 @@ namespace Blitz.Client.Shell
                 Command = new DelegateCommand(() =>
                 {
                     var viewModel1 = appearanceViewModelFactory();
-                    _viewService.ShowModal(viewModel1);
+                    ViewService.ShowModal(viewModel1);
                 })
             });
         }

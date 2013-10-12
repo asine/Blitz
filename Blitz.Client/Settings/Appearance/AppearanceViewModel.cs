@@ -6,7 +6,7 @@ using Common.Logging;
 
 using Naru.WPF.MVVM;
 using Naru.WPF.ModernUI.Presentation;
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Settings.Appearance
 {
@@ -120,8 +120,8 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public AppearanceViewModel(ILog log, IScheduler scheduler, BindableCollectionFactory bindableCollectionFactory)
-            : base(log, scheduler)
+        public AppearanceViewModel(ILog log, IScheduler scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory)
+            : base(log, scheduler, viewService)
         {
             this.SetupHeader("Appearance");
 

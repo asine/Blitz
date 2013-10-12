@@ -14,6 +14,8 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
+using Naru.WPF.Prism.Region;
+
 namespace Blitz.Client.Trading
 {
     public class TradingModule : IModule
@@ -22,13 +24,15 @@ namespace Blitz.Client.Trading
         private readonly IViewService _viewService;
         private readonly IUnityContainer _container;
         private readonly IMenuService _menuService;
+        private readonly IRegionService _regionService;
 
-        public TradingModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService)
+        public TradingModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService, IRegionService regionService)
         {
             _log = log;
             _viewService = viewService;
             _container = container;
             _menuService = menuService;
+            _regionService = regionService;
         }
 
         public void Initialize()
@@ -53,7 +57,7 @@ namespace Blitz.Client.Trading
             newReportMenuItem.Command = new DelegateCommand(() =>
             {
                 _log.Debug("Adding Blotter to Main region");
-                var viewModel = _viewService.RegionBuilder<QuoteBlotterViewModel>()
+                var viewModel = _regionService.RegionBuilder<QuoteBlotterViewModel>()
                     .WithScope()
                     .Show(RegionNames.MAIN);
                 ((ISupportActivationState)viewModel).Activate();
@@ -66,7 +70,7 @@ namespace Blitz.Client.Trading
             chartMenuItem.Command = new DelegateCommand(() =>
             {
                 _log.Debug("Adding Chart to Main region");
-                var viewModel = _viewService.RegionBuilder<ChartViewModel>()
+                var viewModel = _regionService.RegionBuilder<ChartViewModel>()
                     .WithScope()
                     .Show(RegionNames.MAIN);
                 ((ISupportActivationState)viewModel).Activate();

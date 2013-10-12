@@ -12,7 +12,7 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Microsoft.Practices.Prism.Commands;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.DynamicReportData
 {
@@ -22,9 +22,9 @@ namespace Blitz.Client.Common.DynamicReportData
 
         public BindableCollection<DynamicColumn> Columns { get; private set; }
 
-        public DynamicReportDataViewModel(ILog log, IScheduler scheduler, BindableCollectionFactory bindableCollectionFactory,
-                                          IToolBarService toolBarService, IViewService viewService, Func<DynamicColumnManagementViewModel> dynamicColumnManagementViewModelFactory)
-            : base(log, scheduler)
+        public DynamicReportDataViewModel(ILog log, IScheduler scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory,
+                                          IToolBarService toolBarService, Func<DynamicColumnManagementViewModel> dynamicColumnManagementViewModelFactory)
+            : base(log, scheduler, viewService)
         {
             Items = bindableCollectionFactory.Get<ExpandoObject>();
             Columns = bindableCollectionFactory.Get<DynamicColumn>();

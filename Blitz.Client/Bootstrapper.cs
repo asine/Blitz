@@ -26,7 +26,8 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
-using Naru.WPF.MVVM.Prism;
+using Naru.WPF.Prism;
+using Naru.WPF.Prism.TabControl;
 
 namespace Blitz.Client
 {
@@ -62,6 +63,7 @@ namespace Blitz.Client
 
             Container
                 .ConfigureNaru()
+                .ConfigureNaruPrism()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()
                 .RegisterType<IDynamicColumnManagementService, DynamicColumnManagementService>()

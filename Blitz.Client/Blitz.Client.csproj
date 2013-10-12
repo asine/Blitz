@@ -189,9 +189,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Naru\Naru.TPL\Naru.TPL.csproj">
+      <Project>{2bbca269-6fdf-446d-9651-32717907afa8}</Project>
+      <Name>Naru.TPL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Naru\Naru.WPF.ModernUI\Naru.WPF.ModernUI.csproj">
       <Project>{ca857197-fc3d-4185-a4ca-cb8b78828b48}</Project>
       <Name>Naru.WPF.ModernUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.WPF.Prism\Naru.WPF.Prism.csproj">
+      <Project>{9fb203d3-fcdf-4bc5-8c57-267b116a8436}</Project>
+      <Name>Naru.WPF.Prism</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Naru\Naru.WPF\Naru.WPF.csproj">
       <Project>{6da2b9ad-0810-4c8c-a886-edbd8130c89b}</Project>

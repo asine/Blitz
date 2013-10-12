@@ -5,7 +5,7 @@ using Blitz.Client.Core.Agatha;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
 
-using Naru.WPF.TPL;
+using Naru.TPL;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {

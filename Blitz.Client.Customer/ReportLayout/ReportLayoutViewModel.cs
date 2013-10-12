@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Common.Logging;
 
+using Naru.TPL;
 using Naru.WPF.MVVM;
 
 using Blitz.Common.Customer;
 
 using Microsoft.Practices.Prism.Commands;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Customer.ReportLayout
 {
@@ -17,7 +19,6 @@ namespace Blitz.Client.Customer.ReportLayout
     {
         private readonly IScheduler _scheduler;
         private readonly IReportLayoutService _service;
-        private readonly IViewService _viewService;
         private readonly Func<ReportLayoutItemViewModel> _reportLayoutItemViewModelFactory;
 
         public BindableCollection<ReportLayoutItemViewModel> Available { get; private set; }
@@ -34,14 +35,13 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public DelegateCommand OkCommand { get; private set; }
 
-        public ReportLayoutViewModel(ILog log, IScheduler scheduler,
-            IReportLayoutService service, IViewService viewService, BindableCollectionFactory bindableCollectionFactory, 
+        public ReportLayoutViewModel(ILog log, IScheduler scheduler, IViewService viewService,
+            IReportLayoutService service, BindableCollectionFactory bindableCollectionFactory, 
             Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
-            : base(log, scheduler)
+            : base(log, scheduler, viewService)
         {
             _scheduler = scheduler;
             _service = service;
-            _viewService = viewService;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
 
             this.SetupHeader("Layout");
@@ -57,15 +57,15 @@ namespace Blitz.Client.Customer.ReportLayout
             OkCommand = new DelegateCommand(Close);
         }
 
-        protected override void OnInitialise()
+        protected override Task OnInitialise()
         {
-            BusyAsync("... Loading Attributes ...")
+            return BusyViewModel.ActiveAsync("... Loading Attributes ...")
                 .SelectMany(_ => _service.GetAttributesAsync())
                 .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)))
                 .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)))
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _scheduler.Task)
-                .Finally(Idle, _scheduler.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), _scheduler.Task)
+                .Finally(BusyViewModel.InActive, _scheduler.Task);
         }
 
         private ReportLayoutItemViewModel CreateDimension(AttributeDto dimension)

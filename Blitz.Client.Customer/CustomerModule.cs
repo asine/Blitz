@@ -14,6 +14,7 @@ using Naru.WPF;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.Menu;
+using Naru.WPF.Prism.Region;
 
 namespace Blitz.Client.Customer
 {
@@ -23,13 +24,15 @@ namespace Blitz.Client.Customer
         private readonly IViewService _viewService;
         private readonly IUnityContainer _container;
         private readonly IMenuService _menuService;
+        private readonly IRegionService _regionService;
 
-        public CustomerModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService)
+        public CustomerModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService, IRegionService regionService)
         {
             _log = log;
             _viewService = viewService;
             _container = container;
             _menuService = menuService;
+            _regionService = regionService;
         }
 
         public void Initialize()
@@ -53,7 +56,7 @@ namespace Blitz.Client.Customer
             newReportMenuItem.Command = new DelegateCommand(() =>
             {
                 _log.Debug("Adding Customer Report to Main region");
-                var viewModel = _viewService.RegionBuilder<ReportViewModel>()
+                var viewModel = _regionService.RegionBuilder<ReportViewModel>()
                     .WithScope()
                     .WithInitialisation(x => x.SetupHeader("Customer Report"))
                     .Show(RegionNames.MAIN);

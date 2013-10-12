@@ -1,12 +1,16 @@
-﻿using Common.Logging;
+﻿using System.Threading.Tasks;
 
+using Common.Logging;
+
+using Naru.TPL;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.ToolBar;
 using Naru.WPF.ModernUI.Assets.Icons;
 
 using Microsoft.Practices.Prism.Commands;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Prism.Region;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.ReportRunner
 {
@@ -14,7 +18,7 @@ namespace Blitz.Client.Common.ReportRunner
         where TReportParameterViewModel : IViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        private readonly IViewService _viewService;
+        private readonly IRegionService _regionService;
         private readonly IScheduler _scheduler;
 
         protected readonly IToolBarService ToolBarService;
@@ -44,11 +48,11 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        protected ReportRunnerViewModel(ILog log, IViewService viewService, IScheduler scheduler, 
+        protected ReportRunnerViewModel(ILog log, IViewService viewService, IRegionService regionService, IScheduler scheduler, 
             IToolBarService toolBarService, TReportParameterViewModel reportParameterViewModel, TReportRunnerService service)
-            : base(log, scheduler)
+            : base(log, scheduler, viewService)
         {
-            _viewService = viewService;
+            _regionService = regionService;
             _scheduler = scheduler;
             ToolBarService = toolBarService;
             _reportParameterViewModel = reportParameterViewModel;
@@ -62,19 +66,19 @@ namespace Blitz.Client.Common.ReportRunner
             CreateExportToExcelToolBarItem();
         }
 
-        protected override void OnInitialise()
+        protected override Task OnInitialise()
         {
-            BusyAsync("... Loading ...")
+            return BusyViewModel.ActiveAsync("... Loading ...")
                 .SelectMany(() => Service.ConfigureParameterViewModelAsync(_reportParameterViewModel))
-                .SelectMany(() => _viewService.RegionBuilder<TReportParameterViewModel>().ShowAsync(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
+                .SelectMany(() => _regionService.RegionBuilder<TReportParameterViewModel>().ShowAsync(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _scheduler.Task)
-                .Finally(Idle, _scheduler.Task);
+                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), _scheduler.Task)
+                .Finally(BusyViewModel.InActive, _scheduler.Task);
         }
 
         private void GenerateReport()
         {
-            BusyAsync("... Loading ...")
+            BusyViewModel.ActiveAsync("... Loading ...")
                 .SelectMany(_ => Service.GenerateAsync(Service.CreateRequest(_reportParameterViewModel)))
                 .SelectMany(response =>
                 {
@@ -83,10 +87,10 @@ namespace Blitz.Client.Common.ReportRunner
                 })
                 .SelectMany(dataViewModels =>
                     {
-                        _viewService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
+                        _regionService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
                         foreach (var dataViewModel in dataViewModels)
                         {
-                            _viewService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
+                            _regionService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
 
                             var supportActivationState = dataViewModel as ISupportActivationState;
                             if (supportActivationState != null)
@@ -96,10 +100,10 @@ namespace Blitz.Client.Common.ReportRunner
                         }
                     })
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"), _scheduler.Task)
+                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"), _scheduler.Task)
                 .Finally(() =>
                 {
-                    Idle();
+                    BusyViewModel.InActive();
 
                     IsExpanded = false;
 
@@ -127,13 +131,13 @@ namespace Blitz.Client.Common.ReportRunner
 
         private void ExportToExcel()
         {
-            BusyAsync("... Exporting to Excel ...")
+            BusyViewModel.ActiveAsync("... Exporting to Excel ...")
                 .SelectMany(_ => Service.ExportToExcel(_response))
                 .LogException(Log)
-                .CatchAndHandle(x => _viewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _scheduler.Task)
+                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), _scheduler.Task)
                 .Finally(() =>
                 {
-                    Idle();
+                    BusyViewModel.InActive();
 
                     IsExpanded = false;
                 }, _scheduler.Task);

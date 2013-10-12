@@ -1,18 +1,15 @@
 ﻿using Common.Logging;
 
 using Naru.WPF.MVVM;
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.Report
 {
     public abstract class ReportViewModel : Workspace
     {
-        protected readonly IViewService ViewService;
-
         protected ReportViewModel(ILog log, IViewService viewService, IScheduler scheduler)
-            : base(log, scheduler)
+            : base(log, scheduler, viewService)
         {
-            ViewService = viewService;
         }
     }
 }

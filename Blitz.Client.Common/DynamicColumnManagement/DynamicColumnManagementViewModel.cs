@@ -12,7 +12,7 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Microsoft.Practices.Prism.Commands;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.DynamicColumnManagement
 {
@@ -63,10 +63,10 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
         #endregion
 
-        public DynamicColumnManagementViewModel(ILog log, IScheduler scheduler, IDynamicColumnManagementService service,
+        public DynamicColumnManagementViewModel(ILog log, IScheduler scheduler, IViewService viewService, IDynamicColumnManagementService service,
                                                 BindableCollectionFactory bindableCollectionFactory, Func<DynamicColumnEditViewModel> editViewModelFactory,
                                                 IToolBarService toolBarService)
-            : base(log, scheduler)
+            : base(log, scheduler, viewService)
         {
             _service = service;
             _editViewModelFactory = editViewModelFactory;
@@ -89,7 +89,7 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
             var cancelToolBarItem = toolBarService.CreateToolBarButtonItem();
             cancelToolBarItem.DisplayName = "Cancel";
-            cancelToolBarItem.Command = ClosingCommand;
+            cancelToolBarItem.Command = CloseCommand;
             ToolBarItems.Add(cancelToolBarItem);
         }
 

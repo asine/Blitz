@@ -7,11 +7,10 @@ using Blitz.Client.Core.Agatha;
 
 using Common.Logging;
 
+using Naru.TPL;
 using Naru.WPF.MVVM;
 
 using Blitz.Common.Trading.Security.Chart;
-
-using Naru.WPF.TPL;
 
 namespace Blitz.Client.Trading.Security.Chart
 {

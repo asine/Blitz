@@ -1,33 +1,37 @@
-﻿using Blitz.Client.Common.ReportViewer.History;
+﻿using System;
+using System.Threading.Tasks;
+
+using Blitz.Client.Common.ReportViewer.History;
 
 using Common.Logging;
 
+using Naru.TPL;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.ToolBar;
 
 using Microsoft.Practices.Prism.Events;
 
-using Naru.WPF.TPL;
+using Naru.WPF.Prism.Region;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.ReportViewer
 {
     public abstract class ReportViewerViewModel<TReportViewerService, THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : Workspace
         where TReportViewerService : IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
+        private readonly IRegionService _regionService;
         protected readonly TReportViewerService Service;
-        private readonly IScheduler _scheduler;
-        private readonly IViewService _viewService;
         private readonly HistoryViewModel _historyViewModel;
 
         protected readonly IToolBarService ToolBarService;
 
-        protected ReportViewerViewModel(ILog log, TReportViewerService service, IScheduler scheduler, 
-            IViewService viewService, IToolBarService toolBarService, HistoryViewModel historyViewModel)
-            : base(log, scheduler)
+        protected ReportViewerViewModel(ILog log, IScheduler scheduler, IViewService viewService, IRegionService regionService, 
+            TReportViewerService service, IToolBarService toolBarService, HistoryViewModel historyViewModel)
+            : base(log, scheduler, viewService)
         {
+            if (regionService == null) throw new ArgumentNullException("regionService");
+            _regionService = regionService;
             Service = service;
-            _scheduler = scheduler;
-            _viewService = viewService;
             ToolBarService = toolBarService;
             _historyViewModel = historyViewModel;
 
@@ -39,25 +43,25 @@ namespace Blitz.Client.Common.ReportViewer
 
         private void Open(object sender, DataEventArgs<long> e)
         {
-            BusyAsync("... Opening Historic Report ...")
+            BusyViewModel.ActiveAsync("... Opening Historic Report ...")
                 .SelectMany(_ => Service.GenerateReportAsync(Service.CreateReportRequest(e.Value)))
                 .SelectMany(response => Service.GenerateReportViewModelsAsync(response))
                 .SelectMany(dataViewModels =>
                 {
-                    _viewService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
+                    _regionService.RegionBuilder().Clear(RegionNames.HISTORY_DATA);
                     foreach (var dataViewModel in dataViewModels)
                     {
-                        _viewService.RegionBuilder<IViewModel>().Show(RegionNames.HISTORY_DATA, dataViewModel);
+                        _regionService.RegionBuilder<IViewModel>().Show(RegionNames.HISTORY_DATA, dataViewModel);
                     }
                 })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), _scheduler.Task)
-                .Finally(Idle, _scheduler.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), Scheduler.Task)
+                .Finally(BusyViewModel.InActive, Scheduler.Task);
         }
 
-        protected override void OnInitialise()
+        protected override Task OnInitialise()
         {
-            BusyAsync("... Loading ...")
+            return BusyViewModel.ActiveAsync("... Loading ...")
                 .SelectMany(_ => Service.GetHistoryAsync(Service.CreateHistoryRequest()))
                 .SelectMany(response => Service.GenerateHistoryItemViewModelsAsync(response))
                 .SelectMany(dataViewModels =>
@@ -67,12 +71,12 @@ namespace Blitz.Client.Common.ReportViewer
                             _historyViewModel.Items.Add(dataViewModel);
                         }
 
-                        _viewService.RegionBuilder<HistoryViewModel>().Show(RegionNames.HISTORY_DATA, _historyViewModel);
+                        _regionService.RegionBuilder<HistoryViewModel>().Show(RegionNames.HISTORY_DATA, _historyViewModel);
                         ((ISupportActivationState)_historyViewModel).Activate();
                     })
                 .LogException(Log)
-                .CatchAndHandle(_ => _viewService.StandardDialogBuilder().Error("Error", "Problem loading History"), _scheduler.Task)
-                .Finally(Idle, _scheduler.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading History"), Scheduler.Task)
+                .Finally(BusyViewModel.InActive, Scheduler.Task);
         }
 
         protected override void OnActivate()
