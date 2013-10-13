@@ -8,8 +8,6 @@ using Naru.WPF.MVVM.ToolBar;
 using Blitz.Client.Customer.ReportParameters;
 using Blitz.Common.Customer;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
 

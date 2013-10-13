@@ -1,10 +1,10 @@
 ﻿using Agatha.Common;
 using Agatha.ServiceLayer;
 
-using Blitz.Common.Agatha;
-using Blitz.Common.Core;
-
 using Common.Logging;
+
+using Naru.Agatha;
+using Naru.Core;
 
 namespace Blitz.Server.Core
 {

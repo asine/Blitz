@@ -2,6 +2,7 @@
 
 using Common.Logging;
 
+using Naru.Unity;
 using Naru.WPF;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.Menu;
@@ -10,7 +11,6 @@ using Blitz.Client.Trading.Quote.Blotter;
 using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Client.Trading.Security.Chart;
 
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 

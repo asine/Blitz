@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-using Blitz.Common.Agatha;
+using Naru.Agatha;
 
 namespace Blitz.Common.Customer
 {

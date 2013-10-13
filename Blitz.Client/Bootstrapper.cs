@@ -9,17 +9,17 @@ using Agatha.Unity;
 using Blitz.Client.Common.DynamicColumnEdit;
 using Blitz.Client.Common.DynamicColumnManagement;
 using Blitz.Client.Common.ExportToExcel;
-using Blitz.Client.Core.Agatha;
 
 using ILogInject.Unity;
 
+using Naru.Agatha;
+using Naru.Log4Net;
+using Naru.Unity;
 using Naru.WPF;
 using Naru.WPF.MVVM;
 
 using Blitz.Client.Shell;
 using Blitz.Client.Trading;
-using Blitz.Common.Agatha;
-using Blitz.Common.Core;
 
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
@@ -62,7 +62,7 @@ namespace Blitz.Client
                 .RegisterInstance<ILog4NetConfiguration>(new Log4NetConfiguration("ILogInject.UnityCommonLogging.Blitz.Client"));
 
             Container
-                .ConfigureNaru()
+                .ConfigureNaruWPF()
                 .ConfigureNaruPrism()
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()

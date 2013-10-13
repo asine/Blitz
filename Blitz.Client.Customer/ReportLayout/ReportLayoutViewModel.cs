@@ -9,8 +9,6 @@ using Naru.WPF.MVVM;
 
 using Blitz.Common.Customer;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Customer.ReportLayout

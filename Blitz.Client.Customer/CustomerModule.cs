@@ -6,10 +6,10 @@ using Blitz.Client.Customer.Reportviewer;
 
 using Common.Logging;
 
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
+using Naru.Unity;
 using Naru.WPF;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Naru.WPF.MVVM;

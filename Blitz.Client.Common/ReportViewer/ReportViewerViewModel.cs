@@ -5,11 +5,10 @@ using Blitz.Client.Common.ReportViewer.History;
 
 using Common.Logging;
 
+using Naru.Core;
 using Naru.TPL;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.ToolBar;
-
-using Microsoft.Practices.Prism.Events;
 
 using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;

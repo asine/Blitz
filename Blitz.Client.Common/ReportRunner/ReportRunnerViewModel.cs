@@ -7,8 +7,6 @@ using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.ToolBar;
 using Naru.WPF.ModernUI.Assets.Icons;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
 

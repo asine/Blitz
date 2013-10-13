@@ -2,10 +2,8 @@
 
 using Common.Logging;
 
+using Naru.Core;
 using Naru.WPF.MVVM;
-
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Events;
 
 using Naru.WPF.Scheduler;
 

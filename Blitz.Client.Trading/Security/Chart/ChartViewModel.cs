@@ -7,8 +7,6 @@ using Naru.WPF.MVVM;
 
 using Blitz.Common.Trading.Security.Chart;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Trading.Security.Chart

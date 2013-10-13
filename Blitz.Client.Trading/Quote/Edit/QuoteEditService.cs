@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Blitz.Client.Core.Agatha;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
 
+using Naru.Agatha;
 using Naru.TPL;
 
 namespace Blitz.Client.Trading.Quote.Edit

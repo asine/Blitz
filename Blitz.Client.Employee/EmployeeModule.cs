@@ -2,6 +2,7 @@
 
 using Common.Logging;
 
+using Naru.Unity;
 using Naru.WPF;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.Menu;
@@ -9,7 +10,6 @@ using Blitz.Client.Employee.Report;
 using Blitz.Client.Employee.ReportRunner;
 using Naru.WPF.ModernUI.Assets.Icons;
 
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 

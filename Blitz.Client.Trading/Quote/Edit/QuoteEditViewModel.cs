@@ -9,8 +9,6 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Blitz.Common.Trading.Quote.Edit;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Trading.Quote.Edit

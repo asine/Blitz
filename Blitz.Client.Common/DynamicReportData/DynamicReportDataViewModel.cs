@@ -10,8 +10,6 @@ using Common.Logging;
 using Naru.WPF.MVVM;
 using Naru.WPF.MVVM.ToolBar;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Common.DynamicReportData

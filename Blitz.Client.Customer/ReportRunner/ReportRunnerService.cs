@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Common.ReportRunner;
-using Blitz.Client.Core.Agatha;
 
 using Common.Logging;
 
+using Naru.Agatha;
 using Naru.TPL;
 using Naru.WPF.MVVM;
 

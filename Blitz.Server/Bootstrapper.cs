@@ -6,15 +6,12 @@ using Agatha.ServiceLayer;
 using Agatha.ServiceLayer.WCF;
 using Agatha.Unity;
 
-using Blitz.Common.Agatha;
-using Blitz.Common.Core;
-using Blitz.Server.Core;
-
-using Common.Logging;
-
 using ILogInject.Unity;
 
 using Microsoft.Practices.Unity;
+
+using Naru.Agatha;
+using Naru.Log4Net;
 
 using Raven.Client;
 using Raven.Client.Embedded;

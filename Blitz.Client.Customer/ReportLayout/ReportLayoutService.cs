@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-using Blitz.Client.Core.Agatha;
 using Blitz.Common.Customer;
+
+using Naru.Agatha;
 
 namespace Blitz.Client.Customer.ReportLayout
 {

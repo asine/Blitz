@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Common.ReportViewer.History;
-using Blitz.Client.Core.Agatha;
 
 using Common.Logging;
 
+using Naru.Agatha;
 using Naru.WPF.MVVM;
 
 using Blitz.Common.Customer;

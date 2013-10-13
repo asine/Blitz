@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Blitz.Client.Core.Agatha;
-
+using Naru.Agatha;
 using Naru.TPL;
 using Naru.WPF.MVVM;
 

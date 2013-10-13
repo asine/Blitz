@@ -10,8 +10,6 @@ using Naru.WPF.MVVM.ToolBar;
 
 using Blitz.Client.Settings.Appearance;
 
-using Microsoft.Practices.Prism.Commands;
-
 using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Shell
