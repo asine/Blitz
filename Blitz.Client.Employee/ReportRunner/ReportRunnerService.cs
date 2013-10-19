@@ -11,10 +11,11 @@ using Common.Logging;
 
 using Naru.Agatha;
 using Naru.TPL;
-using Naru.WPF.MVVM;
 
 using Blitz.Client.Employee.ReportParameters;
 using Blitz.Common.Customer;
+
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Employee.ReportRunner
 {

@@ -4,28 +4,28 @@ using System.Threading.Tasks;
 using Common.Logging;
 
 using Naru.TPL;
+using Naru.WPF.Command;
 using Naru.WPF.MVVM;
-using Naru.WPF.MVVM.ToolBar;
 using Naru.WPF.ModernUI.Assets.Icons;
 
 using Naru.WPF.Scheduler;
+using Naru.WPF.ToolBar;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading.Quote.Blotter
 {
     public class QuoteBlotterViewModel : Workspace
     {
-        private readonly IScheduler _scheduler;
         private readonly IQuoteBlotterService _service;
 
         public BindableCollection<QuoteBlotterItemViewModel> Items { get; private set; }
 
         public DelegateCommand<QuoteBlotterItemViewModel> OpenCommand { get; private set; }
 
-        public QuoteBlotterViewModel(ILog log, IScheduler scheduler, IViewService viewService,
+        public QuoteBlotterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
             BindableCollectionFactory bindableCollectionFactory, IQuoteBlotterService service, IToolBarService toolBarService)
             : base(log, scheduler, viewService)
         {
-            _scheduler = scheduler;
             _service = service;
 
             this.SetupHeader("Blotter");
@@ -35,8 +35,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
                 _service.EditQuoteAsync(quote)
                     .SelectMany(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."))
                     .SelectMany(() => RefreshQuotesAsync())
-                    .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), _scheduler.Task)
-                    .Finally(BusyViewModel.InActive, _scheduler.Task));
+                    .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), Scheduler.TPL.Task)
+                    .Finally(BusyViewModel.InActive, Scheduler.TPL.Task));
 
             CreateToolBar(toolBarService);
         }
@@ -45,8 +45,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
         {
             return BusyViewModel.ActiveAsync("... Loading quotes ...")
                 .SelectMany(_ => RefreshQuotesAsync())
-                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"), _scheduler.Task)
-                .Finally(BusyViewModel.InActive, _scheduler.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading quotes"), Scheduler.TPL.Task)
+                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
         }
 
         public override bool CanClose()
@@ -83,8 +83,8 @@ namespace Blitz.Client.Trading.Quote.Blotter
                 _service.NewQuoteAsync()
                     .SelectMany(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."))
                     .SelectMany(() => RefreshQuotesAsync())
-                    .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), _scheduler.Task)
-                    .Finally(BusyViewModel.InActive, _scheduler.Task));
+                    .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem refreshing quotes"), Scheduler.TPL.Task)
+                    .Finally(BusyViewModel.InActive, Scheduler.TPL.Task));
             toolBarService.Items.Add(newQuoteToolBarItem);
 
             this.SyncToolBarItemWithViewModelActivationState(newQuoteToolBarItem);

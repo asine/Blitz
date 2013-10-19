@@ -3,9 +3,9 @@
 using Common.Logging;
 
 using Naru.Unity;
-using Naru.WPF;
+using Naru.WPF.Command;
+using Naru.WPF.Menu;
 using Naru.WPF.MVVM;
-using Naru.WPF.MVVM.Menu;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Blitz.Client.Trading.Quote.Blotter;
 using Blitz.Client.Trading.Quote.Edit;
@@ -15,6 +15,7 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
 using Naru.WPF.Prism.Region;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading
 {

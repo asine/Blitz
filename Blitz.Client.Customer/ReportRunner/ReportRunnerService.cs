@@ -17,6 +17,8 @@ using Blitz.Client.Customer.ReportLayout;
 using Blitz.Client.Customer.ReportParameters;
 using Blitz.Common.Customer;
 
+using Naru.WPF.ViewModel;
+
 namespace Blitz.Client.Customer.ReportRunner
 {
     public interface IReportRunnerService : IReportRunnerService<ReportParameterViewModel, ReportRunnerRequest, ReportRunnerResponse>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Naru.WPF.MVVM;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportRunner
 {

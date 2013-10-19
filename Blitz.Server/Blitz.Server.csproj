@@ -121,7 +121,6 @@
     <Compile Include="AssemblyHook.cs" />
     <Compile Include="Customer\GetAttributesHandler.cs" />
     <Compile Include="Customer\GetHistoryListHandler.cs" />
-    <Compile Include="Core\Handler.cs" />
     <Compile Include="Customer\GetHistoryReportsHandler.cs" />
     <Compile Include="Customer\InitialiseParametersHandler.cs" />
     <Compile Include="Customer\ReportRunnerHandler.cs" />
@@ -133,7 +132,6 @@
     <Compile Include="Trading\GetQuotesHandler.cs" />
     <Compile Include="Trading\SaveQuoteHandler.cs" />
     <Compile Include="Trading\Security\Chart\GetHistoricDataHandler.cs" />
-    <Compile Include="UnityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -151,6 +149,10 @@
     <ProjectReference Include="..\..\Naru\Naru.Log4Net\Naru.Log4Net.csproj">
       <Project>{72505099-f699-406d-bcec-8850cdfd49f3}</Project>
       <Name>Naru.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.Unity\Naru.Unity.csproj">
+      <Project>{50893d70-53a5-4435-89da-5705ee16c206}</Project>
+      <Name>Naru.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\Blitz.Client.Common\Blitz.Client.Common.csproj">
       <Project>{bdce3e56-89dd-47c5-9d70-1fc759dd43c1}</Project>

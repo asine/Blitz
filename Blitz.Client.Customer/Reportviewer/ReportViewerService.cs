@@ -10,9 +10,10 @@ using Blitz.Client.Common.ReportViewer.History;
 using Common.Logging;
 
 using Naru.Agatha;
-using Naru.WPF.MVVM;
 
 using Blitz.Common.Customer;
+
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.Reportviewer
 {

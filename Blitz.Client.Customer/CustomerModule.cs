@@ -10,11 +10,12 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
 using Naru.Unity;
-using Naru.WPF;
+using Naru.WPF.Command;
+using Naru.WPF.Menu;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Naru.WPF.MVVM;
-using Naru.WPF.MVVM.Menu;
 using Naru.WPF.Prism.Region;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer
 {

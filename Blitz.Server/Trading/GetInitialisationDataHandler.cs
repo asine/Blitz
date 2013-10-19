@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 
 using Blitz.Common.Trading.Quote.Edit;
-using Blitz.Server.Core;
 
 using Common.Logging;
+
+using Naru.Agatha;
 
 namespace Blitz.Server.Trading
 {

@@ -4,6 +4,7 @@ using Common.Logging;
 
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.ReportParameters
 {
@@ -28,7 +29,7 @@ namespace Blitz.Client.Customer.ReportParameters
 
         #endregion
 
-        public ReportParameterViewModel(ILog log, IScheduler scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory)
+        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory)
             : base(log, scheduler, viewService)
         {
             Dates = bindableCollectionFactory.Get<DateTime>();

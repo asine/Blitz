@@ -1,16 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
-using Agatha.Common;
-using Agatha.Unity;
 
 using Blitz.Client.Common.DynamicColumnEdit;
 using Blitz.Client.Common.DynamicColumnManagement;
 using Blitz.Client.Common.ExportToExcel;
-
-using ILogInject.Unity;
 
 using Naru.Agatha;
 using Naru.Log4Net;
@@ -55,23 +48,15 @@ namespace Blitz.Client
 
             Container.RegisterInstance(Container);
 
-            // Configure Logging
             Container
-                .AddNewExtension<BuildTracking>()
-                .AddNewExtension<CommonLoggingLogCreationExtension>()
-                .RegisterInstance<ILog4NetConfiguration>(new Log4NetConfiguration("ILogInject.UnityCommonLogging.Blitz.Client"));
-
-            Container
+                .ConfigureNaruLog4Net("ILogInject.UnityCommonLogging.Blitz.Client")
                 .ConfigureNaruWPF()
                 .ConfigureNaruPrism()
+                .ConfigureNaruAgathaClient(typeof(Blitz.Common.AssemblyHook).Assembly)
                 .RegisterTransient<IRequestTask, RequestTask>()
                 .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()
                 .RegisterType<IDynamicColumnManagementService, DynamicColumnManagementService>()
                 .RegisterType<IDynamicColumnEditService, DynamicColumnEditService>();
-
-            InitialiseAgatha(Container);
-
-            ConfigureLog4Net(Container);
         }
 
         protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
@@ -86,26 +71,6 @@ namespace Blitz.Client
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Customer.CustomerModule));
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Employee.EmployeeModule));
             ((ModuleCatalog)ModuleCatalog).AddModule(typeof(TradingModule));
-        }
-
-        private static void InitialiseAgatha(IUnityContainer container)
-        {
-            new ClientConfiguration(new Container(container))
-                .AddRequestAndResponseAssembly(typeof (AssemblyHook).Assembly)
-                .Initialize();
-
-            AgathaKnownTypeRegistration.RegisterWCFAgathaTypes(typeof(Blitz.Common.AssemblyHook).Assembly);
-        }
-
-        private static void ConfigureLog4Net(IUnityContainer container)
-        {
-            var configuration = container.Resolve<ILog4NetConfiguration>();
-            if (!Directory.Exists(configuration.LogDirectoryPath))
-            {
-                Directory.CreateDirectory(configuration.LogDirectoryPath);
-            }
-            log4net.GlobalContext.Properties["LogFile"] = Path.Combine(configuration.LogDirectoryPath, configuration.LogFileName);
-            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile));
         }
     }
 }

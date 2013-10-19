@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 
 using Blitz.Client.Common.ReportViewer.History;
-using Naru.WPF.MVVM;
+
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportViewer
 {

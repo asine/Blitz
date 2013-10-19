@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 
 using Blitz.Common.Trading.Security.Chart;
-using Blitz.Server.Core;
 
 using Common.Logging;
+
+using Naru.Agatha;
 
 namespace Blitz.Server.Trading.Security.Chart
 {

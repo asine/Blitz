@@ -2,15 +2,17 @@
 
 using Common.Logging;
 
+using Naru.WPF.Command;
+using Naru.WPF.Menu;
 using Naru.WPF.ModernUI.Presentation;
 using Naru.WPF.ModernUI.Windows.Controls;
 using Naru.WPF.MVVM;
-using Naru.WPF.MVVM.Menu;
-using Naru.WPF.MVVM.ToolBar;
 
 using Blitz.Client.Settings.Appearance;
 
 using Naru.WPF.Scheduler;
+using Naru.WPF.ToolBar;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Shell
 {
@@ -20,9 +22,9 @@ namespace Blitz.Client.Shell
 
         public BindableCollection<IToolBarItem> ToolBarItems { get; private set; }
 
-        public LinkCollection TitleLinks { get; private set; } 
+        public LinkCollection TitleLinks { get; private set; }
 
-        public ShellViewModel(ILog log, IScheduler scheduler, IViewService viewService, IToolBarService toolBarService, IMenuService menuService, 
+        public ShellViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, IToolBarService toolBarService, IMenuService menuService, 
             Func<AppearanceViewModel> appearanceViewModelFactory) 
             : base(log, scheduler, viewService)
         {

@@ -7,8 +7,8 @@
                 <ResourceDictionary Source="/Naru.WPF.ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/Naru.WPF.ModernUI;component/Assets/ModernUI.Dark.xaml" />
 
-                <ResourceDictionary Source="/Naru.WPF;component/MVVM/ToolBar/ToolBarItemTemplates.xaml" />
-                <ResourceDictionary Source="/Naru.WPF;component/MVVM/Menu/MenuItemTemplates.xaml" />
+                <ResourceDictionary Source="/Naru.WPF;component/ToolBar/ToolBarItemTemplates.xaml" />
+                <ResourceDictionary Source="/Naru.WPF;component/Menu/MenuItemTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

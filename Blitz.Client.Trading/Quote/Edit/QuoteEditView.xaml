@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:edit="clr-namespace:Blitz.Client.Trading.Quote.Edit"
-             xmlns:toolBar="clr-namespace:Naru.WPF.MVVM.ToolBar;assembly=Naru.WPF"
+             xmlns:toolBar="clr-namespace:Naru.WPF.ToolBar;assembly=Naru.WPF"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"

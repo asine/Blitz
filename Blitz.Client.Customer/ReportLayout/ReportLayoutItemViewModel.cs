@@ -2,7 +2,7 @@
 
 using Common.Logging;
 
-using Naru.WPF.MVVM;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.ReportLayout
 {

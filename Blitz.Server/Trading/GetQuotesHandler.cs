@@ -2,9 +2,10 @@
 
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Blotter;
-using Blitz.Server.Core;
 
 using Common.Logging;
+
+using Naru.Agatha;
 
 using Raven.Client;
 

@@ -8,10 +8,10 @@ using Common.Logging;
 using Naru.Core;
 using Naru.TPL;
 using Naru.WPF.MVVM;
-using Naru.WPF.MVVM.ToolBar;
-
 using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
+using Naru.WPF.ToolBar;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportViewer
 {
@@ -24,7 +24,7 @@ namespace Blitz.Client.Common.ReportViewer
 
         protected readonly IToolBarService ToolBarService;
 
-        protected ReportViewerViewModel(ILog log, IScheduler scheduler, IViewService viewService, IRegionService regionService, 
+        protected ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, IRegionService regionService, 
             TReportViewerService service, IToolBarService toolBarService, HistoryViewModel historyViewModel)
             : base(log, scheduler, viewService)
         {
@@ -54,8 +54,8 @@ namespace Blitz.Client.Common.ReportViewer
                     }
                 })
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), Scheduler.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading historic report"), Scheduler.TPL.Task)
+                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
         }
 
         protected override Task OnInitialise()
@@ -74,8 +74,8 @@ namespace Blitz.Client.Common.ReportViewer
                         ((ISupportActivationState)_historyViewModel).Activate();
                     })
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading History"), Scheduler.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem loading History"), Scheduler.TPL.Task)
+                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
         }
 
         protected override void OnActivate()

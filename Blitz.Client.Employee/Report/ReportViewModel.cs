@@ -10,6 +10,7 @@ using Blitz.Client.Employee.ReportRunner;
 
 using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Employee.Report
 {
@@ -18,7 +19,7 @@ namespace Blitz.Client.Employee.Report
     {
         private readonly IRegionService _regionService;
 
-        public ReportViewModel(ILog log, IViewService viewService, IScheduler scheduler, IRegionService regionService)
+        public ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler, IRegionService regionService)
             : base(log, viewService, scheduler)
         {
             _regionService = regionService;

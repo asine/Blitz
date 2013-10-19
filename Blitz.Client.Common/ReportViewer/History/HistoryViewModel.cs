@@ -3,9 +3,11 @@
 using Common.Logging;
 
 using Naru.Core;
+using Naru.WPF.Command;
 using Naru.WPF.MVVM;
 
 using Naru.WPF.Scheduler;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportViewer.History
 {
@@ -17,7 +19,7 @@ namespace Blitz.Client.Common.ReportViewer.History
 
         public event EventHandler<DataEventArgs<long>> Open;
 
-        public HistoryViewModel(ILog log, IScheduler scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory) 
+        public HistoryViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory) 
             : base(log, scheduler, viewService)
         {
             Items = bindableCollectionFactory.Get<HistoryItemViewModel>();
