@@ -7,7 +7,6 @@ using Naru.WPF.Command;
 using Naru.WPF.MVVM;
 using Naru.WPF.ModernUI.Assets.Icons;
 
-using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ToolBar;
 using Naru.WPF.ViewModel;
@@ -18,17 +17,32 @@ namespace Blitz.Client.Common.ReportRunner
         where TReportParameterViewModel : IViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        private readonly IRegionService _regionService;
-
         protected readonly IToolBarService ToolBarService;
 
-        private readonly TReportParameterViewModel _reportParameterViewModel;
         protected readonly TReportRunnerService Service;
 
         private DelegateCommand _exportToExcel;
         private TResponse _response;
 
         public DelegateCommand GenerateReportCommand { get; private set; }
+
+        public BindableCollection<IViewModel> Items { get; private set; }
+
+        #region ParameterViewModel
+
+        private TReportParameterViewModel _parameterViewModel;
+
+        public TReportParameterViewModel ParameterViewModel
+        {
+            get { return _parameterViewModel; }
+            private set
+            {
+                _parameterViewModel = value;
+                RaisePropertyChanged(() => ParameterViewModel);
+            }
+        }
+
+        #endregion
 
         #region IsExpanded
 
@@ -47,15 +61,16 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        protected ReportRunnerViewModel(ILog log, IViewService viewService, IRegionService regionService, ISchedulerProvider scheduler, 
-            IToolBarService toolBarService, TReportParameterViewModel reportParameterViewModel, TReportRunnerService service)
+        protected ReportRunnerViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler, 
+                                        IToolBarService toolBarService, TReportParameterViewModel reportParameterViewModel,
+                                        TReportRunnerService service, BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, viewService)
         {
-            _regionService = regionService;
             ToolBarService = toolBarService;
-            _reportParameterViewModel = reportParameterViewModel;
+            ParameterViewModel = reportParameterViewModel;
             Service = service;
             IsExpanded = true;
+            Items = itemsCollection;
 
             this.SetupHeader("Runner", IconNames.EXCEL);
 
@@ -67,28 +82,27 @@ namespace Blitz.Client.Common.ReportRunner
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading ...")
-                .SelectMany(() => Service.ConfigureParameterViewModelAsync(_reportParameterViewModel))
-                .SelectMany(() => _regionService.RegionBuilder<TReportParameterViewModel>().ShowAsync(RegionNames.REPORT_PARAMETER, _reportParameterViewModel))
+                .Then(() => Service.ConfigureParameterViewModelAsync(ParameterViewModel), Scheduler.TPL.Task)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem initialising parameters"), Scheduler.TPL.Task)
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem initialising parameters"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
         }
 
         private void GenerateReport()
         {
             BusyViewModel.ActiveAsync("... Loading ...")
-                .SelectMany(_ => Service.GenerateAsync(Service.CreateRequest(_reportParameterViewModel)))
-                .SelectMany(response =>
+                .Then(() => Items.ClearAsync(), Scheduler.TPL.Dispatcher)
+                .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.TPL.Task)
+                .Then(response =>
                 {
                     _response = response;
                     return Service.GenerateDataViewModelsAsync(response);
-                })
-                .SelectMany(dataViewModels =>
+                }, Scheduler.TPL.Task)
+                .Then(dataViewModels =>
                     {
-                        _regionService.RegionBuilder().Clear(RegionNames.REPORT_DATA);
                         foreach (var dataViewModel in dataViewModels)
                         {
-                            _regionService.RegionBuilder<IViewModel>().Show(RegionNames.REPORT_DATA, dataViewModel);
+                            Items.Add(dataViewModel);
 
                             var supportActivationState = dataViewModel as ISupportActivationState;
                             if (supportActivationState != null)
@@ -96,9 +110,9 @@ namespace Blitz.Client.Common.ReportRunner
                                 this.SyncViewModelActivationStates(supportActivationState);
                             }
                         }
-                    })
+                    }, Scheduler.TPL.Dispatcher)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem Generating Report"), Scheduler.TPL.Task)
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Generating Report"), Scheduler.TPL.Task)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();
@@ -130,9 +144,9 @@ namespace Blitz.Client.Common.ReportRunner
         private void ExportToExcel()
         {
             BusyViewModel.ActiveAsync("... Exporting to Excel ...")
-                .SelectMany(_ => Service.ExportToExcel(_response))
+                .Then(_ => Service.ExportToExcel(_response), Scheduler.TPL.Task)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem Exporting to Excel"), Scheduler.TPL.Task)
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Exporting to Excel"), Scheduler.TPL.Task)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();

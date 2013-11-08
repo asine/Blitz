@@ -1,82 +1,23 @@
-﻿using Blitz.Client.Common;
+﻿using Autofac;
 
-using Common.Logging;
-
-using Naru.Unity;
-using Naru.WPF.Command;
-using Naru.WPF.Menu;
-using Naru.WPF.MVVM;
-using Naru.WPF.ModernUI.Assets.Icons;
 using Blitz.Client.Trading.Quote.Blotter;
 using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Client.Trading.Security.Chart;
 
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
-
-using Naru.WPF.Prism.Region;
-using Naru.WPF.ViewModel;
-
 namespace Blitz.Client.Trading
 {
-    public class TradingModule : IModule
+    public class TradingModule : Module
     {
-        private readonly ILog _log;
-        private readonly IViewService _viewService;
-        private readonly IUnityContainer _container;
-        private readonly IMenuService _menuService;
-        private readonly IRegionService _regionService;
-
-        public TradingModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService, IRegionService regionService)
+        protected override void Load(ContainerBuilder builder)
         {
-            _log = log;
-            _viewService = viewService;
-            _container = container;
-            _menuService = menuService;
-            _regionService = regionService;
-        }
+            builder.RegisterType<QuoteBlotterViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<QuoteBlotterService>().As<IQuoteBlotterService>().InstancePerDependency();
 
-        public void Initialize()
-        {
-            _container
-                .RegisterTransient<IQuoteBlotterService, QuoteBlotterService>()
-                .RegisterTransient<IQuoteEditService, QuoteEditService>()
-                .RegisterTransient<IChartService, ChartService>();
+            builder.RegisterType<QuoteEditViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<QuoteEditService>().As<IQuoteEditService>().InstancePerDependency();
 
-            CreateMenu();
-        }
-
-        private void CreateMenu()
-        {
-            var tradingMenuItem = _menuService.CreateMenuGroupItem();
-            tradingMenuItem.DisplayName = "Trading";
-            _menuService.Items.Add(tradingMenuItem);
-
-            var newReportMenuItem = _menuService.CreateMenuButtonItem();
-            newReportMenuItem.DisplayName = "New Blotter";
-            newReportMenuItem.ImageName = IconNames.NEW;
-            newReportMenuItem.Command = new DelegateCommand(() =>
-            {
-                _log.Debug("Adding Blotter to Main region");
-                var viewModel = _regionService.RegionBuilder<QuoteBlotterViewModel>()
-                    .WithScope()
-                    .Show(RegionNames.MAIN);
-                ((ISupportActivationState)viewModel).Activate();
-            });
-            tradingMenuItem.Items.Add(newReportMenuItem);
-
-            var chartMenuItem = _menuService.CreateMenuButtonItem();
-            chartMenuItem.DisplayName = "Chart";
-            chartMenuItem.ImageName = IconNames.NEW;
-            chartMenuItem.Command = new DelegateCommand(() =>
-            {
-                _log.Debug("Adding Chart to Main region");
-                var viewModel = _regionService.RegionBuilder<ChartViewModel>()
-                    .WithScope()
-                    .Show(RegionNames.MAIN);
-                ((ISupportActivationState)viewModel).Activate();
-            });
-            tradingMenuItem.Items.Add(chartMenuItem);
+            builder.RegisterType<ChartViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ChartService>().As<IChartService>().InstancePerDependency();
         }
     }
 }

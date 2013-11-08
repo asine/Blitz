@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 
-using Blitz.Client.Common;
 using Blitz.Client.Common.Report;
 
 using Common.Logging;
 
+using Naru.TPL;
 using Naru.WPF.MVVM;
 using Blitz.Client.Employee.ReportRunner;
 
-using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
@@ -17,19 +16,20 @@ namespace Blitz.Client.Employee.Report
     [UseView(typeof(ReportView))]
     public class ReportViewModel : Common.Report.ReportViewModel
     {
-        private readonly IRegionService _regionService;
+        private readonly ReportRunnerViewModel _reportRunnerViewModel;
 
-        public ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler, IRegionService regionService)
-            : base(log, viewService, scheduler)
+        public ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler,
+                               BindableCollection<IViewModel> itemsCollection,
+                               ReportRunnerViewModel reportRunnerViewModel)
+            : base(log, viewService, scheduler, itemsCollection)
         {
-            _regionService = regionService;
+            _reportRunnerViewModel = reportRunnerViewModel;
+            Disposables.Add(this.SyncViewModelActivationStates(_reportRunnerViewModel));
         }
 
         protected override Task OnInitialise()
         {
-            return _regionService.RegionBuilder<ReportRunnerViewModel>()
-                .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)))
-                .ShowAsync(RegionNames.REPORT);
+            return Task.Factory.StartNew(() => Items.Add(_reportRunnerViewModel), Scheduler.TPL.Dispatcher);
         }
     }
 }

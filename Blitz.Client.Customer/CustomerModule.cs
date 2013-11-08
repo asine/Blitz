@@ -1,71 +1,29 @@
-﻿using Blitz.Client.Common;
+﻿using Autofac;
+
 using Blitz.Client.Customer.Report;
 using Blitz.Client.Customer.ReportLayout;
+using Blitz.Client.Customer.ReportParameters;
 using Blitz.Client.Customer.ReportRunner;
 using Blitz.Client.Customer.Reportviewer;
 
-using Common.Logging;
-
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Unity;
-
-using Naru.Unity;
-using Naru.WPF.Command;
-using Naru.WPF.Menu;
-using Naru.WPF.ModernUI.Assets.Icons;
-using Naru.WPF.MVVM;
-using Naru.WPF.Prism.Region;
-using Naru.WPF.ViewModel;
-
 namespace Blitz.Client.Customer
 {
-    public class CustomerModule : IModule
+    public class CustomerModule : Module
     {
-        private readonly ILog _log;
-        private readonly IViewService _viewService;
-        private readonly IUnityContainer _container;
-        private readonly IMenuService _menuService;
-        private readonly IRegionService _regionService;
-
-        public CustomerModule(ILog log, IViewService viewService, IUnityContainer container, IMenuService menuService, IRegionService regionService)
+        protected override void Load(ContainerBuilder builder)
         {
-            _log = log;
-            _viewService = viewService;
-            _container = container;
-            _menuService = menuService;
-            _regionService = regionService;
-        }
+            builder.RegisterType<ReportViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ReportParameterViewModel>().AsSelf().InstancePerDependency();
 
-        public void Initialize()
-        {
-            _container
-                .RegisterTransient<IReportLayoutService, ReportLayoutService>()
-                .RegisterTransient<IReportRunnerService, ReportRunnerService>()
-                .RegisterTransient<IReportViewerService, ReportViewerService>();
+            builder.RegisterType<ReportLayoutViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ReportLayoutService>().As<IReportLayoutService>().InstancePerDependency();
+            builder.RegisterType<ReportLayoutItemViewModel>().AsSelf().InstancePerDependency();
 
-            CreateMenu();
-        }
+            builder.RegisterType<ReportRunnerViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ReportRunnerService>().As<IReportRunnerService>().InstancePerDependency();
 
-        private void CreateMenu()
-        {
-            var customerMenuItem = _menuService.CreateMenuGroupItem();
-            customerMenuItem.DisplayName = "Customer";
-
-            var newReportMenuItem = _menuService.CreateMenuButtonItem();
-            newReportMenuItem.DisplayName = "New";
-            newReportMenuItem.ImageName = IconNames.NEW;
-            newReportMenuItem.Command = new DelegateCommand(() =>
-            {
-                _log.Debug("Adding Customer Report to Main region");
-                var viewModel = _regionService.RegionBuilder<ReportViewModel>()
-                    .WithScope()
-                    .WithInitialisation(x => x.SetupHeader("Customer Report"))
-                    .Show(RegionNames.MAIN);
-                ((ISupportActivationState)viewModel).Activate();
-            });
-            customerMenuItem.Items.Add(newReportMenuItem);
-
-            _menuService.Items.Add(customerMenuItem);
+            builder.RegisterType<ReportViewerViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ReportViewerService>().As<IReportViewerService>().InstancePerDependency();
         }
     }
 }

@@ -15,6 +15,7 @@ using Naru.TPL;
 using Blitz.Client.Employee.ReportParameters;
 using Blitz.Common.Customer;
 
+using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Employee.ReportRunner
@@ -28,20 +29,23 @@ namespace Blitz.Client.Employee.ReportRunner
         private readonly Func<DynamicReportDataViewModel> _dynamicReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
         private readonly IBasicExportToExcel _exportToExcel;
+        private readonly ISchedulerProvider _schedulerProvider;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> dynamicReportDataViewModelFactory,
-            IRequestTask requestTask, ILog log, IBasicExportToExcel exportToExcel)
+                                   IRequestTask requestTask, ILog log, IBasicExportToExcel exportToExcel,
+                                   ISchedulerProvider schedulerProvider)
             : base(log)
         {
             _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;
             _requestTask = requestTask;
             _exportToExcel = exportToExcel;
+            _schedulerProvider = schedulerProvider;
         }
 
         public override Task ConfigureParameterViewModelAsync(ReportParameterViewModel viewModel)
         {
-            return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
-                .SelectMany(x =>
+            return _requestTask.Get(new InitialiseParametersRequest())
+                .Then(x =>
                 {
                     var availableDates = x.AvailableDates.OrderByDescending(d => d);
                     foreach (var availableDate in availableDates)
@@ -50,7 +54,7 @@ namespace Blitz.Client.Employee.ReportRunner
                     }
 
                     viewModel.SelectedDate = availableDates.First();
-                });
+                }, _schedulerProvider.TPL.Task);
         }
 
         public override ReportRunnerRequest CreateRequest(ReportParameterViewModel reportParameterViewModel)
@@ -60,7 +64,7 @@ namespace Blitz.Client.Employee.ReportRunner
 
         public override Task<ReportRunnerResponse> GenerateAsync(ReportRunnerRequest request)
         {
-            return _requestTask.Get<ReportRunnerRequest, ReportRunnerResponse>(request);
+            return _requestTask.Get(request);
         }
 
         public override Task<List<IViewModel>> GenerateDataViewModelsAsync(ReportRunnerResponse response)

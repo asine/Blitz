@@ -22,7 +22,7 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public Task<GetAttributesResponse> GetAttributesAsync()
         {
-            return _requestTask.Get<GetAttributesRequest, GetAttributesResponse>(new GetAttributesRequest());
+            return _requestTask.Get(new GetAttributesRequest());
         }
     }
 }

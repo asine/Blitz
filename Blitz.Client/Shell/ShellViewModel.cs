@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Reactive.Linq;
 
 using Common.Logging;
 
+using Naru.Core;
 using Naru.WPF.Command;
 using Naru.WPF.Menu;
 using Naru.WPF.ModernUI.Presentation;
@@ -24,24 +26,33 @@ namespace Blitz.Client.Shell
 
         public LinkCollection TitleLinks { get; private set; }
 
-        public ShellViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, IToolBarService toolBarService, IMenuService menuService, 
-            Func<AppearanceViewModel> appearanceViewModelFactory) 
+        public BindableCollection<IViewModel> Items { get; private set; }
+
+        public ShellViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                              IToolBarService toolBarService, IMenuService menuService, IEventStream eventStream,
+                              Func<AppearanceViewModel> appearanceViewModelFactory,
+                              BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, viewService)
         {
             ToolBarItems = toolBarService.Items;
             MenuItems = menuService.Items;
+            Items = itemsCollection;
 
             TitleLinks = new LinkCollection();
 
             TitleLinks.Add(new Link
-            {
-                DisplayName = "Appearance",
-                Command = new DelegateCommand(() =>
-                {
-                    var viewModel1 = appearanceViewModelFactory();
-                    ViewService.ShowModal(viewModel1);
-                })
-            });
+                           {
+                               DisplayName = "Appearance",
+                               Command = new DelegateCommand(() =>
+                                                             {
+                                                                 var viewModel1 = appearanceViewModelFactory();
+                                                                 ViewService.ShowModal(viewModel1);
+                                                             })
+                           });
+
+            eventStream.Of<IViewModel>()
+                .ObserveOn(Scheduler.RX.Dispatcher)
+                .Subscribe(x => Items.Add(x));
         }
     }
 }

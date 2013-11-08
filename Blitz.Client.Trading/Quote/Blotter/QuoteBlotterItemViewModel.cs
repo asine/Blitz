@@ -2,11 +2,11 @@
 
 using Blitz.Common.Trading.Quote;
 
-using Microsoft.Practices.Prism.ViewModel;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading.Quote.Blotter
 {
-    public class QuoteBlotterItemViewModel : NotificationObject
+    public class QuoteBlotterItemViewModel : NotifyPropertyChanged
     {
         public Guid Id { get; set; }
 

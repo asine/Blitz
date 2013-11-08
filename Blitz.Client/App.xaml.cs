@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Blitz.Client
 {
@@ -10,21 +8,11 @@ namespace Blitz.Client
         {
             base.OnStartup(e);
 
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-            Dispatcher.UnhandledException += Dispatcher_UnhandledException;
+            Naru.Core.UnhandledExceptionHandler.InstallDomainUnhandledException();
+            Naru.TPL.UnhandledExceptionHandler.InstallTaskUnobservedException();
+            Naru.WPF.UnhandledExceptionHandler.InstallDispatcherUnhandledException();
 
-            var bootstrapper = new Bootstrapper();
-            bootstrapper.Run();
-        }
-
-        private void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
-            Debugger.Break();
-        }
-
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
-        {
-            Debugger.Break();
+            new Bootstrapper();
         }
     }
 }

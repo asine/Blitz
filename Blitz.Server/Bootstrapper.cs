@@ -3,11 +3,11 @@ using System.ServiceModel;
 
 using Agatha.ServiceLayer.WCF;
 
-using Microsoft.Practices.Unity;
+using Autofac;
 
 using Naru.Agatha;
+using Naru.Aufofac.log4Net;
 using Naru.Log4Net;
-using Naru.Unity;
 
 using Raven.Client;
 using Raven.Client.Embedded;
@@ -22,13 +22,29 @@ namespace Blitz.Server
 
         public Bootstrapper()
         {
-            var container = new UnityContainer();
+            Naru.Core.UnhandledExceptionHandler.InstallDomainUnhandledException();
+            Naru.TPL.UnhandledExceptionHandler.InstallTaskUnobservedException();
 
-            container
-                .ConfigureNaruLog4Net("ILogInject.UnityCommonLogging.Blitz.Server")
-                .ConfigureNaruAgathaServer(typeof(Common.AssemblyHook).Assembly, typeof(AssemblyHook).Assembly);
+            IContainer container = null;
 
-            InitialiseRavenDB(container);
+            var builder = new ContainerBuilder();
+
+            builder.RegisterModule(new LogInjectionModule());
+            builder.RegisterModule(new Log4NetModule
+            {
+                SectionName = "CommonLogging.Blitz.Server"
+            });
+
+            builder.RegisterModule(new AgathaServerModule
+            {
+                ContainerFactory = () => container,
+                HandlerAssembly = typeof(AssemblyHook).Assembly,
+                RequestResponseAssembly = typeof(Common.AssemblyHook).Assembly
+            });
+
+            InitialiseRavenDB(builder);
+
+            container = builder.Build();
 
             Console.WriteLine("EndPoint - {0}", END_POINT);
 
@@ -37,12 +53,12 @@ namespace Blitz.Server
             Host.Open();
         }
 
-        private static void InitialiseRavenDB(IUnityContainer container)
+        private static void InitialiseRavenDB(ContainerBuilder builder)
         {
             var documentStore = new EmbeddableDocumentStore {DataDirectory = "~/DataDir"};
             documentStore.Initialize();
 
-            container.RegisterSingletonInstance<IDocumentStore>(documentStore);
+            builder.RegisterInstance(documentStore).As<IDocumentStore>();
         }
     }
 }

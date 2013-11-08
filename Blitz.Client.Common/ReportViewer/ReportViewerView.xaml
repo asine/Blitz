@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:common="clr-namespace:Blitz.Client.Common"
-             xmlns:regions="http://www.codeplex.com/CompositeWPF"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:tabControl="clr-namespace:Naru.WPF.TabControl;assembly=Naru.WPF"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
@@ -15,8 +15,11 @@
         
         <Grid>
 
-            <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.HISTORY_DATA}"
-                        TabStripPlacement="Bottom" />
+            <TabControl TabStripPlacement="Bottom">
+                <i:Interaction.Behaviors>
+                    <tabControl:TabControlItemSourceBehavior ItemsSource="{Binding Items}" />
+                </i:Interaction.Behaviors>
+            </TabControl>
 
         </Grid>
         

@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
              xmlns:common="clr-namespace:Blitz.Client.Common"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:tabControl="clr-namespace:Naru.WPF.TabControl;assembly=Naru.WPF"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
@@ -17,8 +19,11 @@
         <TextBlock Text="{Binding DisplayName}" />
         
         <TabControl Grid.Row="1"
-                    regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT}"
-                    TabStripPlacement="Left" />
+                    TabStripPlacement="Left">
+            <i:Interaction.Behaviors>
+                <tabControl:TabControlItemSourceBehavior ItemsSource="{Binding Items}" />
+            </i:Interaction.Behaviors>
+        </TabControl>
         
     </Grid>
     

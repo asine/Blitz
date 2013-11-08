@@ -1,14 +1,14 @@
 ﻿<controls:ModernWindow x:Class="Blitz.Client.Shell.ShellView"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                       xmlns:regions="http://www.codeplex.com/CompositeWPF"
-                       xmlns:common="clr-namespace:Blitz.Client.Common;assembly=Blitz.Client.Common"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:shell="clr-namespace:Blitz.Client.Shell"
                        xmlns:controls="clr-namespace:Naru.WPF.ModernUI.Windows.Controls;assembly=Naru.WPF.ModernUI"
                        xmlns:toolBar="clr-namespace:Naru.WPF.ToolBar;assembly=Naru.WPF"
                        xmlns:menu="clr-namespace:Naru.WPF.Menu;assembly=Naru.WPF"
+                       xmlns:tabControl="clr-namespace:Naru.WPF.TabControl;assembly=Naru.WPF"
+                       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                        mc:Ignorable="d"
                        Title="Blitz"
                        Height="300"
@@ -37,7 +37,11 @@
                      ItemTemplateSelector="{StaticResource ToolBarItemTemplateSelector}" />
         </ToolBarTray>
 
-        <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.MAIN}" />
+        <TabControl>
+            <i:Interaction.Behaviors>
+                <tabControl:TabControlItemSourceBehavior ItemsSource="{Binding Items}" />
+            </i:Interaction.Behaviors>
+        </TabControl>
 
     </DockPanel>
 

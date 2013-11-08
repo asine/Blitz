@@ -63,7 +63,9 @@ namespace Blitz.Client.Common.DynamicColumnManagement
         #endregion
 
         public DynamicColumnManagementViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, IDynamicColumnManagementService service,
-                                                BindableCollectionFactory bindableCollectionFactory, Func<DynamicColumnEditViewModel> editViewModelFactory,
+                                                BindableCollection<DynamicColumn> columnsCollection, 
+                                                BindableCollection<IToolBarItem> toolBarItemsCollection,
+                                                Func<DynamicColumnEditViewModel> editViewModelFactory,
                                                 IToolBarService toolBarService)
             : base(log, scheduler, viewService)
         {
@@ -72,9 +74,9 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
             Disposables.Add(service);
 
-            Columns = bindableCollectionFactory.Get<DynamicColumn>();
+            Columns = columnsCollection;
 
-            ToolBarItems = bindableCollectionFactory.Get<IToolBarItem>();
+            ToolBarItems = toolBarItemsCollection;
 
             var saveToolBarItem = toolBarService.CreateToolBarButtonItem();
             saveToolBarItem.DisplayName = "Save";

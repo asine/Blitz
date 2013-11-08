@@ -40,8 +40,8 @@ namespace Blitz.Client.Trading.Security.Chart
 
         public DelegateCommand GoCommand { get; private set; }
 
-        public ChartViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, 
-            BindableCollectionFactory bindableCollectionFactory, IChartService service)
+        public ChartViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                              BindableCollection<HistoricalDataDto> itemsCollection, IChartService service)
             : base(log, scheduler, viewService)
         {
             _service = service;
@@ -49,18 +49,18 @@ namespace Blitz.Client.Trading.Security.Chart
 
             this.SetupHeader("Chart");
 
-            Items = bindableCollectionFactory.Get<HistoricalDataDto>();
-            GoCommand = new DelegateCommand(GetData,() => !string.IsNullOrEmpty(Ticker));
+            Items = itemsCollection;
+            GoCommand = new DelegateCommand(GetData, () => !string.IsNullOrEmpty(Ticker));
         }
 
         private void GetData()
         {
             BusyViewModel.ActiveAsync(string.Format("... Loading {0} ...", _ticker))
-                .Do(() => Items.ClearAsync())
-                .SelectMany(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now))
-                .SelectMany(data => Items.AddRange(data))
+                .Then(() => Items.ClearAsync(), Scheduler.TPL.Dispatcher)
+                .Then(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now), Scheduler.TPL.Task)
+                .Then(data => Items.AddRange(data), Scheduler.TPL.Dispatcher)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialogBuilder().Error("Error", "Problem getting chart data"), Scheduler.TPL.Task)
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem getting chart data"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
         }
     }

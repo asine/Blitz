@@ -40,7 +40,7 @@ namespace Blitz.Client.Customer.Reportviewer
 
         public override Task<GetHistoryListResponse> GetHistoryAsync(GetHistoryListRequest request)
         {
-            return _requestTask.Get<GetHistoryListRequest, GetHistoryListResponse>(request);
+            return _requestTask.Get(request);
         }
 
         public override Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModelsAsync(GetHistoryListResponse response)
@@ -64,7 +64,7 @@ namespace Blitz.Client.Customer.Reportviewer
 
         public override Task<GetHistoryReportsResponse> GenerateReportAsync(GetHistoryReportsRequest request)
         {
-            return _requestTask.Get<GetHistoryReportsRequest, GetHistoryReportsResponse>(request);
+            return _requestTask.Get(request);
         }
 
         public override Task<List<IViewModel>> GenerateReportViewModelsAsync(GetHistoryReportsResponse response)

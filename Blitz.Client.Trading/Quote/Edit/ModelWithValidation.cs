@@ -5,11 +5,11 @@ using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 
-using Microsoft.Practices.Prism.ViewModel;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {
-    public abstract class ModelWithValidation<TModel, TValidation> : NotificationObject, IDataErrorInfo
+    public abstract class ModelWithValidation<TModel, TValidation> : NotifyPropertyChanged, IDataErrorInfo
         where TModel : ModelWithValidation<TModel, TValidation>
         where TValidation : AbstractValidator<TModel>, new()
     {

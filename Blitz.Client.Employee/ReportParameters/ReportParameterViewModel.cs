@@ -10,7 +10,7 @@ namespace Blitz.Client.Employee.ReportParameters
 {
     public class ReportParameterViewModel : Workspace
     {
-        public BindableCollection<DateTime> Dates { get; private set; } 
+        public BindableCollection<DateTime> Dates { get; private set; }
 
         #region SelectedDate
 
@@ -29,10 +29,11 @@ namespace Blitz.Client.Employee.ReportParameters
 
         #endregion
 
-        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory) 
+        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                                        BindableCollection<DateTime> datesCollection)
             : base(log, scheduler, viewService)
         {
-            Dates = bindableCollectionFactory.Get<DateTime>();
+            Dates = datesCollection;
         }
     }
 }

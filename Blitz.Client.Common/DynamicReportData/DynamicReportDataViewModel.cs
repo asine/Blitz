@@ -21,12 +21,14 @@ namespace Blitz.Client.Common.DynamicReportData
 
         public BindableCollection<DynamicColumn> Columns { get; private set; }
 
-        public DynamicReportDataViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory,
+        public DynamicReportDataViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                                          BindableCollection<ExpandoObject> itemsCollection,
+                                          BindableCollection<DynamicColumn> columnsCollection,
                                           IToolBarService toolBarService, Func<DynamicColumnManagementViewModel> dynamicColumnManagementViewModelFactory)
             : base(log, scheduler, viewService)
         {
-            Items = bindableCollectionFactory.Get<ExpandoObject>();
-            Columns = bindableCollectionFactory.Get<DynamicColumn>();
+            Items = itemsCollection;
+            Columns = columnsCollection;
 
             var columnEditToolBarItem = toolBarService.CreateToolBarButtonItem();
             columnEditToolBarItem.DisplayName = "Column Edit";

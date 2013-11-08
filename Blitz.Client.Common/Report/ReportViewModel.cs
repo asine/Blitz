@@ -8,9 +8,13 @@ namespace Blitz.Client.Common.Report
 {
     public abstract class ReportViewModel : Workspace
     {
-        protected ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler)
+        public BindableCollection<IViewModel> Items { get; private set; } 
+
+        protected ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler,
+                                  BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, viewService)
         {
+            Items = itemsCollection;
         }
     }
 }

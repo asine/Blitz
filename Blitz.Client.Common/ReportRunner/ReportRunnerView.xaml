@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:regions="http://www.codeplex.com/CompositeWPF"
-             xmlns:common="clr-namespace:Blitz.Client.Common"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:mvvm="clr-namespace:Naru.WPF.MVVM;assembly=Naru.WPF"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:tabControl="clr-namespace:Naru.WPF.TabControl;assembly=Naru.WPF"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
@@ -34,8 +35,12 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <ContentControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_PARAMETER}"
-                                    Grid.Row="0" />
+                    <ContentControl DataContext="{Binding ParameterViewModel}"
+                                    Grid.Row="0">
+                        <i:Interaction.Behaviors>
+                            <mvvm:ContentControlViewResolverBehavior />
+                        </i:Interaction.Behaviors>
+                    </ContentControl>
 
                     <Button Grid.Row="1"
                             Content="Generate Report..."
@@ -44,10 +49,13 @@
 
             </Expander>
 
-            <TabControl regions:RegionManager.RegionName="{x:Static common:RegionNames.REPORT_DATA}"
-                        Grid.Column="1"
+            <TabControl Grid.Column="1"
                         Grid.Row="1"
-                        TabStripPlacement="Bottom" />
+                        TabStripPlacement="Bottom">
+                <i:Interaction.Behaviors>
+                    <tabControl:TabControlItemSourceBehavior ItemsSource="{Binding Items}" />
+                </i:Interaction.Behaviors>
+            </TabControl>
 
         </Grid>
     </xctk:BusyIndicator>

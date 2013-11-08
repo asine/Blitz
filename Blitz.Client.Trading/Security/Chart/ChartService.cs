@@ -39,7 +39,7 @@ namespace Blitz.Client.Trading.Security.Chart
             };
 
             return _requestTask
-                .Get<GetHistoricDataRequest, GetHistoricDataResponse>(request)
+                .Get(request)
                 .Select(x => x.Results.ToList());
         }
     }

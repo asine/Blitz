@@ -42,7 +42,7 @@ namespace Blitz.Client.Trading.Quote.Edit
         {
             var request = new GetQuoteRequest{Id = id};
             return _requestTask
-                .Get<GetQuoteRequest, GetQuoteResponse>(request)
+                .Get(request)
                 .Select(x =>
                 {
                     var quoteDto = x.Result;
@@ -61,7 +61,7 @@ namespace Blitz.Client.Trading.Quote.Edit
 
         public Task<GetInitialisationDataResponse> GetInitialisationDataAsync()
         {
-            return _requestTask.Get<GetInitialisationDataRequest, GetInitialisationDataResponse>(new GetInitialisationDataRequest());
+            return _requestTask.Get(new GetInitialisationDataRequest());
         }
 
         public Task SaveQuoteAsync(QuoteModel quoteModel)
@@ -73,7 +73,7 @@ namespace Blitz.Client.Trading.Quote.Edit
                 InstrumentName = quoteModel.Instrument.Value,
                 Notes = quoteModel.Notes
             };
-            return _requestTask.Get<SaveQuoteRequest, SaveQuoteResponse>(new SaveQuoteRequest {Quote = quote});
+            return _requestTask.Get(new SaveQuoteRequest {Quote = quote});
         }
     }
 }

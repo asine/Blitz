@@ -29,10 +29,11 @@ namespace Blitz.Client.Customer.ReportParameters
 
         #endregion
 
-        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory)
+        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                                        BindableCollection<DateTime> datesCollection)
             : base(log, scheduler, viewService)
         {
-            Dates = bindableCollectionFactory.Get<DateTime>();
+            Dates = datesCollection;
         }
     }
 }

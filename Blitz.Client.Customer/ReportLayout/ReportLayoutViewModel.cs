@@ -35,8 +35,11 @@ namespace Blitz.Client.Customer.ReportLayout
         public DelegateCommand OkCommand { get; private set; }
 
         public ReportLayoutViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
-            IReportLayoutService service, BindableCollectionFactory bindableCollectionFactory, 
-            Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
+                                     IReportLayoutService service,
+                                     BindableCollection<ReportLayoutItemViewModel> availableCollection,
+                                     BindableCollection<ReportLayoutItemViewModel> rowsCollection,
+                                     BindableCollection<ReportLayoutItemViewModel> columnsCollection,
+                                     Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
             : base(log, scheduler, viewService)
         {
             _service = service;
@@ -44,13 +47,18 @@ namespace Blitz.Client.Customer.ReportLayout
 
             this.SetupHeader("Layout");
 
-            Available = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();
-            Rows = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();
-            Columns = bindableCollectionFactory.Get<ReportLayoutItemViewModel>();
+            Available = availableCollection;
+            Rows = rowsCollection;
+            Columns = columnsCollection;
 
-            ToRowsDropTarget = new ReportLayoutDropTarget(x => x.Type == AttributeType.Dimension, Rows, Available, Columns);
-            ToColumnsDropTarget = new ReportLayoutDropTarget(x => x.Type == AttributeType.Measure, Columns, Available, Rows);
-            ToAvailableDropTarget = new ReportLayoutDropTarget(x => true, Available, Columns, Rows);
+            ToRowsDropTarget = new ReportLayoutDropTarget(x => x.Type == AttributeType.Dimension,
+                                                          Rows, Available, Columns);
+
+            ToColumnsDropTarget = new ReportLayoutDropTarget(x => x.Type == AttributeType.Measure,
+                                                             Columns, Available, Rows);
+
+            ToAvailableDropTarget = new ReportLayoutDropTarget(x => true,
+                                                               Available, Columns, Rows);
 
             OkCommand = new DelegateCommand(Close);
         }
@@ -58,11 +66,11 @@ namespace Blitz.Client.Customer.ReportLayout
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading Attributes ...")
-                .SelectMany(_ => _service.GetAttributesAsync())
-                .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)))
-                .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)))
+                .Then(_ => _service.GetAttributesAsync(), Scheduler.TPL.Task)
+                .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)), Scheduler.TPL.Dispatcher)
+                .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)), Scheduler.TPL.Dispatcher)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialogBuilder().Error("Error", "Problem initialising attributes"), Scheduler.TPL.Task)
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem initialising attributes"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
         }
 

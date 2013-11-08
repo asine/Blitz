@@ -19,10 +19,11 @@ namespace Blitz.Client.Common.ReportViewer.History
 
         public event EventHandler<DataEventArgs<long>> Open;
 
-        public HistoryViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory) 
+        public HistoryViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                                BindableCollection<HistoryItemViewModel> itemsCollection) 
             : base(log, scheduler, viewService)
         {
-            Items = bindableCollectionFactory.Get<HistoryItemViewModel>();
+            Items = itemsCollection;
 
             this.SetupHeader("History");
 

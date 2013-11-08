@@ -38,7 +38,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         public Task<List<QuoteDto>> GetQuotesAsync()
         {
             return _requestTask
-                .Get<GetQuotesRequest, GetQuotesResponse>(new GetQuotesRequest())
+                .Get(new GetQuotesRequest())
                 .Select(x => x.Results.ToList());
         }
 

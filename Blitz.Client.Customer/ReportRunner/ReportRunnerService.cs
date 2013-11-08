@@ -17,6 +17,7 @@ using Blitz.Client.Customer.ReportLayout;
 using Blitz.Client.Customer.ReportParameters;
 using Blitz.Common.Customer;
 
+using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.ReportRunner
@@ -33,10 +34,13 @@ namespace Blitz.Client.Customer.ReportRunner
         private readonly IViewService _viewService;
         private readonly Func<ReportLayoutViewModel> _reportLayoutViewModelFactory;
         private readonly IBasicExportToExcel _exportToExcel;
+        private readonly ISchedulerProvider _scheduler;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> dynamicReportDataViewModelFactory,
-            IRequestTask requestTask, IViewService viewService, ILog log,
-            Func<ReportLayoutViewModel> reportLayoutViewModelFactory, IBasicExportToExcel exportToExcel)
+                                   IRequestTask requestTask, IViewService viewService, ILog log,
+                                   Func<ReportLayoutViewModel> reportLayoutViewModelFactory,
+                                   IBasicExportToExcel exportToExcel,
+            ISchedulerProvider scheduler)
             : base(log)
         {
             _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;
@@ -44,12 +48,13 @@ namespace Blitz.Client.Customer.ReportRunner
             _viewService = viewService;
             _reportLayoutViewModelFactory = reportLayoutViewModelFactory;
             _exportToExcel = exportToExcel;
+            _scheduler = scheduler;
         }
 
         public override Task ConfigureParameterViewModelAsync(ReportParameterViewModel viewModel)
         {
-            return _requestTask.Get<InitialiseParametersRequest, InitialiseParametersResponse>(new InitialiseParametersRequest())
-                .SelectMany(x =>
+            return _requestTask.Get(new InitialiseParametersRequest())
+                .Then(x =>
                 {
                     var availableDates = x.AvailableDates.OrderByDescending(d => d);
                     foreach (var availableDate in availableDates)
@@ -58,7 +63,7 @@ namespace Blitz.Client.Customer.ReportRunner
                     }
 
                     viewModel.SelectedDate = availableDates.First();
-                });
+                }, _scheduler.TPL.Task);
         }
 
         public override ReportRunnerRequest CreateRequest(ReportParameterViewModel reportParameterViewModel)
@@ -68,7 +73,7 @@ namespace Blitz.Client.Customer.ReportRunner
 
         public override Task<ReportRunnerResponse> GenerateAsync(ReportRunnerRequest request)
         {
-            return _requestTask.Get<ReportRunnerRequest, ReportRunnerResponse>(request);
+            return _requestTask.Get(request);
         }
 
         public override Task<List<IViewModel>> GenerateDataViewModelsAsync(ReportRunnerResponse response)

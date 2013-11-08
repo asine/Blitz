@@ -121,24 +121,27 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public AppearanceViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, BindableCollectionFactory bindableCollectionFactory)
+        public AppearanceViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+                                   BindableCollection<string> fontSizesCollection,
+                                   BindableCollection<Color> accentColorsCollection,
+                                   BindableCollection<ThemeItemViewModel> themesCollection)
             : base(log, scheduler, viewService)
         {
             this.SetupHeader("Appearance");
 
-            FontSizes = bindableCollectionFactory.Get<string>();
+            FontSizes = fontSizesCollection;
             FontSizes.AddRange(new[] {FONT_SMALL, FONT_LARGE});
 
             SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FONT_LARGE : FONT_SMALL;
 
-            AccentColors = bindableCollectionFactory.Get<Color>();
+            AccentColors = accentColorsCollection;
             foreach (var accentColor in _accentColors)
             {
                 AccentColors.Add(accentColor);
             }
 
             // add the default themes
-            Themes = bindableCollectionFactory.Get<ThemeItemViewModel>();
+            Themes = themesCollection;
             Themes.AddRange(new[]
             {
                 new ThemeItemViewModel {Name = "Dark", Source = AppearanceManager.DarkThemeSource},

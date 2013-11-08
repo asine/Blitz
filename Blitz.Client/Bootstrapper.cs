@@ -1,76 +1,88 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using Autofac;
 
 using Blitz.Client.Common.DynamicColumnEdit;
 using Blitz.Client.Common.DynamicColumnManagement;
+using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
-
-using Naru.Agatha;
-using Naru.Log4Net;
-using Naru.Unity;
-using Naru.WPF;
-using Naru.WPF.MVVM;
-
-using Blitz.Client.Shell;
+using Blitz.Client.Common.Report;
+using Blitz.Client.Common.ReportViewer.History;
+using Blitz.Client.Core.EPPlus;
+using Blitz.Client.Customer;
+using Blitz.Client.Employee;
+using Blitz.Client.Settings.Appearance;
 using Blitz.Client.Trading;
 
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Prism.UnityExtensions;
-using Microsoft.Practices.Unity;
+using Naru.Agatha;
+using Naru.Aufofac.log4Net;
+using Naru.Core;
+using Naru.Log4Net;
+using Naru.WPF;
 
-using Naru.WPF.Prism;
-using Naru.WPF.Prism.TabControl;
+using Blitz.Client.Shell;
 
 namespace Blitz.Client
 {
-    public class Bootstrapper : UnityBootstrapper
+    public class Bootstrapper
     {
-        protected override DependencyObject CreateShell()
+        public Bootstrapper()
         {
-            var shellViewModel = Container.Resolve<ShellViewModel>();
-            var shellView = ViewService.CreateView(shellViewModel.GetType());
-            ViewService.BindViewModel(shellView, shellViewModel);
+            IContainer container = null;
 
-            return shellView;
-        }
+            var builder = new ContainerBuilder();
 
-        protected override void InitializeShell()
-        {
-            Application.Current.MainWindow = (Window) Shell;
-            Application.Current.MainWindow.Show();
-            Application.Current.MainWindow.Activate();
-        }
+            builder.RegisterModule(new AgathaClientModule
+            {
+                ContainerFactory = () => container,
+                RequestResponseAssembly = typeof(Blitz.Common.AssemblyHook).Assembly
+            });
 
-        protected override void ConfigureContainer()
-        {
-            base.ConfigureContainer();
+            builder.RegisterModule(new LogInjectionModule());
+            builder.RegisterModule(new Log4NetModule { SectionName = "CommonLogging.Blitz.Client" });
 
-            Container.RegisterInstance(Container);
+            builder.RegisterType<EventStream>().As<IEventStream>().InstancePerOwned<ReportViewModel>().SingleInstance();
 
-            Container
-                .ConfigureNaruLog4Net("ILogInject.UnityCommonLogging.Blitz.Client")
-                .ConfigureNaruWPF()
-                .ConfigureNaruPrism()
-                .ConfigureNaruAgathaClient(typeof(Blitz.Common.AssemblyHook).Assembly)
-                .RegisterTransient<IRequestTask, RequestTask>()
-                .RegisterTransient<IBasicExportToExcel, BasicExportToExcel>()
-                .RegisterType<IDynamicColumnManagementService, DynamicColumnManagementService>()
-                .RegisterType<IDynamicColumnEditService, DynamicColumnEditService>();
-        }
+            builder.RegisterType<ShellViewModel>().AsSelf();
+            builder.RegisterType<AppearanceViewModel>().AsSelf();
 
-        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
-        {
-            var mappings = base.ConfigureRegionAdapterMappings();
-            mappings.RegisterMapping(typeof(TabControl), Container.Resolve<TabControlRegionAdapter>());
-            return mappings;
-        }
+            builder.RegisterType<DynamicReportDataViewModel>().AsSelf();
+            builder.RegisterType<DynamicColumnManagementViewModel>().AsSelf();
+            builder.RegisterType<DynamicColumnManagementService>().As<IDynamicColumnManagementService>().InstancePerDependency();
 
-        protected override void ConfigureModuleCatalog()
-        {
-            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Customer.CustomerModule));
-            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(Employee.EmployeeModule));
-            ((ModuleCatalog)ModuleCatalog).AddModule(typeof(TradingModule));
+            builder.RegisterType<DynamicColumnEditViewModel>().AsSelf();
+            builder.RegisterType<DynamicColumnEditService>().As<IDynamicColumnEditService>().InstancePerDependency();
+
+            builder.RegisterType<BasicExportToExcel>().As<IBasicExportToExcel>().InstancePerDependency();
+            builder.RegisterType<ExcelPackageWriter>().AsSelf();
+            builder.RegisterType<ExcelWorkSheetWriter>().AsSelf();
+            builder.RegisterType<ReflectionDataWriter>().AsSelf();
+            builder.RegisterType<HistoryViewModel>().AsSelf();
+
+            builder.RegisterModule(new WPFModule());
+            builder.RegisterType<WPFStartable>().AsSelf();
+
+            builder.RegisterType<ClientStartable>().AsSelf();
+
+            // Trading
+            builder.RegisterModule(new TradingModule());
+            builder.RegisterType<TradingStartable>().AsSelf();
+
+            // Employee
+            builder.RegisterModule(new EmployeeModule());
+            builder.RegisterType<EmployeeStartable>().AsSelf();
+
+            // Customer
+            builder.RegisterModule(new CustomerModule());
+            builder.RegisterType<CustomerStartable>().AsSelf();
+
+            // Build the container
+            container = builder.Build();
+
+            // TODO : Ideally change this, so it isn't resolved like this
+            container.Resolve<WPFStartable>().Start();
+            container.Resolve<ClientStartable>().Start();
+            container.Resolve<TradingStartable>().Start();
+            container.Resolve<EmployeeStartable>().Start();
+            container.Resolve<CustomerStartable>().Start();
         }
     }
 }

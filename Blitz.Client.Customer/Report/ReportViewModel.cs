@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 
-using Blitz.Client.Common;
 using Blitz.Client.Common.Report;
 
 using Common.Logging;
@@ -10,7 +9,6 @@ using Naru.WPF.MVVM;
 using Blitz.Client.Customer.ReportRunner;
 using Blitz.Client.Customer.Reportviewer;
 
-using Naru.WPF.Prism.Region;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
@@ -19,25 +17,29 @@ namespace Blitz.Client.Customer.Report
     [UseView(typeof(ReportView))]
     public class ReportViewModel : Common.Report.ReportViewModel
     {
-        private readonly IRegionService _regionService;
+        private readonly ReportRunnerViewModel _reportRunnerViewModel;
+        private readonly ReportViewerViewModel _reportViewerViewModel;
 
-        public ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler, IRegionService regionService)
-            : base(log, viewService, scheduler)
+        public ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler,
+                               BindableCollection<IViewModel> itemsCollection,
+                               ReportRunnerViewModel reportRunnerViewModel,
+                               ReportViewerViewModel reportViewerViewModel)
+            : base(log, viewService, scheduler, itemsCollection)
         {
-            _regionService = regionService;
+            _reportRunnerViewModel = reportRunnerViewModel;
+            Disposables.Add(this.SyncViewModelActivationStates(_reportRunnerViewModel));
+
+            _reportViewerViewModel = reportViewerViewModel;
+            Disposables.Add(this.SyncViewModelActivationStates(_reportViewerViewModel));
         }
 
         protected override Task OnInitialise()
         {
-            return _regionService
-                .RegionBuilder<ReportRunnerViewModel>()
-                .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelActivationStates(viewModel)))
-                .ShowAsync(RegionNames.REPORT)
-                .SelectMany(_ =>
-                    _regionService
-                        .RegionBuilder<ReportViewerViewModel>()
-                        .WithInitialisation(viewModel => Disposables.Add(this.SyncViewModelDeActivation(viewModel)))
-                        .ShowAsync(RegionNames.REPORT));
+            return Task.Factory.StartNew(() =>
+                                         {
+                                             Items.Add(_reportRunnerViewModel);
+                                             Items.Add(_reportViewerViewModel);
+                                         }, Scheduler.TPL.Dispatcher);
         }
     }
 }
