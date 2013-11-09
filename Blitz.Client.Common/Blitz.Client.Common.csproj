@@ -126,6 +126,9 @@
     <Compile Include="ExportToExcel\BasicExportToExcel.cs" />
     <Compile Include="ExportToExcel\IBasicExportToExcel.cs" />
     <Compile Include="ExportToExcel\IExportToExcel.cs" />
+    <Compile Include="ReportParameter\ReportParameterWizardStepViewModel.cs" />
+    <Compile Include="ReportParameter\ReportParameterWizardViewModel.cs" />
+    <Compile Include="ReportParameter\IReportParameterViewModel.cs" />
     <Compile Include="ReportRunner\IReportRunnerService.cs" />
     <Compile Include="ReportRunner\ReportRunnerService.cs" />
     <Compile Include="ReportRunner\ReportRunnerView.xaml.cs">

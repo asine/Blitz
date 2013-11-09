@@ -27,17 +27,5 @@ namespace Blitz.Client.Common.ReportViewer
         public abstract Task<TReportResponse> GenerateReportAsync(TReportRequest request);
 
         public abstract Task<List<IViewModel>> GenerateReportViewModelsAsync(TReportResponse response);
-
-        public virtual void OnActivate()
-        {
-        }
-
-        public virtual void OnDeActivate()
-        {
-        }
-
-        public virtual void CleanUp()
-        {
-        }
     }
 }

@@ -53,22 +53,12 @@ namespace Blitz.Client.Customer.ReportRunner
 
         public override Task ConfigureParameterViewModelAsync(ReportParameterViewModel viewModel)
         {
-            return _requestTask.Get(new InitialiseParametersRequest())
-                .Then(x =>
-                {
-                    var availableDates = x.AvailableDates.OrderByDescending(d => d);
-                    foreach (var availableDate in availableDates)
-                    {
-                        viewModel.Dates.Add(availableDate);
-                    }
-
-                    viewModel.SelectedDate = availableDates.First();
-                }, _scheduler.TPL.Task);
+            return CompletedTask.Default;
         }
 
         public override ReportRunnerRequest CreateRequest(ReportParameterViewModel reportParameterViewModel)
         {
-            return new ReportRunnerRequest { ReportDate = reportParameterViewModel.SelectedDate };
+            return new ReportRunnerRequest { ReportDate = reportParameterViewModel.Context.SelectedDate };
         }
 
         public override Task<ReportRunnerResponse> GenerateAsync(ReportRunnerRequest request)

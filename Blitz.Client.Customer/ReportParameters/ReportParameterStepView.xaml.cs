@@ -1,8 +1,8 @@
 ﻿namespace Blitz.Client.Customer.ReportParameters
 {
-    public partial class ReportParameterView
+    public partial class ReportParameterStepView
     {
-        public ReportParameterView()
+        public ReportParameterStepView()
         {
             InitializeComponent();
         }

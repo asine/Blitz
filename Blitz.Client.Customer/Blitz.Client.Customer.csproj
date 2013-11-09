@@ -103,9 +103,12 @@
     <Compile Include="CustomerModule.cs" />
     <Compile Include="CustomerStartable.cs" />
     <Compile Include="ReportLayout\ReportLayoutService.cs" />
-    <Compile Include="ReportParameters\ReportParameterView.xaml.cs">
-      <DependentUpon>ReportParameterView.xaml</DependentUpon>
+    <Compile Include="ReportParameters\ReportParameterContext.cs" />
+    <Compile Include="ReportParameters\ReportParameterStepService.cs" />
+    <Compile Include="ReportParameters\ReportParameterStepView.xaml.cs">
+      <DependentUpon>ReportParameterStepView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReportParameters\ReportParameterStepViewModel.cs" />
     <Compile Include="ReportParameters\ReportParameterViewModel.cs" />
     <Compile Include="ReportRunner\ReportRunnerService.cs" />
     <Compile Include="ReportRunner\ReportRunnerViewModel.cs" />
@@ -182,7 +185,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ReportParameters\ReportParameterView.xaml">
+    <Page Include="ReportParameters\ReportParameterStepView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

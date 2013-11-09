@@ -5,7 +5,7 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportRunner
 {
-    public interface IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
+    public interface IReportRunnerService<TReportParameterViewModel, TRequest, TResponse> : IService
     {
         Task ConfigureParameterViewModelAsync(TReportParameterViewModel viewModel);
 
@@ -15,12 +15,6 @@ namespace Blitz.Client.Common.ReportRunner
 
         Task<List<IViewModel>> GenerateDataViewModelsAsync(TResponse response);
 
-        void ExportToExcel(TResponse response); 
-
-        void OnActivate();
-
-        void OnDeActivate();
-
-        void CleanUp();
+        void ExportToExcel(TResponse response);
     }
 }

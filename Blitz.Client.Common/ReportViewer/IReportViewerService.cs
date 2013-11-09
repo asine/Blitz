@@ -7,7 +7,7 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportViewer
 {
-    public interface IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
+    public interface IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> : IService
     {
         THistoryRequest CreateHistoryRequest();
 
@@ -20,11 +20,5 @@ namespace Blitz.Client.Common.ReportViewer
         Task<TReportResponse> GenerateReportAsync(TReportRequest request);
 
         Task<List<IViewModel>> GenerateReportViewModelsAsync(TReportResponse response);
-
-        void OnActivate();
-
-        void OnDeActivate();
-
-        void CleanUp();
     }
 }

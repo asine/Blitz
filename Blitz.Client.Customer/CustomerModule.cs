@@ -13,7 +13,10 @@ namespace Blitz.Client.Customer
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ReportViewModel>().AsSelf().InstancePerDependency();
+
             builder.RegisterType<ReportParameterViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ReportParameterStepViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ReportParameterStepService>().As<IReportParameterStepService>().InstancePerDependency();
 
             builder.RegisterType<ReportLayoutViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<ReportLayoutService>().As<IReportLayoutService>().InstancePerDependency();

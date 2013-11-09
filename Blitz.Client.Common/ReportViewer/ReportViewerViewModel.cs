@@ -46,13 +46,7 @@ namespace Blitz.Client.Common.ReportViewer
                 .Then(() => Items.ClearAsync(), Scheduler.TPL.Dispatcher)
                 .Then(() => Service.GenerateReportAsync(Service.CreateReportRequest(e.Value)), Scheduler.TPL.Task)
                 .Then(response => Service.GenerateReportViewModelsAsync(response), Scheduler.TPL.Task)
-                .Then(dataViewModels =>
-                {
-                    foreach (var dataViewModel in dataViewModels)
-                    {
-                        Items.Add(dataViewModel);
-                    }
-                }, Scheduler.TPL.Dispatcher)
+                .Then(dataViewModels => Items.AddRangeAsync(dataViewModels), Scheduler.TPL.Dispatcher)
                 .LogException(Log)
                 .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading historic report"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
@@ -67,10 +61,7 @@ namespace Blitz.Client.Common.ReportViewer
                 .Then(response => Service.GenerateHistoryItemViewModelsAsync(response), Scheduler.TPL.Task)
                 .Then(dataViewModels =>
                     {
-                        foreach (var dataViewModel in dataViewModels)
-                        {
-                            _historyViewModel.Items.Add(dataViewModel);
-                        }
+                        _historyViewModel.Items.AddRange(dataViewModels);
 
                         Items.Add(_historyViewModel);
                         ((ISupportActivationState)_historyViewModel).Activate();
@@ -78,21 +69,6 @@ namespace Blitz.Client.Common.ReportViewer
                 .LogException(Log)
                 .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading History"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
-        }
-
-        protected override void OnActivate()
-        {
-            Service.OnActivate();
-        }
-
-        protected override void OnDeActivate()
-        {
-            Service.OnDeActivate();
-        }
-
-        protected override void CleanUp()
-        {
-            Service.CleanUp();
         }
     }
 }

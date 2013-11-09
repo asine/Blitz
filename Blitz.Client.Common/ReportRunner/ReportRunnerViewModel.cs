@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+
+using Blitz.Client.Common.ReportParameter;
 
 using Common.Logging;
 
@@ -14,7 +18,7 @@ using Naru.WPF.ViewModel;
 namespace Blitz.Client.Common.ReportRunner
 {
     public abstract class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : Workspace
-        where TReportParameterViewModel : IViewModel
+        where TReportParameterViewModel : IReportParameterViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
         protected readonly IToolBarService ToolBarService;
@@ -23,8 +27,6 @@ namespace Blitz.Client.Common.ReportRunner
 
         private DelegateCommand _exportToExcel;
         private TResponse _response;
-
-        public DelegateCommand GenerateReportCommand { get; private set; }
 
         public BindableCollection<IViewModel> Items { get; private set; }
 
@@ -67,14 +69,18 @@ namespace Blitz.Client.Common.ReportRunner
             : base(log, scheduler, viewService)
         {
             ToolBarService = toolBarService;
-            ParameterViewModel = reportParameterViewModel;
             Service = service;
             IsExpanded = true;
             Items = itemsCollection;
 
+            ParameterViewModel = reportParameterViewModel;
+            this.SyncViewModelActivationStates(ParameterViewModel);
+
             this.SetupHeader("Runner", IconNames.EXCEL);
 
-            GenerateReportCommand = new DelegateCommand(GenerateReport, CanExecuteGenerateReport);
+            ParameterViewModel.GenerateReport
+                .TakeUntil(Closed)
+                .Subscribe(_ => GenerateReport());
 
             CreateExportToExcelToolBarItem();
         }
@@ -90,14 +96,11 @@ namespace Blitz.Client.Common.ReportRunner
 
         private void GenerateReport()
         {
-            BusyViewModel.ActiveAsync("... Loading ...")
+            BusyViewModel.ActiveAsync("... Generating ...")
                 .Then(() => Items.ClearAsync(), Scheduler.TPL.Dispatcher)
                 .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.TPL.Task)
-                .Then(response =>
-                {
-                    _response = response;
-                    return Service.GenerateDataViewModelsAsync(response);
-                }, Scheduler.TPL.Task)
+                .Do(response => _response = response, Scheduler.TPL.Task)
+                .Then(response => Service.GenerateDataViewModelsAsync(response), Scheduler.TPL.Task)
                 .Then(dataViewModels =>
                     {
                         foreach (var dataViewModel in dataViewModels)
@@ -121,11 +124,6 @@ namespace Blitz.Client.Common.ReportRunner
 
                     _exportToExcel.RaiseCanExecuteChanged();
                 }, Scheduler.TPL.Task);
-        }
-
-        protected virtual bool CanExecuteGenerateReport()
-        {
-            return true;
         }
 
         private void CreateExportToExcelToolBarItem()
@@ -160,19 +158,9 @@ namespace Blitz.Client.Common.ReportRunner
             return !(_response == null);
         }
 
-        protected override void OnActivate()
-        {
-            Service.OnActivate();
-        }
-
-        protected override void OnDeActivate()
-        {
-            Service.OnDeActivate();
-        }
-
         protected override void CleanUp()
         {
-            Service.CleanUp();
+            Service.Dispose();
         }
     }
 }
