@@ -26,6 +26,10 @@ namespace Blitz.Client.Customer.ReportParameters
         protected override IEnumerable<IWizardStepViewModel<ReportParameterContext>> GetSteps()
         {
             yield return _reportParameterStepViewModelFactory();
+            yield return _reportParameterStepViewModelFactory();
+            yield return _reportParameterStepViewModelFactory();
+            yield return _reportParameterStepViewModelFactory();
+            yield return _reportParameterStepViewModelFactory();
         }
     }
 }

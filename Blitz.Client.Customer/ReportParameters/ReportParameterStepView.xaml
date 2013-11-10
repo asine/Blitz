@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance reportParameters:ReportParameterViewModel}">
+             d:DataContext="{d:DesignInstance reportParameters:ReportParameterStepViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -15,6 +15,6 @@
         </Grid.RowDefinitions>
         <ComboBox Grid.Row="0"
                   ItemsSource="{Binding Dates}"
-                  SelectedItem="{Binding SelectedDate}" />
+                  SelectedItem="{Binding SelectedDate, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
     </Grid>
 </UserControl>

@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Autofac.Core.Registration;
-
 using Blitz.Client.Common.ReportParameter;
 
 using Common.Logging;
@@ -17,8 +15,6 @@ namespace Blitz.Client.Employee.ReportParameters
     public class ReportParameterStepViewModel : ReportParameterWizardStepViewModel<ReportParameterContext>
     {
         private readonly IReportParameterStepService _service;
-
-        public const string Firststep = "FirstStep";
 
         public BindableCollection<DateTime> Dates { get; private set; }
 
@@ -41,11 +37,6 @@ namespace Blitz.Client.Employee.ReportParameters
 
         #endregion
 
-        public override string Name
-        {
-            get { return Firststep; }
-        }
-
         public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
                                             IReportParameterStepService service,
                                             BindableCollection<DateTime> datesCollection)
@@ -63,6 +54,11 @@ namespace Blitz.Client.Employee.ReportParameters
                 .Then(x => Dates.AddRangeAsync(x), Scheduler.TPL.Dispatcher)
                 .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem available dates"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+        }
+
+        protected override void LoadFromContext(ReportParameterContext context)
+        {
+            SelectedDate = context.SelectedDate;
         }
     }
 }

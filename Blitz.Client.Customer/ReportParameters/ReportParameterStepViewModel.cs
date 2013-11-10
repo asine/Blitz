@@ -9,14 +9,14 @@ using Common.Logging;
 using Naru.TPL;
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
+using Naru.WPF.Validation;
 
 namespace Blitz.Client.Customer.ReportParameters
 {
-    public class ReportParameterStepViewModel : ReportParameterWizardStepViewModel<ReportParameterContext>
+    public class ReportParameterStepViewModel : ReportParameterWizardStepViewModel<ReportParameterContext>,
+                                                ISupportValidation<ReportParameterStepViewModel, ReportParameterStepValidator>
     {
         private readonly IReportParameterStepService _service;
-
-        public const string Firststep = "FirstStep";
 
         public BindableCollection<DateTime> Dates { get; private set; }
 
@@ -29,7 +29,6 @@ namespace Blitz.Client.Customer.ReportParameters
             get { return _selectedDate; }
             set
             {
-                if (value.Equals(_selectedDate)) return;
                 _selectedDate = value;
                 RaisePropertyChanged(() => SelectedDate);
 
@@ -39,10 +38,22 @@ namespace Blitz.Client.Customer.ReportParameters
 
         #endregion
 
-        public override string Name
+        #region IDataErrorInfo Members
+
+        public string Error
         {
-            get { return Firststep; }
+            get { return this.Validate<ReportParameterStepValidator, ReportParameterStepViewModel>().GetError(); }
         }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                return this.Validate<ReportParameterStepValidator, ReportParameterStepViewModel>().GetErrorForProperty(columnName);
+            }
+        }
+
+        #endregion
 
         public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
                                             IReportParameterStepService service, 
@@ -61,6 +72,11 @@ namespace Blitz.Client.Customer.ReportParameters
                 .Then(x => Dates.AddRangeAsync(x), Scheduler.TPL.Dispatcher)
                 .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem available dates"), Scheduler.TPL.Task)
                 .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+        }
+
+        protected override void LoadFromContext(ReportParameterContext context)
+        {
+            SelectedDate = context.SelectedDate;
         }
     }
 }

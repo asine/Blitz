@@ -2,6 +2,8 @@
 
 using Blitz.Common.Trading.Quote.Edit;
 
+using Naru.WPF.Validation;
+
 namespace Blitz.Client.Trading.Quote.Edit
 {
     public class QuoteModel : ModelWithValidation<QuoteModel, QuoteValidation>
