@@ -15,6 +15,6 @@
         </Grid.RowDefinitions>
         <ComboBox Grid.Row="0"
                   ItemsSource="{Binding Dates}"
-                  SelectedItem="{Binding SelectedDate, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                  SelectedItem="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}" />
     </Grid>
 </UserControl>

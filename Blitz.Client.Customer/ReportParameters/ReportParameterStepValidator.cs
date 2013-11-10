@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using System;
+
+using FluentValidation;
 
 namespace Blitz.Client.Customer.ReportParameters
 {
@@ -6,7 +8,7 @@ namespace Blitz.Client.Customer.ReportParameters
     {
         public ReportParameterStepValidator()
         {
-            RuleFor(x => x.SelectedDate).NotNull();
+            RuleFor(x => x.SelectedDate).Must(x => x > DateTime.Now.AddDays(-2)).WithMessage("xxxxx");
         }
     }
 }
