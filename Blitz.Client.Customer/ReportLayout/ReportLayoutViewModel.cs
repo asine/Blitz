@@ -66,12 +66,12 @@ namespace Blitz.Client.Customer.ReportLayout
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading Attributes ...")
-                .Then(_ => _service.GetAttributesAsync(), Scheduler.TPL.Task)
-                .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)), Scheduler.TPL.Dispatcher)
-                .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)), Scheduler.TPL.Dispatcher)
+                .Then(_ => _service.GetAttributesAsync(), Scheduler.Task.TPL)
+                .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)), Scheduler.Dispatcher.TPL)
+                .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)), Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem initialising attributes"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem initialising attributes"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private ReportLayoutItemViewModel CreateDimension(AttributeDto dimension)

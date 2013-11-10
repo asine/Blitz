@@ -39,7 +39,7 @@ namespace Blitz.Client.Customer.Report
                                          {
                                              Items.Add(_reportRunnerViewModel);
                                              Items.Add(_reportViewerViewModel);
-                                         }, Scheduler.TPL.Dispatcher);
+                                         }, Scheduler.Dispatcher.TPL);
         }
     }
 }

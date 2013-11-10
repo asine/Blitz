@@ -41,18 +41,18 @@ namespace Blitz.Client.Trading.Quote.Blotter
         private object Open(QuoteBlotterItemViewModel quote)
         {
             return _service.EditQuoteAsync(quote)
-                .Then(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."), Scheduler.TPL.Dispatcher)
-                .Then(() => RefreshQuotesAsync(), Scheduler.TPL.Task)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem refreshing quotes"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .Then(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."), Scheduler.Dispatcher.TPL)
+                .Then(() => RefreshQuotesAsync(), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem refreshing quotes"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading quotes ...")
-                .Then(_ => RefreshQuotesAsync(), Scheduler.TPL.Task)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quotes"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .Then(_ => RefreshQuotesAsync(), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quotes"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         public override bool CanClose()
@@ -63,7 +63,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         private Task RefreshQuotesAsync()
         {
             return _service.GetQuotesAsync()
-                .Do(() => Items.ClearAsync(), Scheduler.TPL.Dispatcher)
+                .Do(() => Items.ClearAsync(), Scheduler.Dispatcher.TPL)
                 .Then(quotes =>
                       {
                           var items = quotes.Select(x => new QuoteBlotterItemViewModel
@@ -76,7 +76,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
                                                              ModifiedOn = x.ModifiedOn
                                                          });
                           return Items.AddRangeAsync(items);
-                      }, Scheduler.TPL.Dispatcher)
+                      }, Scheduler.Dispatcher.TPL)
                 .LogException(Log);
         }
 
@@ -94,10 +94,10 @@ namespace Blitz.Client.Trading.Quote.Blotter
         private object NewQuote()
         {
             return _service.NewQuoteAsync()
-                .Then(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."), Scheduler.TPL.Dispatcher)
-                .Then(() => RefreshQuotesAsync(), Scheduler.TPL.Task)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem refreshing quotes"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .Then(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."), Scheduler.Dispatcher.TPL)
+                .Then(() => RefreshQuotesAsync(), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem refreshing quotes"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
     }
 }

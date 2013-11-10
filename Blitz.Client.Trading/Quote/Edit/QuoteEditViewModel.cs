@@ -90,25 +90,25 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void NewQuote()
         {
             BusyViewModel.ActiveAsync("... Loading Quote ...")
-                .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.TPL.Task)
-                .Then(response => Instruments.AddRange(response.Instruments), Scheduler.TPL.Dispatcher)
-                .Then(() => _service.NewQuoteAsync(), Scheduler.TPL.Task)
-                .Do(model => Model = model, Scheduler.TPL.Task)
+                .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
+                .Then(response => Instruments.AddRange(response.Instruments), Scheduler.Dispatcher.TPL)
+                .Then(() => _service.NewQuoteAsync(), Scheduler.Task.TPL)
+                .Do(model => Model = model, Scheduler.Task.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quote"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private void LoadQuote()
         {
             BusyViewModel.ActiveAsync("... Loading Quote ...")
-                .Then(() => _service.GetQuoteAsync(_id.Value), Scheduler.TPL.Task)
-                .Do(quote => Model = quote, Scheduler.TPL.Task)
-                .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.TPL.Task)
-                .Then(response => Instruments.AddRange(response.Instruments), Scheduler.TPL.Dispatcher)
+                .Then(() => _service.GetQuoteAsync(_id.Value), Scheduler.Task.TPL)
+                .Do(quote => Model = quote, Scheduler.Task.TPL)
+                .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
+                .Then(response => Instruments.AddRange(response.Instruments), Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quote"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private void CreateToolBar(Func<ToolBarButtonItem> toolBarButtonItemFactory)
@@ -127,14 +127,14 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void Save()
         {
             BusyViewModel.ActiveAsync("... Saving Quote ...")
-                .Then(_ => _service.SaveQuoteAsync(Model), Scheduler.TPL.Task)
+                .Then(_ => _service.SaveQuoteAsync(Model), Scheduler.Task.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem saving quote"), Scheduler.TPL.Task)
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem saving quote"), Scheduler.Task.TPL)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();
                     Close();
-                }, Scheduler.TPL.Task);
+                }, Scheduler.Task.TPL);
         }
     }
 }

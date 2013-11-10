@@ -65,9 +65,9 @@ namespace Blitz.Client.Customer
                               _eventStream.Push(reportViewModel);
 
                               return reportViewModel;
-                          }, _scheduler.TPL.Dispatcher)
+                          }, _scheduler.Dispatcher.TPL)
                 .Then(reportViewModel => ((ISupportActivationState) reportViewModel).Activate(),
-                      _scheduler.TPL.Dispatcher);
+                      _scheduler.Dispatcher.TPL);
         }
     }
 }

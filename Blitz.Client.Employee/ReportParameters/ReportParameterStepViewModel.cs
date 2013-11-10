@@ -49,11 +49,11 @@ namespace Blitz.Client.Employee.ReportParameters
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading available dates ...")
-                .Then(_ => _service.GetAvailableDatesAsync(), Scheduler.TPL.Task)
-                .Do(x => SelectedDate = x.First(), Scheduler.TPL.Dispatcher)
-                .Then(x => Dates.AddRangeAsync(x), Scheduler.TPL.Dispatcher)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem available dates"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .Then(_ => _service.GetAvailableDatesAsync(), Scheduler.Task.TPL)
+                .Do(x => SelectedDate = x.First(), Scheduler.Dispatcher.TPL)
+                .Then(x => Dates.AddRangeAsync(x), Scheduler.Dispatcher.TPL)
+                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem available dates"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         protected override void LoadFromContext(ReportParameterContext context)

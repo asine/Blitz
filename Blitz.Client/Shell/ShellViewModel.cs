@@ -51,7 +51,7 @@ namespace Blitz.Client.Shell
                            });
 
             eventStream.Of<IViewModel>()
-                .ObserveOn(Scheduler.RX.Dispatcher)
+                .ObserveOn(Scheduler.Dispatcher.RX)
                 .Subscribe(x => Items.Add(x));
         }
     }

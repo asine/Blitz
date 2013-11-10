@@ -29,7 +29,7 @@ namespace Blitz.Client.Employee.Report
 
         protected override Task OnInitialise()
         {
-            return Task.Factory.StartNew(() => Items.Add(_reportRunnerViewModel), Scheduler.TPL.Dispatcher);
+            return Task.Factory.StartNew(() => Items.Add(_reportRunnerViewModel), Scheduler.Dispatcher.TPL);
         }
     }
 }

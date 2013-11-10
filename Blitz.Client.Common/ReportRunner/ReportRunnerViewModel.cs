@@ -88,19 +88,19 @@ namespace Blitz.Client.Common.ReportRunner
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading ...")
-                .Then(() => Service.ConfigureParameterViewModelAsync(ParameterViewModel), Scheduler.TPL.Task)
+                .Then(() => Service.ConfigureParameterViewModelAsync(ParameterViewModel), Scheduler.Task.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem initialising parameters"), Scheduler.TPL.Task)
-                .Finally(BusyViewModel.InActive, Scheduler.TPL.Task);
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem initialising parameters"), Scheduler.Task.TPL)
+                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private void GenerateReport()
         {
             BusyViewModel.ActiveAsync("... Generating ...")
-                .Then(() => Items.ClearAsync(), Scheduler.TPL.Dispatcher)
-                .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.TPL.Task)
-                .Do(response => _response = response, Scheduler.TPL.Task)
-                .Then(response => Service.GenerateDataViewModelsAsync(response), Scheduler.TPL.Task)
+                .Then(() => Items.ClearAsync(), Scheduler.Dispatcher.TPL)
+                .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.Task.TPL)
+                .Do(response => _response = response, Scheduler.Task.TPL)
+                .Then(response => Service.GenerateDataViewModelsAsync(response), Scheduler.Task.TPL)
                 .Then(dataViewModels =>
                     {
                         foreach (var dataViewModel in dataViewModels)
@@ -113,9 +113,9 @@ namespace Blitz.Client.Common.ReportRunner
                                 this.SyncViewModelActivationStates(supportActivationState);
                             }
                         }
-                    }, Scheduler.TPL.Dispatcher)
+                    }, Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Generating Report"), Scheduler.TPL.Task)
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Generating Report"), Scheduler.Task.TPL)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();
@@ -123,7 +123,7 @@ namespace Blitz.Client.Common.ReportRunner
                     IsExpanded = false;
 
                     _exportToExcel.RaiseCanExecuteChanged();
-                }, Scheduler.TPL.Task);
+                }, Scheduler.Task.TPL);
         }
 
         private void CreateExportToExcelToolBarItem()
@@ -142,15 +142,15 @@ namespace Blitz.Client.Common.ReportRunner
         private void ExportToExcel()
         {
             BusyViewModel.ActiveAsync("... Exporting to Excel ...")
-                .Then(_ => Service.ExportToExcel(_response), Scheduler.TPL.Task)
+                .Then(_ => Service.ExportToExcel(_response), Scheduler.Task.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Exporting to Excel"), Scheduler.TPL.Task)
+                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();
 
                     IsExpanded = false;
-                }, Scheduler.TPL.Task);
+                }, Scheduler.Task.TPL);
         }
 
         protected virtual bool CanExportToExcel()
