@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Reactive;
 
-using Naru.TPL;
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportParameter

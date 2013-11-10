@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
 using Common.Logging;
 
-using Naru.TPL;
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 using Naru.WPF.Wizard;
