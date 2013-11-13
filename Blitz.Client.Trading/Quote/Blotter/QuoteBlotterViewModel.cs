@@ -5,6 +5,7 @@ using Common.Logging;
 
 using Naru.TPL;
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.ModernUI.Assets.Icons;
 
@@ -22,7 +23,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
 
         public DelegateCommand<QuoteBlotterItemViewModel> OpenCommand { get; private set; }
 
-        public QuoteBlotterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public QuoteBlotterViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog viewService,
                                      BindableCollection<QuoteBlotterItemViewModel> itemsCollection, IQuoteBlotterService service,
                                      IToolBarService toolBarService)
             : base(log, scheduler, viewService)
@@ -43,7 +44,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
             return _service.EditQuoteAsync(quote)
                 .Then(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."), Scheduler.Dispatcher.TPL)
                 .Then(() => RefreshQuotesAsync(), Scheduler.Task.TPL)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem refreshing quotes"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem refreshing quotes"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
@@ -51,7 +52,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         {
             return BusyViewModel.ActiveAsync("... Loading quotes ...")
                 .Then(_ => RefreshQuotesAsync(), Scheduler.Task.TPL)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading quotes"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quotes"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
@@ -96,7 +97,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
             return _service.NewQuoteAsync()
                 .Then(() => BusyViewModel.ActiveAsync("... Refreshing quotes ..."), Scheduler.Dispatcher.TPL)
                 .Then(() => RefreshQuotesAsync(), Scheduler.Task.TPL)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem refreshing quotes"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem refreshing quotes"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
     }

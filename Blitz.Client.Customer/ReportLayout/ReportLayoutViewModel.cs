@@ -6,6 +6,7 @@ using Common.Logging;
 
 using Naru.TPL;
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 
 using Blitz.Common.Customer;
@@ -34,13 +35,13 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public DelegateCommand OkCommand { get; private set; }
 
-        public ReportLayoutViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public ReportLayoutViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                      IReportLayoutService service,
                                      BindableCollection<ReportLayoutItemViewModel> availableCollection,
                                      BindableCollection<ReportLayoutItemViewModel> rowsCollection,
                                      BindableCollection<ReportLayoutItemViewModel> columnsCollection,
                                      Func<ReportLayoutItemViewModel> reportLayoutItemViewModelFactory)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             _service = service;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
@@ -70,7 +71,7 @@ namespace Blitz.Client.Customer.ReportLayout
                 .Do(response => Available.AddRangeAsync(response.Dimensions.Select(CreateDimension)), Scheduler.Dispatcher.TPL)
                 .Do(response => Available.AddRangeAsync(response.Measures.Select(CreateMeasure)), Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem initialising attributes"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem initialising attributes"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 

@@ -5,6 +5,7 @@ using Blitz.Client.Shell;
 using Naru.WPF.Menu;
 using Naru.WPF.ModernUI.Assets.Icons;
 using Naru.WPF.MVVM;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client
 {
@@ -29,8 +30,7 @@ namespace Blitz.Client
         private void CreateAndShowShell()
         {
             // Setup the Shell
-            var shellView = ViewService.CreateView(_shellViewModel.GetType());
-            ViewService.BindViewModel(shellView, _shellViewModel);
+            var shellView = _shellViewModel.GetViewAndBind();
 
             // Setup application shutdown
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;

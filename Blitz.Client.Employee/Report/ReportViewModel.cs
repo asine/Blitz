@@ -5,6 +5,7 @@ using Blitz.Client.Common.Report;
 using Common.Logging;
 
 using Naru.TPL;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Blitz.Client.Employee.ReportRunner;
 
@@ -18,10 +19,10 @@ namespace Blitz.Client.Employee.Report
     {
         private readonly ReportRunnerViewModel _reportRunnerViewModel;
 
-        public ReportViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler,
+        public ReportViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,
                                BindableCollection<IViewModel> itemsCollection,
                                ReportRunnerViewModel reportRunnerViewModel)
-            : base(log, viewService, scheduler, itemsCollection)
+            : base(log, standardDialog, scheduler, itemsCollection)
         {
             _reportRunnerViewModel = reportRunnerViewModel;
             Disposables.Add(this.SyncViewModelActivationStates(_reportRunnerViewModel));

@@ -11,6 +11,8 @@ using Blitz.Client.Trading.Quote.Edit;
 using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Blotter;
 
+using Naru.WPF.Scheduler;
+
 namespace Blitz.Client.Trading.Quote.Blotter
 {
     public interface IQuoteBlotterService
@@ -25,12 +27,14 @@ namespace Blitz.Client.Trading.Quote.Blotter
     public class QuoteBlotterService : IQuoteBlotterService
     {
         private readonly IRequestTask _requestTask;
+        private readonly ISchedulerProvider _scheduler;
         private readonly IViewService _viewService;
         private readonly Func<QuoteEditViewModel> _quoteEditViewModelFactory;
 
-        public QuoteBlotterService(IRequestTask requestTask, IViewService viewService, Func<QuoteEditViewModel> quoteEditViewModelFactory)
+        public QuoteBlotterService(IRequestTask requestTask, ISchedulerProvider scheduler, IViewService viewService, Func<QuoteEditViewModel> quoteEditViewModelFactory)
         {
             _requestTask = requestTask;
+            _scheduler = scheduler;
             _viewService = viewService;
             _quoteEditViewModelFactory = quoteEditViewModelFactory;
         }
@@ -39,7 +43,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         {
             return _requestTask
                 .Get(new GetQuotesRequest())
-                .Select(x => x.Results.ToList());
+                .Select(x => x.Results.ToList(), _scheduler.Task.TPL);
         }
 
         public Task NewQuoteAsync()

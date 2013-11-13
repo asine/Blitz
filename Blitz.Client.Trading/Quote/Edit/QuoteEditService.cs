@@ -6,6 +6,7 @@ using Blitz.Common.Trading.Quote.Edit;
 
 using Naru.Agatha;
 using Naru.TPL;
+using Naru.WPF.Scheduler;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {
@@ -23,10 +24,12 @@ namespace Blitz.Client.Trading.Quote.Edit
     public class QuoteEditService : IQuoteEditService
     {
         private readonly IRequestTask _requestTask;
+        private readonly ISchedulerProvider _scheduler;
 
-        public QuoteEditService(IRequestTask requestTask)
+        public QuoteEditService(IRequestTask requestTask, ISchedulerProvider scheduler)
         {
             _requestTask = requestTask;
+            _scheduler = scheduler;
         }
 
         public Task<QuoteModel> NewQuoteAsync()
@@ -56,7 +59,7 @@ namespace Blitz.Client.Trading.Quote.Edit
                         Notes = quoteDto.Notes
                     };
                     return quoteModel;
-                });
+                }, _scheduler.Task.TPL);
         }
 
         public Task<GetInitialisationDataResponse> GetInitialisationDataAsync()

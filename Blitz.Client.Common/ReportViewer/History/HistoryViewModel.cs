@@ -4,6 +4,7 @@ using Common.Logging;
 
 using Naru.Core;
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 
 using Naru.WPF.Scheduler;
@@ -19,9 +20,9 @@ namespace Blitz.Client.Common.ReportViewer.History
 
         public event EventHandler<DataEventArgs<long>> Open;
 
-        public HistoryViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public HistoryViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                 BindableCollection<HistoryItemViewModel> itemsCollection) 
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             Items = itemsCollection;
 

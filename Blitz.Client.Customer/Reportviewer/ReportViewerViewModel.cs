@@ -3,6 +3,7 @@ using Blitz.Client.Common.ReportViewer.History;
 
 using Common.Logging;
 
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 
 using Blitz.Common.Customer;
@@ -15,14 +16,12 @@ namespace Blitz.Client.Customer.Reportviewer
 {
     [UseView(typeof (ReportViewerView))]
     public class ReportViewerViewModel :
-        ReportViewerViewModel
-            <IReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest,
-            GetHistoryReportsResponse>
+        ReportViewerViewModel <IReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
-        public ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                      IReportViewerService service, IToolBarService toolBarService,
                                      HistoryViewModel historyViewModel, BindableCollection<IViewModel> itemsCollection)
-            : base(log, scheduler, viewService, service, toolBarService, historyViewModel, itemsCollection)
+            : base(log, scheduler, standardDialog, service, toolBarService, historyViewModel, itemsCollection)
         {
         }
     }

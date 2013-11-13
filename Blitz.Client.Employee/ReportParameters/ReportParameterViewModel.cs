@@ -5,6 +5,7 @@ using Blitz.Client.Common.ReportParameter;
 
 using Common.Logging;
 
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 using Naru.WPF.Wizard;
@@ -16,9 +17,9 @@ namespace Blitz.Client.Employee.ReportParameters
     {
         private readonly Func<ReportParameterStepViewModel> _reportParameterStepViewModelFactory;
 
-        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                         Func<ReportParameterStepViewModel> reportParameterStepViewModelFactory)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             _reportParameterStepViewModelFactory = reportParameterStepViewModelFactory;
         }

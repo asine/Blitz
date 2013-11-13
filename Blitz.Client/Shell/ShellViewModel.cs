@@ -5,6 +5,7 @@ using Common.Logging;
 
 using Naru.Core;
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.Menu;
 using Naru.WPF.ModernUI.Presentation;
 using Naru.WPF.ModernUI.Windows.Controls;
@@ -28,11 +29,11 @@ namespace Blitz.Client.Shell
 
         public BindableCollection<IViewModel> Items { get; private set; }
 
-        public ShellViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public ShellViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, IViewService viewService,
                               IToolBarService toolBarService, IMenuService menuService, IEventStream eventStream,
                               Func<AppearanceViewModel> appearanceViewModelFactory,
                               BindableCollection<IViewModel> itemsCollection)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             ToolBarItems = toolBarService.Items;
             MenuItems = menuService.Items;
@@ -46,7 +47,7 @@ namespace Blitz.Client.Shell
                                Command = new DelegateCommand(() =>
                                                              {
                                                                  var viewModel1 = appearanceViewModelFactory();
-                                                                 ViewService.ShowModal(viewModel1);
+                                                                 viewService.ShowModal(viewModel1);
                                                              })
                            });
 

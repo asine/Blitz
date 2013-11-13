@@ -4,6 +4,7 @@ using Common.Logging;
 
 using Naru.TPL;
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 
 using Blitz.Common.Trading.Security.Chart;
@@ -40,9 +41,9 @@ namespace Blitz.Client.Trading.Security.Chart
 
         public DelegateCommand GoCommand { get; private set; }
 
-        public ChartViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public ChartViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                               BindableCollection<HistoricalDataDto> itemsCollection, IChartService service)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             _service = service;
             Disposables.Add(service);
@@ -60,7 +61,7 @@ namespace Blitz.Client.Trading.Security.Chart
                 .Then(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now), Scheduler.Task.TPL)
                 .Then(data => Items.AddRange(data), Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem getting chart data"), Scheduler.Task.TPL)
+                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem getting chart data"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
     }

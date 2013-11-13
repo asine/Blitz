@@ -7,6 +7,7 @@ using Blitz.Client.Common.ReportParameter;
 using Common.Logging;
 
 using Naru.TPL;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 
@@ -37,10 +38,10 @@ namespace Blitz.Client.Employee.ReportParameters
 
         #endregion
 
-        public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                             IReportParameterStepService service,
                                             BindableCollection<DateTime> datesCollection)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             _service = service;
             Dates = datesCollection;
@@ -52,7 +53,7 @@ namespace Blitz.Client.Employee.ReportParameters
                 .Then(_ => _service.GetAvailableDatesAsync(), Scheduler.Task.TPL)
                 .Do(x => SelectedDate = x.First(), Scheduler.Dispatcher.TPL)
                 .Then(x => Dates.AddRangeAsync(x), Scheduler.Dispatcher.TPL)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem available dates"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem available dates"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 

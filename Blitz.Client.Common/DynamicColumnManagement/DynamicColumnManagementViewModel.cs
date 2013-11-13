@@ -8,6 +8,7 @@ using Blitz.Client.Common.DynamicReportData;
 using Common.Logging;
 
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ToolBar;
@@ -62,12 +63,12 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
         #endregion
 
-        public DynamicColumnManagementViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, IDynamicColumnManagementService service,
+        public DynamicColumnManagementViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, IDynamicColumnManagementService service,
                                                 BindableCollection<DynamicColumn> columnsCollection, 
                                                 BindableCollection<IToolBarItem> toolBarItemsCollection,
                                                 Func<DynamicColumnEditViewModel> editViewModelFactory,
                                                 IToolBarService toolBarService)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             _service = service;
             _editViewModelFactory = editViewModelFactory;

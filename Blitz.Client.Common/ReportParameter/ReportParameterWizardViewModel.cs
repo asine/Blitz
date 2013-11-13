@@ -5,7 +5,7 @@ using System.Reactive.Subjects;
 
 using Common.Logging;
 
-using Naru.WPF.MVVM;
+using Naru.WPF.Dialog;
 using Naru.WPF.Scheduler;
 using Naru.WPF.Wizard;
 
@@ -18,8 +18,8 @@ namespace Blitz.Client.Common.ReportParameter
 
         public IObservable<Unit> GenerateReport { get { return _generateReportSubject.AsObservable(); } }
 
-        protected ReportParameterWizardViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService) 
-            : base(log, scheduler, viewService)
+        protected ReportParameterWizardViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog) 
+            : base(log, scheduler, standardDialog)
         {
         }
 

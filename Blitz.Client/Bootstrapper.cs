@@ -39,6 +39,11 @@ namespace Blitz.Client
             builder.RegisterModule(new LogInjectionModule());
             builder.RegisterModule(new Log4NetModule { SectionName = "CommonLogging.Blitz.Client" });
 
+            builder.RegisterModule(new CoreModule());
+
+            builder.RegisterModule(new WPFModule());
+            builder.RegisterType<WPFStartable>().AsSelf();
+
             builder.RegisterType<EventStream>().As<IEventStream>().InstancePerOwned<ReportViewModel>().SingleInstance();
 
             builder.RegisterType<ShellViewModel>().AsSelf();
@@ -56,9 +61,6 @@ namespace Blitz.Client
             builder.RegisterType<ExcelWorkSheetWriter>().AsSelf();
             builder.RegisterType<ReflectionDataWriter>().AsSelf();
             builder.RegisterType<HistoryViewModel>().AsSelf();
-
-            builder.RegisterModule(new WPFModule());
-            builder.RegisterType<WPFStartable>().AsSelf();
 
             builder.RegisterType<ClientStartable>().AsSelf();
 

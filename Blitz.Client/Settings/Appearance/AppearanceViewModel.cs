@@ -4,6 +4,7 @@ using System.Windows.Media;
 
 using Common.Logging;
 
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.ModernUI.Presentation;
 using Naru.WPF.Scheduler;
@@ -121,11 +122,11 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public AppearanceViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService,
+        public AppearanceViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                    BindableCollection<string> fontSizesCollection,
                                    BindableCollection<Color> accentColorsCollection,
                                    BindableCollection<ThemeItemViewModel> themesCollection)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             this.SetupHeader("Appearance");
 

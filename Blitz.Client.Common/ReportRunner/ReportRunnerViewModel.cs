@@ -8,6 +8,7 @@ using Common.Logging;
 
 using Naru.TPL;
 using Naru.WPF.Command;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.ModernUI.Assets.Icons;
 
@@ -63,10 +64,10 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        protected ReportRunnerViewModel(ILog log, IViewService viewService, ISchedulerProvider scheduler, 
+        protected ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler, 
                                         IToolBarService toolBarService, TReportParameterViewModel reportParameterViewModel,
                                         TReportRunnerService service, BindableCollection<IViewModel> itemsCollection)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             ToolBarService = toolBarService;
             Service = service;
@@ -90,7 +91,7 @@ namespace Blitz.Client.Common.ReportRunner
             return BusyViewModel.ActiveAsync("... Loading ...")
                 .Then(() => Service.ConfigureParameterViewModelAsync(ParameterViewModel), Scheduler.Task.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem initialising parameters"), Scheduler.Task.TPL)
+                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem initialising parameters"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
@@ -115,7 +116,7 @@ namespace Blitz.Client.Common.ReportRunner
                         }
                     }, Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Generating Report"), Scheduler.Task.TPL)
+                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Generating Report"), Scheduler.Task.TPL)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();
@@ -144,7 +145,7 @@ namespace Blitz.Client.Common.ReportRunner
             BusyViewModel.ActiveAsync("... Exporting to Excel ...")
                 .Then(_ => Service.ExportToExcel(_response), Scheduler.Task.TPL)
                 .LogException(Log)
-                .CatchAndHandle(x => ViewService.StandardDialog().Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
+                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
                 .Finally(() =>
                 {
                     BusyViewModel.InActive();

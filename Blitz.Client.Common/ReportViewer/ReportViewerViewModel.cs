@@ -6,6 +6,7 @@ using Common.Logging;
 
 using Naru.Core;
 using Naru.TPL;
+using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ToolBar;
@@ -23,10 +24,10 @@ namespace Blitz.Client.Common.ReportViewer
 
         public BindableCollection<IViewModel> Items { get; private set; }
 
-        protected ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IViewService viewService, 
+        protected ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, 
                                         TReportViewerService service, IToolBarService toolBarService,
                                         HistoryViewModel historyViewModel, BindableCollection<IViewModel> itemsCollection)
-            : base(log, scheduler, viewService)
+            : base(log, scheduler, standardDialog)
         {
             Service = service;
             ToolBarService = toolBarService;
@@ -48,7 +49,7 @@ namespace Blitz.Client.Common.ReportViewer
                 .Then(response => Service.GenerateReportViewModelsAsync(response), Scheduler.Task.TPL)
                 .Then(dataViewModels => Items.AddRangeAsync(dataViewModels), Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading historic report"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading historic report"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
@@ -67,7 +68,7 @@ namespace Blitz.Client.Common.ReportViewer
                         ((ISupportActivationState)_historyViewModel).Activate();
                     }, Scheduler.Dispatcher.TPL)
                 .LogException(Log)
-                .CatchAndHandle(_ => ViewService.StandardDialog().Error("Error", "Problem loading History"), Scheduler.Task.TPL)
+                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading History"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
     }

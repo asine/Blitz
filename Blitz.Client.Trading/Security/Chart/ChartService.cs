@@ -10,6 +10,7 @@ using Naru.TPL;
 
 using Blitz.Common.Trading.Security.Chart;
 
+using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading.Security.Chart
@@ -22,11 +23,13 @@ namespace Blitz.Client.Trading.Security.Chart
     public class ChartService : Service, IChartService
     {
         private readonly IRequestTask _requestTask;
+        private readonly ISchedulerProvider _scheduler;
 
-        public ChartService(ILog log, IRequestTask requestTask)
+        public ChartService(ILog log, IRequestTask requestTask, ISchedulerProvider scheduler)
             : base(log)
         {
             _requestTask = requestTask;
+            _scheduler = scheduler;
         }
 
         public Task<List<HistoricalDataDto>> GetDataAsync(string ticker, DateTime from, DateTime to)
@@ -40,7 +43,7 @@ namespace Blitz.Client.Trading.Security.Chart
 
             return _requestTask
                 .Get(request)
-                .Select(x => x.Results.ToList());
+                .Select(x => x.Results.ToList(), _scheduler.Task.TPL);
         }
     }
 }
