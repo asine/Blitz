@@ -42,11 +42,11 @@
         </ToolBarTray>
 
         <controls:TransitioningContentControl DockPanel.Dock="Bottom"
-                                              MaxHeight="250"
+                                              Height="70"
                                               HorizontalContentAlignment="Stretch"
                                               VerticalContentAlignment="Stretch"
                                               DataContext="{Binding UserInteractionHost}"
-                                              Visibility="{Binding Path=ShowUserInteractionHost, ElementName=Root, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                              Visibility="{Binding Path=DataContext.ShowUserInteractionHost, ElementName=Root, Converter={StaticResource BooleanToVisibilityConverter}}">
             <i:Interaction.Behaviors>
                 <mvvm:ContentControlViewResolverBehavior />
             </i:Interaction.Behaviors>

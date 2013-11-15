@@ -23,8 +23,8 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Rectangle Width="40"
-                               Height="40"
+                    <Rectangle Width="30"
+                               Height="30"
                                Margin="2">
                         <Rectangle.Fill>
                             <SolidColorBrush x:Name="Brush"
@@ -39,28 +39,24 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition MinWidth="120" />
+                <ColumnDefinition MinWidth="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition MinWidth="120" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
 
-            <TextBlock Text="Theme:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,16,4" />
+            <TextBlock Grid.Column="0"
+                       Text="Theme:"
+                       VerticalAlignment="Center" />
             <ComboBox Grid.Column="1"
                       ItemsSource="{Binding Themes}"
                       SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
                       DisplayMemberPath="Name"
-                      VerticalAlignment="Center"
-                      Margin="0,0,0,4" />
+                      VerticalAlignment="Center" />
 
-            <TextBlock Grid.Row="1"
+            <TextBlock Grid.Column="3"
                        Text="Font size:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,16,0" />
-            <ComboBox Grid.Row="1"
-                      Grid.Column="1"
+                       VerticalAlignment="Center" />
+            <ComboBox Grid.Column="4"
                       ItemsSource="{Binding FontSizes}"
                       SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}"
                       VerticalAlignment="Center" />
