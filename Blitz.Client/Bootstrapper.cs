@@ -47,7 +47,7 @@ namespace Blitz.Client
             builder.RegisterType<EventStream>().As<IEventStream>().InstancePerOwned<ReportViewModel>().SingleInstance();
 
             builder.RegisterType<ShellViewModel>().AsSelf();
-            builder.RegisterType<AppearanceViewModel>().AsSelf();
+            builder.RegisterType<AppearanceViewModel>().As<IAppearanceViewModel>().AsSelf();
 
             builder.RegisterType<DynamicReportDataViewModel>().AsSelf();
             builder.RegisterType<DynamicColumnManagementViewModel>().AsSelf();

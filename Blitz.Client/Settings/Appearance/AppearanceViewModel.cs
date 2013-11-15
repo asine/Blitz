@@ -12,10 +12,13 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Settings.Appearance
 {
+    public interface IAppearanceViewModel : IUserInteractionViewModel
+    { }
+
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.
     /// </summary>
-    public class AppearanceViewModel : Workspace
+    public class AppearanceViewModel : Workspace, IAppearanceViewModel
     {
         private const string FONT_SMALL = "small";
         private const string FONT_LARGE = "large";

@@ -9,6 +9,8 @@
                        xmlns:menu="clr-namespace:Naru.WPF.Menu;assembly=Naru.WPF"
                        xmlns:tabControl="clr-namespace:Naru.WPF.TabControl;assembly=Naru.WPF"
                        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                       xmlns:mvvm="clr-namespace:Naru.WPF.MVVM;assembly=Naru.WPF"
+                       xmlns:converters="clr-namespace:Naru.WPF.Converters;assembly=Naru.WPF"
                        mc:Ignorable="d"
                        Title="Blitz"
                        Height="300"
@@ -22,9 +24,11 @@
 
         <menu:MenuItemTemplateSelector x:Key="MenuItemTemplateSelector" />
 
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     </controls:ModernWindow.Resources>
 
-    <DockPanel>
+    <DockPanel x:Name="Root">
 
         <Menu DockPanel.Dock="Top"
               ItemsSource="{Binding MenuItems}"
@@ -36,6 +40,17 @@
             <ToolBar ItemsSource="{Binding ToolBarItems}"
                      ItemTemplateSelector="{StaticResource ToolBarItemTemplateSelector}" />
         </ToolBarTray>
+
+        <controls:TransitioningContentControl DockPanel.Dock="Bottom"
+                                              MaxHeight="250"
+                                              HorizontalContentAlignment="Stretch"
+                                              VerticalContentAlignment="Stretch"
+                                              DataContext="{Binding UserInteractionHost}"
+                                              Visibility="{Binding Path=ShowUserInteractionHost, ElementName=Root, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <i:Interaction.Behaviors>
+                <mvvm:ContentControlViewResolverBehavior />
+            </i:Interaction.Behaviors>
+        </controls:TransitioningContentControl>
 
         <TabControl>
             <i:Interaction.Behaviors>
