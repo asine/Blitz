@@ -9,8 +9,8 @@ using Naru.TPL;
 using Naru.WPF.Command;
 using Naru.WPF.Dialog;
 using Naru.WPF.Menu;
-using Naru.WPF.ModernUI.Presentation;
-using Naru.WPF.ModernUI.Windows.Controls;
+using Naru.WPF.Presentation;
+using Naru.WPF.Windows.Controls;
 using Naru.WPF.MVVM;
 
 using Blitz.Client.Settings.Appearance;
@@ -30,7 +30,7 @@ namespace Blitz.Client.Shell
 
         public BindableCollection<IToolBarItem> ToolBarItems { get; private set; }
 
-        public LinkCollection TitleLinks { get; private set; }
+        public BindableCollection<Link> TitleLinks { get; private set; }
 
         public BindableCollection<IViewModel> Items { get; private set; }
 
@@ -70,6 +70,7 @@ namespace Blitz.Client.Shell
                               IToolBarService toolBarService, IMenuService menuService, IEventStream eventStream,
                               IAppearanceViewModel appearanceViewModel,
                               BindableCollection<IViewModel> itemsCollection,
+                              BindableCollection<Link> linkCollection,
                               IUserInteraction userInteraction,
                               Func<IUserInteractionHostViewModel> userInteractionHostViewModelFactory)
             : base(log, scheduler, standardDialog)
@@ -79,7 +80,7 @@ namespace Blitz.Client.Shell
             MenuItems = menuService.Items;
             Items = itemsCollection;
 
-            TitleLinks = new LinkCollection();
+            TitleLinks = linkCollection;
 
             TitleLinks.Add(new Link
                            {

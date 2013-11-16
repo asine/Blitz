@@ -3,7 +3,7 @@
 using Blitz.Client.Shell;
 
 using Naru.WPF.Menu;
-using Naru.WPF.ModernUI.Assets.Icons;
+using Naru.WPF.Assets.Icons;
 using Naru.WPF.MVVM;
 using Naru.WPF.ViewModel;
 

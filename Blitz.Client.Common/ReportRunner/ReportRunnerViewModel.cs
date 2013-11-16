@@ -10,7 +10,7 @@ using Naru.TPL;
 using Naru.WPF.Command;
 using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
-using Naru.WPF.ModernUI.Assets.Icons;
+using Naru.WPF.Assets.Icons;
 
 using Naru.WPF.Scheduler;
 using Naru.WPF.ToolBar;

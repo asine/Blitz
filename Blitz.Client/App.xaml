@@ -4,8 +4,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Naru.WPF.ModernUI;component/Assets/ModernUI.xaml" />
-                <ResourceDictionary Source="/Naru.WPF.ModernUI;component/Assets/ModernUI.Dark.xaml" />
+                <ResourceDictionary Source="/Naru.WPF;component/Assets/ModernUI.xaml" />
+                <ResourceDictionary Source="/Naru.WPF;component/Assets/ModernUI.Dark.xaml" />
 
                 <ResourceDictionary Source="/Naru.WPF;component/ToolBar/ToolBarItemTemplates.xaml" />
                 <ResourceDictionary Source="/Naru.WPF;component/Menu/MenuItemTemplates.xaml" />

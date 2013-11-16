@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:DynamicColumnManagement="clr-namespace:Blitz.Client.Common.DynamicColumnManagement"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:controls="clr-namespace:Naru.WPF.ModernUI.Windows.Controls;assembly=Naru.WPF.ModernUI"
+             xmlns:controls="clr-namespace:Naru.WPF.Windows.Controls;assembly=Naru.WPF"
              xmlns:mvvm="clr-namespace:Naru.WPF.MVVM;assembly=Naru.WPF"
              xmlns:toolBar="clr-namespace:Naru.WPF.ToolBar;assembly=Naru.WPF"
              mc:Ignorable="d"

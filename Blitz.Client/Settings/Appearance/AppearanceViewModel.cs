@@ -6,7 +6,7 @@ using Common.Logging;
 
 using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
-using Naru.WPF.ModernUI.Presentation;
+using Naru.WPF.Presentation;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 

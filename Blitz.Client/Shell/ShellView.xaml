@@ -4,7 +4,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:shell="clr-namespace:Blitz.Client.Shell"
-                       xmlns:controls="clr-namespace:Naru.WPF.ModernUI.Windows.Controls;assembly=Naru.WPF.ModernUI"
+                       xmlns:controls="clr-namespace:Naru.WPF.Windows.Controls;assembly=Naru.WPF"
                        xmlns:toolBar="clr-namespace:Naru.WPF.ToolBar;assembly=Naru.WPF"
                        xmlns:menu="clr-namespace:Naru.WPF.Menu;assembly=Naru.WPF"
                        xmlns:tabControl="clr-namespace:Naru.WPF.TabControl;assembly=Naru.WPF"
