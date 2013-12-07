@@ -102,7 +102,7 @@ namespace Blitz.Client.Common.ReportRunner
                 .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.Task.TPL)
                 .Do(response => _response = response, Scheduler.Task.TPL)
                 .Then(response => Service.GenerateDataViewModelsAsync(response), Scheduler.Task.TPL)
-                .Then(dataViewModels =>
+                .Do(dataViewModels =>
                     {
                         foreach (var dataViewModel in dataViewModels)
                         {
@@ -143,7 +143,7 @@ namespace Blitz.Client.Common.ReportRunner
         private void ExportToExcel()
         {
             BusyViewModel.ActiveAsync("... Exporting to Excel ...")
-                .Then(_ => Service.ExportToExcel(_response), Scheduler.Task.TPL)
+                .Do(_ => Service.ExportToExcel(_response), Scheduler.Task.TPL)
                 .LogException(Log)
                 .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
                 .Finally(() =>

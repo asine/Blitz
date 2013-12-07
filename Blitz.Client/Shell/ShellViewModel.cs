@@ -101,7 +101,7 @@ namespace Blitz.Client.Shell
             var menuItem = menuService.CreateMenuButtonItem();
             menuItem.DisplayName = "User Interactions";
             menuItem.Command = new DelegateCommand(() => standardDialog.InformationAsync("Title", "Message")
-                                                                       .Then(x =>
+                                                                       .Do(x =>
                                                                              {
 
                                                                              }, Scheduler.Task.TPL));

@@ -92,7 +92,7 @@ namespace Blitz.Client.Trading.Quote.Edit
         {
             BusyViewModel.ActiveAsync("... Loading Quote ...")
                 .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
-                .Then(response => Instruments.AddRange(response.Instruments), Scheduler.Dispatcher.TPL)
+                .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
                 .Then(() => _service.NewQuoteAsync(), Scheduler.Task.TPL)
                 .Do(model => Model = model, Scheduler.Task.TPL)
                 .LogException(Log)
@@ -106,7 +106,7 @@ namespace Blitz.Client.Trading.Quote.Edit
                 .Then(() => _service.GetQuoteAsync(_id.Value), Scheduler.Task.TPL)
                 .Do(quote => Model = quote, Scheduler.Task.TPL)
                 .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
-                .Then(response => Instruments.AddRange(response.Instruments), Scheduler.Dispatcher.TPL)
+                .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
                 .LogException(Log)
                 .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);

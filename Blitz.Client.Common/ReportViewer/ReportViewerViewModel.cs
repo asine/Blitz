@@ -60,7 +60,7 @@ namespace Blitz.Client.Common.ReportViewer
                 .Then(() => _historyViewModel.Items.ClearAsync(), Scheduler.Dispatcher.TPL)
                 .Then(() => Service.GetHistoryAsync(Service.CreateHistoryRequest()), Scheduler.Task.TPL)
                 .Then(response => Service.GenerateHistoryItemViewModelsAsync(response), Scheduler.Task.TPL)
-                .Then(dataViewModels =>
+                .Do(dataViewModels =>
                     {
                         _historyViewModel.Items.AddRange(dataViewModels);
 
