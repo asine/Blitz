@@ -131,7 +131,7 @@ namespace Blitz.Client.Settings.Appearance
                                    BindableCollection<ThemeItemViewModel> themesCollection)
             : base(log, scheduler, standardDialog)
         {
-            this.SetupHeader("Appearance");
+            this.SetupHeader(scheduler, "Appearance");
 
             FontSizes = fontSizesCollection;
             FontSizes.AddRange(new[] {FONT_SMALL, FONT_LARGE});

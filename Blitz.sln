@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.Log4Net", "..\Naru\Nar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.Aufofac", "..\Naru\Naru.Aufofac\Naru.Aufofac.csproj", "{15981272-C201-438A-AEEF-CE3CACD97179}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.RX", "..\Naru\Naru.RX\Naru.RX.csproj", "{9A778612-DF3E-417A-91F7-E354A1B3A412}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{15981272-C201-438A-AEEF-CE3CACD97179}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15981272-C201-438A-AEEF-CE3CACD97179}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15981272-C201-438A-AEEF-CE3CACD97179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A778612-DF3E-417A-91F7-E354A1B3A412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A778612-DF3E-417A-91F7-E354A1B3A412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A778612-DF3E-417A-91F7-E354A1B3A412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A778612-DF3E-417A-91F7-E354A1B3A412}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,6 +170,7 @@ Global
 		{17EA4111-2679-4155-A6E5-FE45E171AC2B} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 		{72505099-F699-406D-BCEC-8850CDFD49F3} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 		{15981272-C201-438A-AEEF-CE3CACD97179} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
+		{9A778612-DF3E-417A-91F7-E354A1B3A412} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35

@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Common.Logging;
-
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.ReportLayout
@@ -14,8 +12,7 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public AttributeType Type { get; set; }
 
-        public ReportLayoutItemViewModel(ILog log)
-            : base(log)
+        public ReportLayoutItemViewModel()
         {
             Id = Guid.NewGuid();
         }

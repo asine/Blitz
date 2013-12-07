@@ -29,17 +29,17 @@ namespace Blitz.Client.Employee.ReportRunner
         private readonly Func<DynamicReportDataViewModel> _dynamicReportDataViewModelFactory;
         private readonly IRequestTask _requestTask;
         private readonly IBasicExportToExcel _exportToExcel;
-        private readonly ISchedulerProvider _schedulerProvider;
+        private readonly ISchedulerProvider _scheduler;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> dynamicReportDataViewModelFactory,
                                    IRequestTask requestTask, ILog log, IBasicExportToExcel exportToExcel,
-                                   ISchedulerProvider schedulerProvider)
+                                   ISchedulerProvider scheduler)
             : base(log)
         {
             _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;
             _requestTask = requestTask;
             _exportToExcel = exportToExcel;
-            _schedulerProvider = schedulerProvider;
+            _scheduler = scheduler;
         }
 
         public override Task ConfigureParameterViewModelAsync(ReportParameterViewModel viewModel)
@@ -63,7 +63,7 @@ namespace Blitz.Client.Employee.ReportRunner
                 .Select((x, i) =>
                 {
                     var dataViewModel = _dynamicReportDataViewModelFactory();
-                    dataViewModel.SetupHeader("ReportData " + i);
+                    dataViewModel.SetupHeader(_scheduler, "ReportData " + i);
 
                     var items = Enumerable.Range(0, 100)
                         .Select(index => new ReportDto { Id = index });
@@ -71,7 +71,7 @@ namespace Blitz.Client.Employee.ReportRunner
 
                     return dataViewModel;
                 })
-                .ToList()));
+                .ToList()), _scheduler.Task.TPL);
         }
 
         public override void ExportToExcel(ReportRunnerResponse response)

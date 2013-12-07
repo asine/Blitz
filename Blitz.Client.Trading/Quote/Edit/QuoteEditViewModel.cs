@@ -63,13 +63,13 @@ namespace Blitz.Client.Trading.Quote.Edit
         {
             if (id == default(Guid))
             {
-                this.SetupHeader("Create Quote");
+                this.SetupHeader(Scheduler, "Create Quote");
             }
             else
             {
                 _id = id;
 
-                this.SetupHeader(_id.ToString());
+                this.SetupHeader(Scheduler, _id.ToString());
             }
         }
 

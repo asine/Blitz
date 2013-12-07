@@ -48,7 +48,7 @@ namespace Blitz.Client.Trading.Security.Chart
             _service = service;
             Disposables.Add(service);
 
-            this.SetupHeader("Chart");
+            this.SetupHeader(Scheduler, "Chart");
 
             Items = itemsCollection;
             GoCommand = new DelegateCommand(GetData, () => !string.IsNullOrEmpty(Ticker));

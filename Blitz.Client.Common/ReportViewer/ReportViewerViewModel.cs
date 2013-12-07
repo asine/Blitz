@@ -35,7 +35,7 @@ namespace Blitz.Client.Common.ReportViewer
 
             Items = itemsCollection;
 
-            this.SetupHeader("Viewer");
+            this.SetupHeader(scheduler, "Viewer");
 
             _historyViewModel.Open += Open;
             Disposables.Add(AnonymousDisposable.Create(() => _historyViewModel.Open -= Open));

@@ -77,7 +77,7 @@ namespace Blitz.Client.Common.ReportRunner
             ParameterViewModel = reportParameterViewModel;
             this.SyncViewModelActivationStates(ParameterViewModel);
 
-            this.SetupHeader("Runner", IconNames.EXCEL);
+            this.SetupHeader(scheduler, "Runner", IconNames.EXCEL);
 
             ParameterViewModel.GenerateReport
                 .TakeUntil(Closed)

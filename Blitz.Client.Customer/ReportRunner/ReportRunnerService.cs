@@ -72,7 +72,7 @@ namespace Blitz.Client.Customer.ReportRunner
                 .Select((x, i) =>
                 {
                     var dataViewModel = _dynamicReportDataViewModelFactory();
-                    dataViewModel.SetupHeader("ReportData " + i);
+                    dataViewModel.SetupHeader(_scheduler, "ReportData " + i);
 
                     var items = Enumerable.Range(0, 100)
                         .Select(index => new ReportDto {Id = index, Name = "Name " + index});

@@ -61,7 +61,7 @@ namespace Blitz.Client.Customer
                               _log.Debug("Adding Customer Report to Main region");
 
                               var reportViewModel = _reportViewModelFactory();
-                              reportViewModel.SetupHeader("Customer Report");
+                              reportViewModel.SetupHeader(_scheduler, "Customer Report");
                               _eventStream.Push(reportViewModel);
 
                               return reportViewModel;

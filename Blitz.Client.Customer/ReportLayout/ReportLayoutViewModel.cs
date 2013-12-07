@@ -46,7 +46,7 @@ namespace Blitz.Client.Customer.ReportLayout
             _service = service;
             _reportLayoutItemViewModelFactory = reportLayoutItemViewModelFactory;
 
-            this.SetupHeader("Layout");
+            this.SetupHeader(scheduler, "Layout");
 
             Available = availableCollection;
             Rows = rowsCollection;

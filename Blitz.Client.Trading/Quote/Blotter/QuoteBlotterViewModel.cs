@@ -30,7 +30,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         {
             _service = service;
 
-            this.SetupHeader("Blotter");
+            this.SetupHeader(Scheduler, "Blotter");
 
             Items = itemsCollection;
 

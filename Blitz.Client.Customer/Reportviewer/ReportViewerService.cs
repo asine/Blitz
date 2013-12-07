@@ -13,6 +13,8 @@ using Naru.Agatha;
 
 using Blitz.Common.Customer;
 
+using Naru.TPL;
+using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.Reportviewer
@@ -24,12 +26,14 @@ namespace Blitz.Client.Customer.Reportviewer
     public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>, IReportViewerService
     {
         private readonly IRequestTask _requestTask;
+        private readonly ISchedulerProvider _scheduler;
         private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
 
-        public ReportViewerService(ILog log, IRequestTask requestTask, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
+        public ReportViewerService(ILog log, IRequestTask requestTask, ISchedulerProvider scheduler, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
             : base(log)
         {
             _requestTask = requestTask;
+            _scheduler = scheduler;
             _simpleReportDataViewModelFactory = simpleReportDataViewModelFactory;
         }
 
@@ -45,16 +49,19 @@ namespace Blitz.Client.Customer.Reportviewer
 
         public override Task<List<HistoryItemViewModel>> GenerateHistoryItemViewModelsAsync(GetHistoryListResponse response)
         {
-            return Task.Factory.StartNew(
-                () => new List<HistoryItemViewModel>(response.Results
-                    .Select((x, i) =>
-                    {
-                        var item = new HistoryItemViewModel();
-                        item.Name = "Instance " + item.Name;
+            return Task.Factory.StartNew(() =>
+                                         {
+                                             var historyItemViewModels = response.Results
+                                                                                 .Select((x, i) =>
+                                                                                         {
+                                                                                             var item =  new HistoryItemViewModel();
+                                                                                             item.Name = "Instance " + item.Name;
 
-                        return item;
-                    })
-                    .ToList()));
+                                                                                             return item;
+                                                                                         })
+                                                                                 .ToList();
+                                             return new List<HistoryItemViewModel>(historyItemViewModels);
+                                         }, _scheduler.Task.TPL);
         }
 
         public override GetHistoryReportsRequest CreateReportRequest(long id)
@@ -73,7 +80,7 @@ namespace Blitz.Client.Customer.Reportviewer
                 .Select((x, i) =>
                 {
                     var dataViewModel = _simpleReportDataViewModelFactory();
-                    dataViewModel.SetupHeader("ReportData " + i);
+                    dataViewModel.SetupHeader(_scheduler, "ReportData " + i);
 
                     var items = Enumerable.Range(0, 100)
                         .Select(index => new ReportDto { Id = index });
@@ -81,7 +88,7 @@ namespace Blitz.Client.Customer.Reportviewer
 
                     return dataViewModel;
                 })
-                .ToList()));
+                .ToList()), _scheduler.Task.TPL);
         }
     }
 }
