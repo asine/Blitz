@@ -51,7 +51,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading quotes ...")
-                .Then(_ => RefreshQuotesAsync(), Scheduler.Task.TPL)
+                .Then(() => RefreshQuotesAsync(), Scheduler.Task.TPL)
                 .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quotes"), Scheduler.Task.TPL)
                 .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }

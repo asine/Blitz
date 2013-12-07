@@ -91,7 +91,7 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void NewQuote()
         {
             BusyViewModel.ActiveAsync("... Loading Quote ...")
-                .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
+                .Then(() => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
                 .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
                 .Then(() => _service.NewQuoteAsync(), Scheduler.Task.TPL)
                 .Do(model => Model = model, Scheduler.Task.TPL)
@@ -128,7 +128,7 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void Save()
         {
             BusyViewModel.ActiveAsync("... Saving Quote ...")
-                .Then(_ => _service.SaveQuoteAsync(Model), Scheduler.Task.TPL)
+                .Then(() => _service.SaveQuoteAsync(Model), Scheduler.Task.TPL)
                 .LogException(Log)
                 .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem saving quote"), Scheduler.Task.TPL)
                 .Finally(() =>

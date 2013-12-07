@@ -143,7 +143,7 @@ namespace Blitz.Client.Common.ReportRunner
         private void ExportToExcel()
         {
             BusyViewModel.ActiveAsync("... Exporting to Excel ...")
-                .Do(_ => Service.ExportToExcel(_response), Scheduler.Task.TPL)
+                .Do(() => Service.ExportToExcel(_response), Scheduler.Task.TPL)
                 .LogException(Log)
                 .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
                 .Finally(() =>

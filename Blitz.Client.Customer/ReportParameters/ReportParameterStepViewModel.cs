@@ -68,7 +68,7 @@ namespace Blitz.Client.Customer.ReportParameters
         {
             return BusyViewModel
                 .ActiveAsync("... Loading available dates ...")
-                .Then(_ => _service.GetAvailableDatesAsync(), Scheduler.Task.TPL)
+                .Then(() => _service.GetAvailableDatesAsync(), Scheduler.Task.TPL)
                 .Do(x => SelectedDate = x.First(), Scheduler.Dispatcher.TPL)
                 .Then(x => Dates.AddRangeAsync(x), Scheduler.Dispatcher.TPL)
                 .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem available dates"), Scheduler.Task.TPL)
