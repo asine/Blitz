@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Common.Logging;
@@ -37,7 +38,7 @@ namespace Blitz.Client.CRM.Client.Edit
 
         public Task SaveAsync()
         {
-            return CompletedTask.Default;
+            return Task.Factory.StartNew(() => { Thread.Sleep(TimeSpan.FromSeconds(10)); }, _scheduler.Task.TPL);
         }
     }
 }

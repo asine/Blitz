@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 
 using Common.Logging;
@@ -39,6 +40,7 @@ namespace Blitz.Client.CRM.Client.Edit
             Genders = genderCollection;
 
             CreateSaveToolBar(toolBarService);
+            CreateCancelToolBar(toolBarService);
         }
 
         protected override Task OnInitialise()
@@ -53,10 +55,11 @@ namespace Blitz.Client.CRM.Client.Edit
         {
             var saveCommand = new ObservableCommand(Model.IsValid);
             saveCommand.Executed
-                       .TakeUntil(BusyViewModel.BusyLatch)
                        .ObserveOn(Scheduler.Task.RX)
+                       .SelectMany(_ => _service.SaveAsync().ToObservable()
+                                                .TakeUntil(BusyViewModel.BusyLatch))
                        .TakeUntil(Closed)
-                       .Subscribe(_ => _service.SaveAsync());
+                       .Subscribe(_ => { });
 
             var saveToolBarItem = toolBarService.CreateToolBarButtonItem();
             saveToolBarItem.DisplayName = "Save";
@@ -66,6 +69,20 @@ namespace Blitz.Client.CRM.Client.Edit
             ToolBarItems.Add(saveToolBarItem);
 
             this.SyncToolBarItemWithViewModelActivationState(saveToolBarItem);
+        }
+
+        private void CreateCancelToolBar(IToolBarService toolBarService)
+        {
+            var cancelCommand = new DelegateCommand(() => Close());
+
+            var cancelToolBarItem = toolBarService.CreateToolBarButtonItem();
+            cancelToolBarItem.DisplayName = "Cancel";
+            cancelToolBarItem.ImageName = IconNames.CANCEL;
+            cancelToolBarItem.Command = cancelCommand;
+
+            ToolBarItems.Add(cancelToolBarItem);
+
+            this.SyncToolBarItemWithViewModelActivationState(cancelToolBarItem);
         }
 
         protected override void CleanUp()

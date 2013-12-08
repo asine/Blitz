@@ -121,29 +121,30 @@ namespace Blitz.Client.CRM.Client.Edit
             : base(scheduler, validation)
         {
             _firstName.ConnectINPCProperty(this, () => FirstName, scheduler).AddDisposable(Disposables);
-            _firstName.AddValidation(Validation, scheduler, () => FirstName, Disposables);
+            _firstName.AddValidation(Validation, scheduler, () => FirstName).AddDisposable(Disposables);
 
             _lastName.ConnectINPCProperty(this, () => LastName, scheduler).AddDisposable(Disposables);
-            _lastName.AddValidation(Validation, scheduler, () => LastName, Disposables);
+            _lastName.AddValidation(Validation, scheduler, () => LastName).AddDisposable(Disposables);
 
             _fullName.ConnectINPCProperty(this, () => FullName, scheduler).AddDisposable(Disposables);
 
             _gender.ConnectINPCProperty(this, () => Gender, scheduler).AddDisposable(Disposables);
+            _gender.AddValidation(Validation, scheduler, () => Gender).AddDisposable(Disposables);
 
             _addressLine1.ConnectINPCProperty(this, () => AddressLine1, scheduler).AddDisposable(Disposables);
-            _addressLine1.AddValidation(Validation, scheduler, () => AddressLine1, Disposables);
+            _addressLine1.AddValidation(Validation, scheduler, () => AddressLine1).AddDisposable(Disposables);
 
             _addressLine2.ConnectINPCProperty(this, () => AddressLine2, scheduler).AddDisposable(Disposables);
-            _addressLine2.AddValidation(Validation, scheduler, () => AddressLine2, Disposables);
+            _addressLine2.AddValidation(Validation, scheduler, () => AddressLine2).AddDisposable(Disposables);
 
             _postCode.ConnectINPCProperty(this, () => PostCode, scheduler).AddDisposable(Disposables);
-            _postCode.AddValidation(Validation, scheduler, () => PostCode, Disposables);
+            _postCode.AddValidation(Validation, scheduler, () => PostCode).AddDisposable(Disposables);
 
             _country.ConnectINPCProperty(this, () => Country, scheduler).AddDisposable(Disposables);
-            _country.AddValidation(Validation, scheduler, () => Country, Disposables);
+            _country.AddValidation(Validation, scheduler, () => Country).AddDisposable(Disposables);
 
             _dateOfBirth.ConnectINPCProperty(this, () => DateOfBirth, scheduler).AddDisposable(Disposables);
-            _dateOfBirth.AddValidation(Validation, scheduler, () => DateOfBirth, Disposables);
+            _dateOfBirth.AddValidation(Validation, scheduler, () => DateOfBirth).AddDisposable(Disposables);
 
             ObservableEx.WhenAny(_firstName.ValueChanged, _lastName.ValueChanged)
                         .Subscribe(x => FullName = string.Format("{0} {1}", x.Item1, x.Item2))

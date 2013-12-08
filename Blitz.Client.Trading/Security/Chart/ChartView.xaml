@@ -11,8 +11,8 @@
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Chart:ChartViewModel}">
 
-    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
-                        BusyContent="{Binding BusyMessage}">
+    <xctk:BusyIndicator IsBusy="{Binding BusyViewModel.IsActive}"
+                        BusyContent="{Binding BusyViewModel.Message}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

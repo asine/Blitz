@@ -34,7 +34,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
 
             Items = itemsCollection;
 
-            OpenCommand = new DelegateCommand<QuoteBlotterItemViewModel>(quote => Open(quote));
+            OpenCommand = new DelegateCommand<QuoteBlotterItemViewModel>(x => Open(x));
 
             CreateToolBar(toolBarService);
         }

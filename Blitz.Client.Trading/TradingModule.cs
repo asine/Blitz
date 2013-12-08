@@ -10,6 +10,7 @@ namespace Blitz.Client.Trading
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<QuoteModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<QuoteBlotterViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<QuoteBlotterService>().As<IQuoteBlotterService>().InstancePerDependency();
 

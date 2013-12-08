@@ -17,8 +17,8 @@
 
     </UserControl.Resources>
 
-    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
-                        BusyContent="{Binding BusyMessage}">
+    <xctk:BusyIndicator IsBusy="{Binding BusyViewModel.IsActive}"
+                        BusyContent="{Binding BusyViewModel.Message}">
         <DockPanel>
 
             <ToolBarTray DockPanel.Dock="Top"

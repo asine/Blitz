@@ -10,8 +10,8 @@
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance blotter:QuoteBlotterViewModel}">
 
-    <xctk:BusyIndicator IsBusy="{Binding IsBusy}"
-                        BusyContent="{Binding BusyMessage}">
+    <xctk:BusyIndicator IsBusy="{Binding BusyViewModel.IsActive}"
+                        BusyContent="{Binding BusyViewModel.Message}">
         <Grid x:Name="RootGrid">
 
             <DataGrid ItemsSource="{Binding Items}"
