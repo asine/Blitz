@@ -73,12 +73,10 @@ namespace Blitz.Client.CRM.Client.Edit
 
         private void CreateCancelToolBar(IToolBarService toolBarService)
         {
-            var cancelCommand = new DelegateCommand(() => Close());
-
             var cancelToolBarItem = toolBarService.CreateToolBarButtonItem();
             cancelToolBarItem.DisplayName = "Cancel";
             cancelToolBarItem.ImageName = IconNames.CANCEL;
-            cancelToolBarItem.Command = cancelCommand;
+            cancelToolBarItem.Command = CloseCommand;
 
             ToolBarItems.Add(cancelToolBarItem);
 

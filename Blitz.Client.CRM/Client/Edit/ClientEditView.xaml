@@ -79,7 +79,7 @@
                           Grid.Row="2"
                           Margin="10"
                           ItemsSource="{Binding Genders}"
-                          SelectedItem="{Binding Model.Gender}" />
+                          SelectedItem="{Binding Model.Gender, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock Grid.Column="3"
                            Grid.Row="2"
@@ -88,7 +88,7 @@
                 <DatePicker Grid.Column="4"
                             Grid.Row="2"
                             Margin="10"
-                            SelectedDate="{Binding Model.DateOfBirth}" />
+                            SelectedDate="{Binding Model.DateOfBirth, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock Grid.Column="0"
                            Grid.Row="3"
