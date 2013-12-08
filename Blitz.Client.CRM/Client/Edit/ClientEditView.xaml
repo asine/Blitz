@@ -4,108 +4,127 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:edit="clr-namespace:Blitz.Client.CRM.Client.Edit"
+             xmlns:toolBar="clr-namespace:Naru.WPF.ToolBar;assembly=Naru.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance edit:ClientEditViewModel}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0"
-                   Grid.Row="0"
-                   Margin="10"
-                   Text="FirstName" />
-        <TextBox Grid.Column="1"
-                 Grid.Row="0"
-                 Margin="10"
-                 Text="{Binding Model.FirstName, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+    <UserControl.Resources>
+
+        <toolBar:ToolBarItemTemplateSelector x:Key="ToolBarItemTemplateSelector" />
+
+    </UserControl.Resources>
+    
+    <DockPanel>
+
+        <ToolBarTray DockPanel.Dock="Top"
+                     IsLocked="True">
+            <ToolBar ItemsSource="{Binding ToolBarItems}"
+                     ItemTemplateSelector="{StaticResource ToolBarItemTemplateSelector}" />
+        </ToolBarTray>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="0"
+                       Margin="10"
+                       Text="FirstName" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="0"
+                     Margin="10"
+                     Text="{Binding Model.FirstName, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Column="3"
+                       Grid.Row="0"
+                       Margin="10"
+                       Text="LastName" />
+            <TextBox Grid.Column="4"
+                     Grid.Row="0"
+                     Margin="10"
+                     Text="{Binding Model.LastName, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="1"
+                       Margin="10"
+                       Text="FullName" />
+            <TextBox Grid.Column="1"
+                     Grid.ColumnSpan="4"
+                     Grid.Row="1"
+                     Margin="10"
+                     IsEnabled="False"
+                     Text="{Binding Model.FullName, Mode=OneWay}" />
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="2"
+                       Margin="10"
+                       Text="Genders" />
+            <ComboBox Grid.Column="1"
+                      Grid.Row="2"
+                      Margin="10"
+                      ItemsSource="{Binding Genders}"
+                      SelectedItem="{Binding Model.Gender}" />
+
+            <TextBlock Grid.Column="3"
+                       Grid.Row="2"
+                       Margin="10"
+                       Text="DateOfBirth" />
+            <DatePicker Grid.Column="4"
+                        Grid.Row="2"
+                        Margin="10"
+                        SelectedDate="{Binding Model.DateOfBirth}" />
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="3"
+                       Margin="10"
+                       Text="AddressLine1" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="3"
+                     Margin="10"
+                     Text="{Binding Model.AddressLine1, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Column="3"
+                       Grid.Row="3"
+                       Margin="10"
+                       Text="AddressLine2" />
+            <TextBox Grid.Column="4"
+                     Grid.Row="3"
+                     Margin="10"
+                     Text="{Binding Model.AddressLine2, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="4"
+                       Margin="10"
+                       Text="PostCode" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="4"
+                     Margin="10"
+                     Text="{Binding Model.PostCode, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Grid.Column="3"
+                       Grid.Row="4"
+                       Margin="10"
+                       Text="Country" />
+            <TextBox Grid.Column="4"
+                     Grid.Row="4"
+                     Margin="10"
+                     Text="{Binding Model.Country, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+        </Grid>
         
-        <TextBlock Grid.Column="3"
-                   Grid.Row="0"
-                   Margin="10"
-                   Text="LastName" />
-        <TextBox Grid.Column="4"
-                 Grid.Row="0"
-                 Margin="10"
-                 Text="{Binding Model.LastName, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
-
-        <TextBlock Grid.Column="0"
-                   Grid.Row="1"
-                   Margin="10"
-                   Text="FullName" />
-        <TextBox Grid.Column="1"
-                 Grid.ColumnSpan="4"
-                 Grid.Row="1"
-                 Margin="10"
-                 IsEnabled="False"
-                 Text="{Binding Model.FullName, Mode=OneWay}" />
-
-        <TextBlock Grid.Column="0"
-                   Grid.Row="2"
-                   Margin="10"
-                   Text="Genders" />
-        <ComboBox Grid.Column="1"
-                  Grid.Row="2"
-                  Margin="10"
-                  ItemsSource="{Binding Genders}"
-                  SelectedItem="{Binding Model.Gender}" />
-
-        <TextBlock Grid.Column="3"
-                   Grid.Row="2"
-                   Margin="10"
-                   Text="DateOfBirth" />
-        <DatePicker Grid.Column="4"
-                    Grid.Row="2"
-                    Margin="10"
-                    SelectedDate="{Binding Model.DateOfBirth}" />
-
-        <TextBlock Grid.Column="0"
-                   Grid.Row="3"
-                   Margin="10"
-                   Text="AddressLine1" />
-        <TextBox Grid.Column="1"
-                 Grid.Row="3"
-                 Margin="10"
-                 Text="{Binding Model.AddressLine1, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
-
-        <TextBlock Grid.Column="3"
-                   Grid.Row="3"
-                   Margin="10"
-                   Text="AddressLine2" />
-        <TextBox Grid.Column="4"
-                 Grid.Row="3"
-                 Margin="10"
-                 Text="{Binding Model.AddressLine2, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
-
-        <TextBlock Grid.Column="0"
-                   Grid.Row="4"
-                   Margin="10"
-                   Text="PostCode" />
-        <TextBox Grid.Column="1"
-                 Grid.Row="4"
-                 Margin="10"
-                 Text="{Binding Model.PostCode, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
-
-        <TextBlock Grid.Column="3"
-                   Grid.Row="4"
-                   Margin="10"
-                   Text="Country" />
-        <TextBox Grid.Column="4"
-                 Grid.Row="4"
-                 Margin="10"
-                 Text="{Binding Model.Country, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
-
-    </Grid>
+    </DockPanel>
+    
 </UserControl>

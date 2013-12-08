@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Common.Logging;
 
+using Naru.TPL;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;
 
@@ -14,6 +15,8 @@ namespace Blitz.Client.CRM.Client.Edit
     public interface IClientEditService
     {
         Task<List<string>> GetGendersAsync();
+
+        Task SaveAsync();
     }
 
     public class ClientEditService : Service, IClientEditService
@@ -30,6 +33,11 @@ namespace Blitz.Client.CRM.Client.Edit
         {
             var genders = new List<string> {"Male", "Female", "Unknown"};
             return Task.FromResult(genders);
+        }
+
+        public Task SaveAsync()
+        {
+            return CompletedTask.Default;
         }
     }
 }
