@@ -25,20 +25,23 @@ namespace Blitz.Client.Trading.Quote.Edit
     {
         private readonly IRequestTask _requestTask;
         private readonly ISchedulerProvider _scheduler;
+        private readonly Func<QuoteModel> _quoteModelFactory;
 
-        public QuoteEditService(IRequestTask requestTask, ISchedulerProvider scheduler)
+        public QuoteEditService(IRequestTask requestTask, ISchedulerProvider scheduler, Func<QuoteModel> quoteModelFactory)
         {
             _requestTask = requestTask;
             _scheduler = scheduler;
+            _quoteModelFactory = quoteModelFactory;
         }
 
         public Task<QuoteModel> NewQuoteAsync()
         {
             return Task.Factory.StartNew(() =>
-            {
-                var quoteModel = new QuoteModel(Guid.NewGuid());
-                return quoteModel;
-            });
+                                         {
+                                             var quoteModel = _quoteModelFactory();
+                                             quoteModel.Initialise(Guid.NewGuid());
+                                             return quoteModel;
+                                         });
         }
 
         public Task<QuoteModel> GetQuoteAsync(Guid id)
@@ -47,19 +50,18 @@ namespace Blitz.Client.Trading.Quote.Edit
             return _requestTask
                 .Get(request)
                 .Select(x =>
-                {
-                    var quoteDto = x.Result;
-                    var quoteModel = new QuoteModel(id)
-                    {
-                        Instrument = new LookupValue
                         {
-                            Id = quoteDto.InstrumentId,
-                            Value = quoteDto.InstrumentName
-                        },
-                        Notes = quoteDto.Notes
-                    };
-                    return quoteModel;
-                }, _scheduler.Task.TPL);
+                            var quoteDto = x.Result;
+                            var quoteModel = _quoteModelFactory();
+                            quoteModel.Initialise(id);
+                            quoteModel.Instrument = new LookupValue
+                                                    {
+                                                        Id = quoteDto.InstrumentId,
+                                                        Value = quoteDto.InstrumentName
+                                                    };
+                            quoteModel.Notes = quoteDto.Notes;
+                            return quoteModel;
+                        }, _scheduler.Task.TPL);
         }
 
         public Task<GetInitialisationDataResponse> GetInitialisationDataAsync()
@@ -70,12 +72,12 @@ namespace Blitz.Client.Trading.Quote.Edit
         public Task SaveQuoteAsync(QuoteModel quoteModel)
         {
             var quote = new QuoteDto
-            {
-                Id = quoteModel.Id,
-                InstrumentId = quoteModel.Instrument.Id,
-                InstrumentName = quoteModel.Instrument.Value,
-                Notes = quoteModel.Notes
-            };
+                        {
+                            Id = quoteModel.Id,
+                            InstrumentId = quoteModel.Instrument.Id,
+                            InstrumentName = quoteModel.Instrument.Value,
+                            Notes = quoteModel.Notes
+                        };
             return _requestTask.Get(new SaveQuoteRequest {Quote = quote});
         }
     }

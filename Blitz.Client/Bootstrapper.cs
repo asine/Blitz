@@ -7,6 +7,7 @@ using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Common.Report;
 using Blitz.Client.Common.ReportViewer.History;
 using Blitz.Client.Core.EPPlus;
+using Blitz.Client.CRM;
 using Blitz.Client.Customer;
 using Blitz.Client.Employee;
 using Blitz.Client.Settings.Appearance;
@@ -76,6 +77,10 @@ namespace Blitz.Client
             builder.RegisterModule(new CustomerModule());
             builder.RegisterType<CustomerStartable>().AsSelf();
 
+            // CRM
+            builder.RegisterModule(new CRMModule());
+            builder.RegisterType<CRMStartable>().AsSelf();
+
             // Build the container
             container = builder.Build();
 
@@ -85,6 +90,7 @@ namespace Blitz.Client
             container.Resolve<TradingStartable>().Start();
             container.Resolve<EmployeeStartable>().Start();
             container.Resolve<CustomerStartable>().Start();
+            container.Resolve<CRMStartable>().Start();
         }
     }
 }

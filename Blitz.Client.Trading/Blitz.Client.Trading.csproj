@@ -167,6 +167,10 @@
       <Project>{17EA4111-2679-4155-A6E5-FE45E171AC2B}</Project>
       <Name>Naru.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.RX\Naru.RX.csproj">
+      <Project>{9A778612-DF3E-417A-91F7-E354A1B3A412}</Project>
+      <Name>Naru.RX</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Naru\Naru.TPL\Naru.TPL.csproj">
       <Project>{2bbca269-6fdf-446d-9651-32717907afa8}</Project>
       <Name>Naru.TPL</Name>

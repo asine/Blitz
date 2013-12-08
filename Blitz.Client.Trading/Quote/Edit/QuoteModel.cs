@@ -2,7 +2,10 @@
 
 using Blitz.Common.Trading.Quote.Edit;
 
+using Naru.RX;
+using Naru.WPF.Scheduler;
 using Naru.WPF.Validation;
+using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {
@@ -14,39 +17,35 @@ namespace Blitz.Client.Trading.Quote.Edit
 
         #region Instrument
 
-        private LookupValue _instrument;
+        private readonly ObservableProperty<LookupValue> _instrument = new ObservableProperty<LookupValue>();
 
         public LookupValue Instrument
         {
-            get { return _instrument; }
-            set
-            {
-                if (Equals(value, _instrument)) return;
-                _instrument = value;
-                RaisePropertyChanged(() => Instrument);
-            }
+            get { return _instrument.Value; }
+            set { this.RaiseAndSetIfChanged(_instrument, value); }
         }
 
         #endregion
 
         #region Notes
 
-        private string _notes;
+        private readonly ObservableProperty<string> _notes = new ObservableProperty<string>();
 
         public string Notes
         {
-            get { return _notes; }
-            set
-            {
-                if (value == _notes) return;
-                _notes = value;
-                RaisePropertyChanged(() => Notes);
-            }
+            get { return _notes.Value; }
+            set { this.RaiseAndSetIfChanged(_notes, value); }
         }
 
         #endregion
 
-        public QuoteModel(Guid id)
+        public QuoteModel(ISchedulerProvider scheduler)
+        {
+            _instrument.ConnectINPCProperty(this, () => Instrument, scheduler).AddDisposable(Disposables);
+            _notes.ConnectINPCProperty(this, () => Notes, scheduler).AddDisposable(Disposables);
+        }
+
+        public void Initialise(Guid id)
         {
             Id = id;
         }
