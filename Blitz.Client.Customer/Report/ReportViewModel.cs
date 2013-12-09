@@ -4,6 +4,7 @@ using Blitz.Client.Common.Report;
 
 using Common.Logging;
 
+using Naru.RX;
 using Naru.TPL;
 using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
@@ -28,10 +29,10 @@ namespace Blitz.Client.Customer.Report
             : base(log, standardDialog, scheduler, itemsCollection)
         {
             _reportRunnerViewModel = reportRunnerViewModel;
-            Disposables.Add(this.SyncViewModelActivationStates(_reportRunnerViewModel));
+            this.SyncViewModelActivationStates(_reportRunnerViewModel).AddDisposable(Disposables);
 
             _reportViewerViewModel = reportViewerViewModel;
-            Disposables.Add(this.SyncViewModelActivationStates(_reportViewerViewModel));
+            this.SyncViewModelActivationStates(_reportViewerViewModel).AddDisposable(Disposables);
         }
 
         protected override Task OnInitialise()

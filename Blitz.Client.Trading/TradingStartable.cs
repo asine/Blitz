@@ -9,7 +9,6 @@ using Naru.Core;
 using Naru.WPF.Command;
 using Naru.WPF.Menu;
 using Naru.WPF.Assets.Icons;
-using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading
 {
@@ -53,7 +52,7 @@ namespace Blitz.Client.Trading
 
                     var quoteBlotterViewModel = _quoteBlotterViewModelFactory();
                     _eventStream.Push(quoteBlotterViewModel);
-                    ((ISupportActivationState)quoteBlotterViewModel).Activate();
+                    quoteBlotterViewModel.ActivationStateViewModel.Activate();
                 });
             tradingMenuItem.Items.Add(newReportMenuItem);
 
@@ -67,7 +66,7 @@ namespace Blitz.Client.Trading
 
                     var chartViewModel = _chartViewModelFactory();
                     _eventStream.Push(chartViewModel);
-                    ((ISupportActivationState)chartViewModel).Activate();
+                    chartViewModel.ActivationStateViewModel.Activate();
                 });
             tradingMenuItem.Items.Add(chartMenuItem);
         }

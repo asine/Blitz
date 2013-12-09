@@ -52,7 +52,7 @@ namespace Blitz.Client.Employee
                     var reportViewModel = _reportViewModelFactory();
                     reportViewModel.SetupHeader(_scheduler, "Employee Report");
                     _eventStream.Push(reportViewModel);
-                    ((ISupportActivationState)reportViewModel).Activate();
+                    reportViewModel.ActivationStateViewModel.Activate();
                 });
             employeeMenuItem.Items.Add(newReportMenuItem);
 

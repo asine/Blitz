@@ -65,7 +65,7 @@ namespace Blitz.Client.Common.ReportViewer
                         _historyViewModel.Items.AddRange(dataViewModels);
 
                         Items.Add(_historyViewModel);
-                        ((ISupportActivationState)_historyViewModel).Activate();
+                        _historyViewModel.ActivationStateViewModel.Activate();
                     }, Scheduler.Dispatcher.TPL)
                 .LogException(Log)
                 .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading History"), Scheduler.Task.TPL)

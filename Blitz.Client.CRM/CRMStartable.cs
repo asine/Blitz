@@ -47,7 +47,7 @@ namespace Blitz.Client.CRM
                 {
                     var clientEditViewModel = _clientEditViewModelFactory();
                     _eventStream.Push(clientEditViewModel);
-                    ((ISupportActivationState)clientEditViewModel).Activate();
+                    clientEditViewModel.ActivationStateViewModel.Activate();
                 });
             crmMenuItem.Items.Add(newReportMenuItem);
         }

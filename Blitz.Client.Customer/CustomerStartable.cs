@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Blitz.Client.Common;
 using Blitz.Client.Customer.Report;
 
 using Common.Logging;
@@ -66,7 +65,7 @@ namespace Blitz.Client.Customer
 
                               return reportViewModel;
                           }, _scheduler.Dispatcher.TPL)
-                .Do(reportViewModel => ((ISupportActivationState) reportViewModel).Activate(), _scheduler.Dispatcher.TPL);
+                .Do(reportViewModel => reportViewModel.ActivationStateViewModel.Activate(), _scheduler.Dispatcher.TPL);
         }
     }
 }

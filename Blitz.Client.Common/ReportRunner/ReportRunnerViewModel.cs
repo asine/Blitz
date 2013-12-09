@@ -6,6 +6,7 @@ using Blitz.Client.Common.ReportParameter;
 
 using Common.Logging;
 
+using Naru.RX;
 using Naru.TPL;
 using Naru.WPF.Command;
 using Naru.WPF.Dialog;
@@ -75,7 +76,7 @@ namespace Blitz.Client.Common.ReportRunner
             Items = itemsCollection;
 
             ParameterViewModel = reportParameterViewModel;
-            this.SyncViewModelActivationStates(ParameterViewModel);
+            this.SyncViewModelActivationStates(ParameterViewModel).AddDisposable(Disposables);
 
             this.SetupHeader(scheduler, "Runner", IconNames.EXCEL);
 
@@ -111,7 +112,7 @@ namespace Blitz.Client.Common.ReportRunner
                             var supportActivationState = dataViewModel as ISupportActivationState;
                             if (supportActivationState != null)
                             {
-                                this.SyncViewModelActivationStates(supportActivationState);
+                                this.SyncViewModelActivationStates(supportActivationState).AddDisposable(Disposables);
                             }
                         }
                     }, Scheduler.Dispatcher.TPL)
