@@ -57,12 +57,12 @@ namespace Blitz.Client.Trading.Security.Chart
         private void GetData()
         {
             BusyViewModel.ActiveAsync(string.Format("... Loading {0} ...", _ticker))
-                .Then(() => Items.ClearAsync(), Scheduler.Dispatcher.TPL)
-                .Then(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now), Scheduler.Task.TPL)
-                .Then(data => Items.AddRangeAsync(data), Scheduler.Dispatcher.TPL)
-                .LogException(Log)
-                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem getting chart data"), Scheduler.Task.TPL)
-                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
+                         .Then(() => Items.ClearAsync(), Scheduler.Dispatcher.TPL)
+                         .Then(() => _service.GetDataAsync(_ticker, DateTime.Now.AddMonths(-1), DateTime.Now), Scheduler.Task.TPL)
+                         .Then(data => Items.AddRangeAsync(data), Scheduler.Dispatcher.TPL)
+                         .LogException(Log)
+                         .CatchAndHandle(x => StandardDialog.Error("Error", "Problem getting chart data"), Scheduler.Task.TPL)
+                         .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Blitz.Client.Customer.ReportParameters
         public Task<List<DateTime>> GetAvailableDatesAsync()
         {
             return _requestTask.Get(new InitialiseParametersRequest())
-                .Select(x => x.AvailableDates.ToList(), _scheduler.Task.TPL);
+                               .Select(x => x.AvailableDates.ToList(), _scheduler.Task.TPL);
         }
     }
 }

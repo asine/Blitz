@@ -19,6 +19,7 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportRunner
 {
+    [UseView(typeof(ReportRunnerView))]
     public abstract class ReportRunnerViewModel<TReportParameterViewModel, TReportRunnerService, TRequest, TResponse> : Workspace
         where TReportParameterViewModel : IReportParameterViewModel
         where TReportRunnerService : IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
@@ -81,7 +82,7 @@ namespace Blitz.Client.Common.ReportRunner
             this.SetupHeader(scheduler, "Runner", IconNames.EXCEL);
 
             ParameterViewModel.GenerateReport
-                .TakeUntil(Closed)
+                .TakeUntil(ClosingStrategy.Closed)
                 .Subscribe(_ => GenerateReport());
 
             CreateExportToExcelToolBarItem();
@@ -90,42 +91,42 @@ namespace Blitz.Client.Common.ReportRunner
         protected override Task OnInitialise()
         {
             return BusyViewModel.ActiveAsync("... Loading ...")
-                .Then(() => Service.ConfigureParameterViewModelAsync(ParameterViewModel), Scheduler.Task.TPL)
-                .LogException(Log)
-                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem initialising parameters"), Scheduler.Task.TPL)
-                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
+                                .Then(() => Service.ConfigureParameterViewModelAsync(ParameterViewModel), Scheduler.Task.TPL)
+                                .LogException(Log)
+                                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem initialising parameters"), Scheduler.Task.TPL)
+                                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private void GenerateReport()
         {
             BusyViewModel.ActiveAsync("... Generating ...")
-                .Then(() => Items.ClearAsync(), Scheduler.Dispatcher.TPL)
-                .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.Task.TPL)
-                .Do(response => _response = response, Scheduler.Task.TPL)
-                .Then(response => Service.GenerateDataViewModelsAsync(response), Scheduler.Task.TPL)
-                .Do(dataViewModels =>
-                    {
-                        foreach (var dataViewModel in dataViewModels)
-                        {
-                            Items.Add(dataViewModel);
+                         .Then(() => Items.ClearAsync(), Scheduler.Dispatcher.TPL)
+                         .Then(() => Service.GenerateAsync(Service.CreateRequest(ParameterViewModel)), Scheduler.Task.TPL)
+                         .Do(response => _response = response, Scheduler.Task.TPL)
+                         .Then(response => Service.GenerateDataViewModelsAsync(response), Scheduler.Task.TPL)
+                         .Do(dataViewModels =>
+                             {
+                                 foreach (var dataViewModel in dataViewModels)
+                                 {
+                                     Items.Add(dataViewModel);
 
-                            var supportActivationState = dataViewModel as ISupportActivationState;
-                            if (supportActivationState != null)
-                            {
-                                this.SyncViewModelActivationStates(supportActivationState).AddDisposable(Disposables);
-                            }
-                        }
-                    }, Scheduler.Dispatcher.TPL)
-                .LogException(Log)
-                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Generating Report"), Scheduler.Task.TPL)
-                .Finally(() =>
-                {
-                    BusyViewModel.InActive();
+                                     var supportActivationState = dataViewModel as ISupportActivationState;
+                                     if (supportActivationState != null)
+                                     {
+                                         this.SyncViewModelActivationStates(supportActivationState).AddDisposable(Disposables);
+                                     }
+                                 }
+                             }, Scheduler.Dispatcher.TPL)
+                         .LogException(Log)
+                         .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Generating Report"), Scheduler.Task.TPL)
+                         .Finally(() =>
+                                  {
+                                      BusyViewModel.InActive();
 
-                    IsExpanded = false;
+                                      IsExpanded = false;
 
-                    _exportToExcel.RaiseCanExecuteChanged();
-                }, Scheduler.Task.TPL);
+                                      _exportToExcel.RaiseCanExecuteChanged();
+                                  }, Scheduler.Task.TPL);
         }
 
         private void CreateExportToExcelToolBarItem()
@@ -144,15 +145,15 @@ namespace Blitz.Client.Common.ReportRunner
         private void ExportToExcel()
         {
             BusyViewModel.ActiveAsync("... Exporting to Excel ...")
-                .Do(() => Service.ExportToExcel(_response), Scheduler.Task.TPL)
-                .LogException(Log)
-                .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
-                .Finally(() =>
-                {
-                    BusyViewModel.InActive();
+                         .Do(() => Service.ExportToExcel(_response), Scheduler.Task.TPL)
+                         .LogException(Log)
+                         .CatchAndHandle(x => StandardDialog.Error("Error", "Problem Exporting to Excel"), Scheduler.Task.TPL)
+                         .Finally(() =>
+                                  {
+                                      BusyViewModel.InActive();
 
-                    IsExpanded = false;
-                }, Scheduler.Task.TPL);
+                                      IsExpanded = false;
+                                  }, Scheduler.Task.TPL);
         }
 
         protected virtual bool CanExportToExcel()

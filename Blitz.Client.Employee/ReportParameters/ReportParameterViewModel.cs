@@ -6,13 +6,11 @@ using Blitz.Client.Common.ReportParameter;
 using Common.Logging;
 
 using Naru.WPF.Dialog;
-using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 using Naru.WPF.Wizard;
 
 namespace Blitz.Client.Employee.ReportParameters
 {
-    [UseView(typeof(WizardView))]
     public class ReportParameterViewModel : ReportParameterWizardViewModel<ReportParameterContext>
     {
         private readonly Func<ReportParameterStepViewModel> _reportParameterStepViewModelFactory;

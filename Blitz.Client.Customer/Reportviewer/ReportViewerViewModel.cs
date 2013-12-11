@@ -14,7 +14,6 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.Reportviewer
 {
-    [UseView(typeof (ReportViewerView))]
     public class ReportViewerViewModel :
         ReportViewerViewModel <IReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {

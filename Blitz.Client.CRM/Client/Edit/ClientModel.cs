@@ -7,7 +7,7 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.CRM.Client.Edit
 {
-    public class ClientModel : ModelWithValidationAsync<ClientModel, ClientValidation>
+    public class ClientModel : ModelWithValidationAsync<ClientModel, ClientValidator>
     {
         #region FirstName
 
@@ -16,7 +16,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string FirstName
         {
             get { return _firstName.Value; }
-            set { this.RaiseAndSetIfChanged(_firstName, value); }
+            set { _firstName.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -28,7 +28,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string LastName
         {
             get { return _lastName.Value; }
-            set { this.RaiseAndSetIfChanged(_lastName, value); }
+            set { _lastName.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -40,7 +40,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string FullName
         {
             get { return _fullName.Value; }
-            set { this.RaiseAndSetIfChanged(_fullName, value); }
+            set { _fullName.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string Gender
         {
             get { return _gender.Value; }
-            set { this.RaiseAndSetIfChanged(_gender, value); }
+            set { _gender.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -64,7 +64,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string AddressLine1
         {
             get { return _addressLine1.Value; }
-            set { this.RaiseAndSetIfChanged(_addressLine1, value); }
+            set { _addressLine1.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string AddressLine2
         {
             get { return _addressLine2.Value; }
-            set { this.RaiseAndSetIfChanged(_addressLine2, value); }
+            set { _addressLine2.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -88,7 +88,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string PostCode
         {
             get { return _postCode.Value; }
-            set { this.RaiseAndSetIfChanged(_postCode, value); }
+            set { _postCode.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -100,7 +100,7 @@ namespace Blitz.Client.CRM.Client.Edit
         public string Country
         {
             get { return _country.Value; }
-            set { this.RaiseAndSetIfChanged(_country, value); }
+            set { _country.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -112,12 +112,12 @@ namespace Blitz.Client.CRM.Client.Edit
         public DateTime DateOfBirth
         {
             get { return _dateOfBirth.Value; }
-            set { this.RaiseAndSetIfChanged(_dateOfBirth, value); }
+            set { _dateOfBirth.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
 
-        public ClientModel(ISchedulerProvider scheduler, ValidationAsync<ClientModel, ClientValidation> validation)
+        public ClientModel(ISchedulerProvider scheduler, ValidationAsync<ClientModel, ClientValidator> validation)
             : base(scheduler, validation)
         {
             _firstName.ConnectINPCProperty(this, () => FirstName, scheduler).AddDisposable(Disposables);

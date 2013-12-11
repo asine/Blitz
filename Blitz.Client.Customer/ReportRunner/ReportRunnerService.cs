@@ -40,7 +40,7 @@ namespace Blitz.Client.Customer.ReportRunner
                                    IRequestTask requestTask, IViewService viewService, ILog log,
                                    Func<ReportLayoutViewModel> reportLayoutViewModelFactory,
                                    IBasicExportToExcel exportToExcel,
-            ISchedulerProvider scheduler)
+                                   ISchedulerProvider scheduler)
             : base(log)
         {
             _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;

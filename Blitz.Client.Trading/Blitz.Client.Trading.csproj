@@ -125,7 +125,7 @@
     <Compile Include="Quote\Edit\QuoteEditView.xaml.cs">
       <DependentUpon>QuoteEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Quote\Edit\QuoteValidation.cs" />
+    <Compile Include="Quote\Edit\QuoteValidator.cs" />
     <Compile Include="Security\Chart\ChartService.cs" />
     <Compile Include="Security\Chart\ChartView.xaml.cs">
       <DependentUpon>ChartView.xaml</DependentUpon>

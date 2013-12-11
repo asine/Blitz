@@ -6,11 +6,13 @@ using System.Reactive.Subjects;
 using Common.Logging;
 
 using Naru.WPF.Dialog;
+using Naru.WPF.MVVM;
 using Naru.WPF.Scheduler;
 using Naru.WPF.Wizard;
 
 namespace Blitz.Client.Common.ReportParameter
 {
+    [UseView(typeof(WizardView))]
     public abstract class ReportParameterWizardViewModel<TContext> : WizardViewModel<TContext>, IReportParameterViewModel
         where TContext : IWizardContext, new()
     {

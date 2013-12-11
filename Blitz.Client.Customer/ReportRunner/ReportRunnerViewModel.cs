@@ -2,6 +2,7 @@
 
 using Common.Logging;
 
+using Naru.RX;
 using Naru.WPF.Command;
 using Naru.WPF.Dialog;
 using Naru.WPF.MVVM;
@@ -15,7 +16,6 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Customer.ReportRunner
 {
-    [UseView(typeof(ReportRunnerView))]
     public class ReportRunnerViewModel : ReportRunnerViewModel<ReportParameterViewModel, IReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>
     {
         public ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,
@@ -35,7 +35,7 @@ namespace Blitz.Client.Customer.ReportRunner
             showLayoutToolBarItem.IsVisible = false;
 
             ToolBarService.Items.Add(showLayoutToolBarItem);
-            this.SyncToolBarItemWithViewModelActivationState(showLayoutToolBarItem);
+            this.SyncToolBarItemWithViewModelActivationState(showLayoutToolBarItem).AddDisposable(Disposables);
         }
     }
 }

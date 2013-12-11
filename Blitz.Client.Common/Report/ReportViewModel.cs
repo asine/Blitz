@@ -7,6 +7,7 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.Report
 {
+    [UseView(typeof(ReportView))]
     public abstract class ReportViewModel : Workspace
     {
         public BindableCollection<IViewModel> Items { get; private set; }

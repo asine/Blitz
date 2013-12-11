@@ -83,15 +83,14 @@ namespace Blitz.Client.Common.DynamicColumnManagement
             saveToolBarItem.DisplayName = "Save";
             _saveCommand = new DelegateCommand(() =>
             {
-                
-                Close();
+                ClosingStrategy.Close();
             });
             saveToolBarItem.Command = _saveCommand;
             ToolBarItems.Add(saveToolBarItem);
 
             var cancelToolBarItem = toolBarService.CreateToolBarButtonItem();
             cancelToolBarItem.DisplayName = "Cancel";
-            cancelToolBarItem.Command = CloseCommand;
+            cancelToolBarItem.Command = ClosingStrategy.CloseCommand;
             ToolBarItems.Add(cancelToolBarItem);
         }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Common.Logging;
 
+using Naru.RX;
 using Naru.TPL;
 using Naru.WPF.Assets.Icons;
 using Naru.WPF.Command;
@@ -36,6 +37,7 @@ namespace Blitz.Client.CRM.Client.Edit
             ToolBarItems = toolBarCollection;
 
             Model = model;
+            Model.AddDisposable(Disposables);
 
             Genders = genderCollection;
 
@@ -47,7 +49,7 @@ namespace Blitz.Client.CRM.Client.Edit
         {
             return BusyViewModel.ActiveAsync("Loading")
                                 .Then(() => _service.GetGendersAsync(), Scheduler.Task.TPL)
-                                .Do(x => Genders.AddRangeAsync(x), Scheduler.Dispatcher.TPL)
+                                .Do(genders => Genders.AddRangeAsync(genders), Scheduler.Dispatcher.TPL)
                                 .Finally(() => BusyViewModel.InActive(), Scheduler.Dispatcher.TPL);
         }
 
@@ -56,9 +58,10 @@ namespace Blitz.Client.CRM.Client.Edit
             var saveCommand = new ObservableCommand(Model.IsValid);
             saveCommand.Executed
                        .ObserveOn(Scheduler.Task.RX)
-                       .SelectMany(_ => _service.SaveAsync().ToObservable()
+                       .SelectMany(_ => _service.SaveAsync()
+                                                .ToObservable()
                                                 .TakeUntil(BusyViewModel.BusyLatch))
-                       .TakeUntil(Closed)
+                       .TakeUntil(ClosingStrategy.Closed)
                        .Subscribe(_ => { });
 
             var saveToolBarItem = toolBarService.CreateToolBarButtonItem();
@@ -68,7 +71,7 @@ namespace Blitz.Client.CRM.Client.Edit
 
             ToolBarItems.Add(saveToolBarItem);
 
-            this.SyncToolBarItemWithViewModelActivationState(saveToolBarItem);
+            this.SyncToolBarItemWithViewModelActivationState(saveToolBarItem).AddDisposable(Disposables);
         }
 
         private void CreateCancelToolBar(IToolBarService toolBarService)
@@ -76,16 +79,11 @@ namespace Blitz.Client.CRM.Client.Edit
             var cancelToolBarItem = toolBarService.CreateToolBarButtonItem();
             cancelToolBarItem.DisplayName = "Cancel";
             cancelToolBarItem.ImageName = IconNames.CANCEL;
-            cancelToolBarItem.Command = CloseCommand;
+            cancelToolBarItem.Command = ClosingStrategy.CloseCommand;
 
             ToolBarItems.Add(cancelToolBarItem);
 
-            this.SyncToolBarItemWithViewModelActivationState(cancelToolBarItem);
-        }
-
-        protected override void CleanUp()
-        {
-            Model.Dispose();
+            this.SyncToolBarItemWithViewModelActivationState(cancelToolBarItem).AddDisposable(Disposables);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Blitz.Client.CRM.Client.Edit
 {
-    public class ClientValidation : AbstractValidator<ClientModel>
+    public class ClientValidator : AbstractValidator<ClientModel>
     {
-        public ClientValidation()
+        public ClientValidator()
         {
             RuleFor(x => x.FirstName).NotEmpty();
             RuleFor(x => x.LastName).NotEmpty();

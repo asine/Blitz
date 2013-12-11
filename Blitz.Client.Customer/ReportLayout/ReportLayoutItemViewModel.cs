@@ -22,10 +22,4 @@ namespace Blitz.Client.Customer.ReportLayout
             return string.Format("{0} - {1}", Type, Name);
         }
     }
-
-    public enum AttributeType
-    {
-        Dimension,
-        Measure
-    }
 }

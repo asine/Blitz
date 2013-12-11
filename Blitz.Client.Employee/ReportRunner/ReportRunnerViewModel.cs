@@ -14,7 +14,6 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Employee.ReportRunner
 {
-    [UseView(typeof (ReportRunnerView))]
     public class ReportRunnerViewModel : ReportRunnerViewModel<ReportParameterViewModel, IReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>
     {
         public ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,

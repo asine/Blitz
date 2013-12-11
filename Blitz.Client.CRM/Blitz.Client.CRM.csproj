@@ -104,7 +104,7 @@
     </Compile>
     <Compile Include="Client\Edit\ClientEditViewModel.cs" />
     <Compile Include="Client\Edit\ClientModel.cs" />
-    <Compile Include="Client\Edit\ClientValidation.cs" />
+    <Compile Include="Client\Edit\ClientValidator.cs" />
     <Compile Include="Client\Edit\TextBoxIntegerMaskBehavior.cs" />
     <Compile Include="CRMModule.cs" />
     <Compile Include="CRMStartable.cs" />

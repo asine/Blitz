@@ -91,25 +91,25 @@ namespace Blitz.Client.Trading.Quote.Edit
         private void NewQuote()
         {
             BusyViewModel.ActiveAsync("... Loading Quote ...")
-                .Then(() => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
-                .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
-                .Then(() => _service.NewQuoteAsync(), Scheduler.Task.TPL)
-                .Do(model => Model = model, Scheduler.Task.TPL)
-                .LogException(Log)
-                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
-                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
+                         .Then(() => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
+                         .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
+                         .Then(() => _service.NewQuoteAsync(), Scheduler.Task.TPL)
+                         .Do(model => Model = model, Scheduler.Task.TPL)
+                         .LogException(Log)
+                         .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
+                         .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private void LoadQuote()
         {
             BusyViewModel.ActiveAsync("... Loading Quote ...")
-                .Then(() => _service.GetQuoteAsync(_id.Value), Scheduler.Task.TPL)
-                .Do(quote => Model = quote, Scheduler.Task.TPL)
-                .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
-                .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
-                .LogException(Log)
-                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
-                .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
+                         .Then(() => _service.GetQuoteAsync(_id.Value), Scheduler.Task.TPL)
+                         .Do(quote => Model = quote, Scheduler.Task.TPL)
+                         .Then(_ => _service.GetInitialisationDataAsync(), Scheduler.Task.TPL)
+                         .Then(response => Instruments.AddRangeAsync(response.Instruments), Scheduler.Dispatcher.TPL)
+                         .LogException(Log)
+                         .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem loading quote"), Scheduler.Task.TPL)
+                         .Finally(BusyViewModel.InActive, Scheduler.Task.TPL);
         }
 
         private void CreateToolBar(Func<ToolBarButtonItem> toolBarButtonItemFactory)
@@ -121,21 +121,21 @@ namespace Blitz.Client.Trading.Quote.Edit
 
             var cancelToolBarItem = toolBarButtonItemFactory();
             cancelToolBarItem.DisplayName = "Cancel";
-            cancelToolBarItem.Command = new DelegateCommand(Close);
+            cancelToolBarItem.Command = new DelegateCommand(ClosingStrategy.Close);
             ToolBarItems.Add(cancelToolBarItem);
         }
 
         private void Save()
         {
             BusyViewModel.ActiveAsync("... Saving Quote ...")
-                .Then(() => _service.SaveQuoteAsync(Model), Scheduler.Task.TPL)
-                .LogException(Log)
-                .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem saving quote"), Scheduler.Task.TPL)
-                .Finally(() =>
-                {
-                    BusyViewModel.InActive();
-                    Close();
-                }, Scheduler.Task.TPL);
+                         .Then(() => _service.SaveQuoteAsync(Model), Scheduler.Task.TPL)
+                         .LogException(Log)
+                         .CatchAndHandle(_ => StandardDialog.Error("Error", "Problem saving quote"), Scheduler.Task.TPL)
+                         .Finally(() =>
+                                  {
+                                      BusyViewModel.InActive();
+                                      ClosingStrategy.Close();
+                                  }, Scheduler.Task.TPL);
         }
     }
 }

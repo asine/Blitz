@@ -120,7 +120,7 @@ namespace Blitz.Client.Shell
                                                  userInteractionHostViewModel.Initialise(viewModel);
 
                                                  IDisposable closing = null;
-                                                 closing = userInteractionHostViewModel.Closed
+                                                 closing = userInteractionHostViewModel.ClosingStrategy.Closed
                                                                     .Subscribe(x =>
                                                                                {
                                                                                    tcs.TrySetResult(null);

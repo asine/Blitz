@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="CustomerModule.cs" />
     <Compile Include="CustomerStartable.cs" />
+    <Compile Include="ReportLayout\AttributeType.cs" />
     <Compile Include="ReportLayout\ReportLayoutService.cs" />
     <Compile Include="ReportParameters\ReportParameterContext.cs" />
     <Compile Include="ReportParameters\ReportParameterStepService.cs" />

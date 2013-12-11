@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 
-using Blitz.Client.Common.Report;
-
 using Common.Logging;
 
 using Naru.RX;
@@ -15,7 +13,6 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Employee.Report
 {
-    [UseView(typeof(ReportView))]
     public class ReportViewModel : Common.Report.ReportViewModel
     {
         private readonly ReportRunnerViewModel _reportRunnerViewModel;

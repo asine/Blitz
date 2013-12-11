@@ -9,7 +9,7 @@ using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Trading.Quote.Edit
 {
-    public class QuoteModel : ModelWithValidation<QuoteModel, QuoteValidation>
+    public class QuoteModel : ModelWithValidationAsync<QuoteModel, QuoteValidator>
     {
         public Guid Id { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Blitz.Client.Trading.Quote.Edit
         public LookupValue Instrument
         {
             get { return _instrument.Value; }
-            set { this.RaiseAndSetIfChanged(_instrument, value); }
+            set { _instrument.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
@@ -34,15 +34,19 @@ namespace Blitz.Client.Trading.Quote.Edit
         public string Notes
         {
             get { return _notes.Value; }
-            set { this.RaiseAndSetIfChanged(_notes, value); }
+            set { _notes.RaiseAndSetIfChanged(value); }
         }
 
         #endregion
 
-        public QuoteModel(ISchedulerProvider scheduler)
+        public QuoteModel(ISchedulerProvider scheduler, ValidationAsync<QuoteModel, QuoteValidator> validation)
+            : base(scheduler, validation)
         {
             _instrument.ConnectINPCProperty(this, () => Instrument, scheduler).AddDisposable(Disposables);
+            _instrument.AddValidation(validation, scheduler, () => Instrument).AddDisposable(Disposables);
+
             _notes.ConnectINPCProperty(this, () => Notes, scheduler).AddDisposable(Disposables);
+            _notes.AddValidation(validation, scheduler, () => Notes).AddDisposable(Disposables);
         }
 
         public void Initialise(Guid id)
