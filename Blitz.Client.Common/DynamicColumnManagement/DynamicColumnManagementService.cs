@@ -1,5 +1,3 @@
-using Common.Logging;
-
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.DynamicColumnManagement
@@ -10,9 +8,5 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
     public class DynamicColumnManagementService : Service, IDynamicColumnManagementService
     {
-        public DynamicColumnManagementService(ILog log)
-            : base(log)
-        {
-        }
     }
 }

@@ -7,8 +7,6 @@ using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ReportViewer;
 using Blitz.Client.Common.ReportViewer.History;
 
-using Common.Logging;
-
 using Naru.Agatha;
 
 using Blitz.Common.Customer;
@@ -29,8 +27,7 @@ namespace Blitz.Client.Customer.Reportviewer
         private readonly ISchedulerProvider _scheduler;
         private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
 
-        public ReportViewerService(ILog log, IRequestTask requestTask, ISchedulerProvider scheduler, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
-            : base(log)
+        public ReportViewerService(IRequestTask requestTask, ISchedulerProvider scheduler, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
         {
             _requestTask = requestTask;
             _scheduler = scheduler;

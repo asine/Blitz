@@ -7,8 +7,6 @@ using Blitz.Client.Common.DynamicReportData;
 using Blitz.Client.Common.ExportToExcel;
 using Blitz.Client.Common.ReportRunner;
 
-using Common.Logging;
-
 using Naru.Agatha;
 using Naru.TPL;
 using Naru.WPF.MVVM;
@@ -37,11 +35,10 @@ namespace Blitz.Client.Customer.ReportRunner
         private readonly ISchedulerProvider _scheduler;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> dynamicReportDataViewModelFactory,
-                                   IRequestTask requestTask, IViewService viewService, ILog log,
+                                   IRequestTask requestTask, IViewService viewService,
                                    Func<ReportLayoutViewModel> reportLayoutViewModelFactory,
                                    IBasicExportToExcel exportToExcel,
                                    ISchedulerProvider scheduler)
-            : base(log)
         {
             _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;
             _requestTask = requestTask;

@@ -22,7 +22,7 @@ namespace Blitz.Client.Customer.ReportParameters
                                                 ISupportValidationAsync<ReportParameterStepViewModel, ReportParameterStepValidator>
     {
         private readonly IReportParameterStepService _service;
-        private readonly ValidationAsync<ReportParameterStepViewModel, ReportParameterStepValidator> _validation;
+        private readonly IValidationAsync<ReportParameterStepViewModel, ReportParameterStepValidator> _validation;
 
         public BindableCollection<DateTime> Dates { get; private set; }
 
@@ -48,7 +48,7 @@ namespace Blitz.Client.Customer.ReportParameters
 
         public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
                                             IReportParameterStepService service, 
-                                            ValidationAsync<ReportParameterStepViewModel, ReportParameterStepValidator> validation,
+                                            IValidationAsync<ReportParameterStepViewModel, ReportParameterStepValidator> validation,
                                             BindableCollection<DateTime> datesCollection)
             : base(log, scheduler, standardDialog)
         {

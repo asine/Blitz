@@ -117,7 +117,7 @@ namespace Blitz.Client.CRM.Client.Edit
 
         #endregion
 
-        public ClientModel(ISchedulerProvider scheduler, ValidationAsync<ClientModel, ClientValidator> validation)
+        public ClientModel(ISchedulerProvider scheduler, IValidationAsync<ClientModel, ClientValidator> validation)
             : base(scheduler, validation)
         {
             _firstName.ConnectINPCProperty(this, () => FirstName, scheduler).AddDisposable(Disposables);

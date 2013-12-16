@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 
 using Blitz.Common.Customer;
 
-using Common.Logging;
-
 using Naru.Agatha;
 using Naru.TPL;
 using Naru.WPF.Scheduler;
@@ -24,8 +22,7 @@ namespace Blitz.Client.Customer.ReportParameters
         private readonly IRequestTask _requestTask;
         private readonly ISchedulerProvider _scheduler;
 
-        public ReportParameterStepService(ILog log, IRequestTask requestTask, ISchedulerProvider scheduler) 
-            : base(log)
+        public ReportParameterStepService(IRequestTask requestTask, ISchedulerProvider scheduler) 
         {
             _requestTask = requestTask;
             _scheduler = scheduler;

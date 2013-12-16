@@ -1,5 +1,3 @@
-using Common.Logging;
-
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.DynamicColumnEdit
@@ -10,9 +8,5 @@ namespace Blitz.Client.Common.DynamicColumnEdit
 
     public class DynamicColumnEditService : Service, IDynamicColumnEditService
     {
-        public DynamicColumnEditService(ILog log)
-            : base(log)
-        {
-        }
     }
 }

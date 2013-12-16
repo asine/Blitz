@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 
 using Blitz.Client.Common.ReportViewer.History;
 
-using Common.Logging;
-
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportViewer
@@ -12,10 +10,6 @@ namespace Blitz.Client.Common.ReportViewer
     public abstract class ReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse> 
         : Service, IReportViewerService<THistoryRequest, THistoryResponse, TReportRequest, TReportResponse>
     {
-        protected ReportViewerService(ILog log)
-            : base(log)
-        { }
-
         public abstract THistoryRequest CreateHistoryRequest();
 
         public abstract Task<THistoryResponse> GetHistoryAsync(THistoryRequest request);

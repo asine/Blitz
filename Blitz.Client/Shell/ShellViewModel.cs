@@ -82,7 +82,7 @@ namespace Blitz.Client.Shell
 
             TitleLinks = linkCollection;
 
-            TitleLinks.Add(new Link
+            TitleLinks.Add(new Link(scheduler)
                            {
                                DisplayName = "Appearance",
                                Command = new DelegateCommand(() => userInteraction.ShowModalAsync(appearanceViewModel))

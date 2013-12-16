@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Common.Logging;
 
 using Naru.TPL;
 using Naru.WPF.Scheduler;
@@ -24,8 +20,7 @@ namespace Blitz.Client.CRM.Client.Edit
     {
         private readonly ISchedulerProvider _scheduler;
 
-        public ClientEditService(ILog log, ISchedulerProvider scheduler)
-            : base(log)
+        public ClientEditService(ISchedulerProvider scheduler)
         {
             _scheduler = scheduler;
         }

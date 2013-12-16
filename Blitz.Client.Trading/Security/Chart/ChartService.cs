@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Common.Logging;
-
 using Naru.Agatha;
 using Naru.TPL;
 
@@ -25,8 +23,7 @@ namespace Blitz.Client.Trading.Security.Chart
         private readonly IRequestTask _requestTask;
         private readonly ISchedulerProvider _scheduler;
 
-        public ChartService(ILog log, IRequestTask requestTask, ISchedulerProvider scheduler)
-            : base(log)
+        public ChartService(IRequestTask requestTask, ISchedulerProvider scheduler)
         {
             _requestTask = requestTask;
             _scheduler = scheduler;

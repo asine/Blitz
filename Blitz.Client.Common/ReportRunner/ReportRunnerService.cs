@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Common.Logging;
-
 using Naru.WPF.ViewModel;
 
 namespace Blitz.Client.Common.ReportRunner
@@ -10,10 +8,6 @@ namespace Blitz.Client.Common.ReportRunner
     public abstract class ReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
         : Service, IReportRunnerService<TReportParameterViewModel, TRequest, TResponse>
     {
-        protected ReportRunnerService(ILog log)
-            : base(log)
-        { }
-
         public abstract Task ConfigureParameterViewModelAsync(TReportParameterViewModel viewModel);
 
         public abstract TRequest CreateRequest(TReportParameterViewModel reportParameterViewModel);
