@@ -25,7 +25,7 @@ namespace Blitz.Client.Common.ReportViewer
 
         public BindableCollection<IViewModel> Items { get; private set; }
 
-        protected ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, 
+        protected ReportViewerViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog, 
                                         TReportViewerService service, IToolBarService toolBarService,
                                         HistoryViewModel historyViewModel, BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, standardDialog)

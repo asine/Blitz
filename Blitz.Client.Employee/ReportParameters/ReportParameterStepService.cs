@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blitz.Common.Customer;
 
 using Naru.Agatha;
+using Naru.Concurrency.Scheduler;
 using Naru.TPL;
 using Naru.WPF.Scheduler;
 using Naru.WPF.ViewModel;

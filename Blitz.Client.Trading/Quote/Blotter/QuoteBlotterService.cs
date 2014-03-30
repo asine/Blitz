@@ -27,11 +27,11 @@ namespace Blitz.Client.Trading.Quote.Blotter
     public class QuoteBlotterService : IQuoteBlotterService
     {
         private readonly IRequestTask _requestTask;
-        private readonly ISchedulerProvider _scheduler;
+        private readonly IDispatcherSchedulerProvider _scheduler;
         private readonly IViewService _viewService;
         private readonly Func<QuoteEditViewModel> _quoteEditViewModelFactory;
 
-        public QuoteBlotterService(IRequestTask requestTask, ISchedulerProvider scheduler, IViewService viewService, Func<QuoteEditViewModel> quoteEditViewModelFactory)
+        public QuoteBlotterService(IRequestTask requestTask, IDispatcherSchedulerProvider scheduler, IViewService viewService, Func<QuoteEditViewModel> quoteEditViewModelFactory)
         {
             _requestTask = requestTask;
             _scheduler = scheduler;

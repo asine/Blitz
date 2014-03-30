@@ -18,7 +18,7 @@ namespace Blitz.Client.Customer.ReportRunner
 {
     public class ReportRunnerViewModel : ReportRunnerViewModel<ReportParameterViewModel, IReportRunnerService, ReportRunnerRequest, ReportRunnerResponse>
     {
-        public ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,
+        public ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, IDispatcherSchedulerProvider scheduler,
                                      IToolBarService toolBarService,
                                      ReportParameterViewModel reportParameterViewModel, IReportRunnerService service,
                                      BindableCollection<IViewModel> itemsCollection)

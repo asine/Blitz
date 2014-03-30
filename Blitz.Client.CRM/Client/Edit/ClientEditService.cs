@@ -18,9 +18,9 @@ namespace Blitz.Client.CRM.Client.Edit
 
     public class ClientEditService : Service, IClientEditService
     {
-        private readonly ISchedulerProvider _scheduler;
+        private readonly IDispatcherSchedulerProvider _scheduler;
 
-        public ClientEditService(ISchedulerProvider scheduler)
+        public ClientEditService(IDispatcherSchedulerProvider scheduler)
         {
             _scheduler = scheduler;
         }

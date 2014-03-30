@@ -15,7 +15,7 @@ namespace Blitz.Client.Employee.ReportParameters
     {
         private readonly Func<ReportParameterStepViewModel> _reportParameterStepViewModelFactory;
 
-        public ReportParameterViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ReportParameterViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                         Func<ReportParameterStepViewModel> reportParameterStepViewModelFactory)
             : base(log, scheduler, standardDialog)
         {

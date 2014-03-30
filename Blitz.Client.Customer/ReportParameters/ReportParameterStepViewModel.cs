@@ -46,7 +46,7 @@ namespace Blitz.Client.Customer.ReportParameters
 
         #endregion
 
-        public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ReportParameterStepViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                             IReportParameterStepService service, 
                                             IValidationAsync<ReportParameterStepViewModel, ReportParameterStepValidator> validation,
                                             BindableCollection<DateTime> datesCollection)

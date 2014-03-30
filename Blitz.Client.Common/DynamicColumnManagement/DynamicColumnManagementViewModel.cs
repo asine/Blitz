@@ -63,7 +63,7 @@ namespace Blitz.Client.Common.DynamicColumnManagement
 
         #endregion
 
-        public DynamicColumnManagementViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, IDynamicColumnManagementService service,
+        public DynamicColumnManagementViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog, IDynamicColumnManagementService service,
                                                 BindableCollection<DynamicColumn> columnsCollection, 
                                                 BindableCollection<IToolBarItem> toolBarItemsCollection,
                                                 Func<DynamicColumnEditViewModel> editViewModelFactory,

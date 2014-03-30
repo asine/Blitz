@@ -27,7 +27,7 @@ namespace Blitz.Client.CRM.Client.Edit
 
         public BindableCollection<string> Genders { get; private set; }
 
-        public ClientEditViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ClientEditViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                    IToolBarService toolBarService, BindableCollection<IToolBarItem> toolBarCollection,
                                    IClientEditService service, ClientModel model, BindableCollection<string> genderCollection)
             : base(log, scheduler, standardDialog)

@@ -35,7 +35,7 @@ namespace Blitz.Client.Customer.ReportLayout
 
         public DelegateCommand OkCommand { get; private set; }
 
-        public ReportLayoutViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ReportLayoutViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                      IReportLayoutService service,
                                      BindableCollection<ReportLayoutItemViewModel> availableCollection,
                                      BindableCollection<ReportLayoutItemViewModel> rowsCollection,

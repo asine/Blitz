@@ -17,7 +17,7 @@ namespace Blitz.Client.Employee.Report
     {
         private readonly ReportRunnerViewModel _reportRunnerViewModel;
 
-        public ReportViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,
+        public ReportViewModel(ILog log, IStandardDialog standardDialog, IDispatcherSchedulerProvider scheduler,
                                BindableCollection<IViewModel> itemsCollection,
                                ReportRunnerViewModel reportRunnerViewModel)
             : base(log, standardDialog, scheduler, itemsCollection)

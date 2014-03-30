@@ -32,13 +32,13 @@ namespace Blitz.Client.Customer.ReportRunner
         private readonly IViewService _viewService;
         private readonly Func<ReportLayoutViewModel> _reportLayoutViewModelFactory;
         private readonly IBasicExportToExcel _exportToExcel;
-        private readonly ISchedulerProvider _scheduler;
+        private readonly IDispatcherSchedulerProvider _scheduler;
 
         public ReportRunnerService(Func<DynamicReportDataViewModel> dynamicReportDataViewModelFactory,
                                    IRequestTask requestTask, IViewService viewService,
                                    Func<ReportLayoutViewModel> reportLayoutViewModelFactory,
                                    IBasicExportToExcel exportToExcel,
-                                   ISchedulerProvider scheduler)
+                                   IDispatcherSchedulerProvider scheduler)
         {
             _dynamicReportDataViewModelFactory = dynamicReportDataViewModelFactory;
             _requestTask = requestTask;

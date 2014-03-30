@@ -16,12 +16,12 @@ namespace Blitz.Client.Employee
     public class EmployeeStartable
     {
         private readonly ILog _log;
-        private readonly ISchedulerProvider _scheduler;
+        private readonly IDispatcherSchedulerProvider _scheduler;
         private readonly IMenuService _menuService;
         private readonly IEventStream _eventStream;
         private readonly Func<ReportViewModel> _reportViewModelFactory;
 
-        public EmployeeStartable(ILog log, ISchedulerProvider scheduler, IMenuService menuService, IEventStream eventStream,
+        public EmployeeStartable(ILog log, IDispatcherSchedulerProvider scheduler, IMenuService menuService, IEventStream eventStream,
                                 Func<ReportViewModel> reportViewModelFactory)
         {
             _log = log;

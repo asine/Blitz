@@ -21,10 +21,10 @@ namespace Blitz.Client.Customer
         private readonly IMenuService _menuService;
         private readonly IEventStream _eventStream;
         private readonly Func<ReportViewModel> _reportViewModelFactory;
-        private readonly ISchedulerProvider _scheduler;
+        private readonly IDispatcherSchedulerProvider _scheduler;
 
         public CustomerStartable(ILog log, IMenuService menuService, IEventStream eventStream,
-                                 Func<ReportViewModel> reportViewModelFactory, ISchedulerProvider scheduler)
+                                 Func<ReportViewModel> reportViewModelFactory, IDispatcherSchedulerProvider scheduler)
         {
             _log = log;
             _menuService = menuService;

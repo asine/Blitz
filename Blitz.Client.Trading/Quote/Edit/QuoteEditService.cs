@@ -5,6 +5,7 @@ using Blitz.Common.Trading.Quote;
 using Blitz.Common.Trading.Quote.Edit;
 
 using Naru.Agatha;
+using Naru.Concurrency.Scheduler;
 using Naru.TPL;
 using Naru.WPF.Scheduler;
 

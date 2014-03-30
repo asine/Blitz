@@ -12,7 +12,7 @@ namespace Blitz.Client.Common.Report
     {
         public BindableCollection<IViewModel> Items { get; private set; }
 
-        protected ReportViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,
+        protected ReportViewModel(ILog log, IStandardDialog standardDialog, IDispatcherSchedulerProvider scheduler,
                                   BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, standardDialog)
         {

@@ -39,7 +39,7 @@ namespace Blitz.Client.Trading.Quote.Edit
 
         #endregion
 
-        public QuoteModel(ISchedulerProvider scheduler, IValidationAsync<QuoteModel, QuoteValidator> validation)
+        public QuoteModel(IDispatcherSchedulerProvider scheduler, IValidationAsync<QuoteModel, QuoteValidator> validation)
             : base(scheduler, validation)
         {
             _instrument.ConnectINPCProperty(this, () => Instrument, scheduler).AddDisposable(Disposables);

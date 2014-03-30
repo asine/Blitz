@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client", "Blitz.Client\Blitz.Client.csproj", "{B94E7768-2B75-4245-9580-B2C34E376619}"
 EndProject
@@ -66,6 +66,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.RX", "..\Naru\Naru.RX\Naru.RX.csproj", "{9A778612-DF3E-417A-91F7-E354A1B3A412}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blitz.Client.CRM", "Blitz.Client.CRM\Blitz.Client.CRM.csproj", "{29289AA9-2B50-4CDA-8DF9-43F572681F3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.Concurrency", "..\Naru\Naru.Concurrency\Naru.Concurrency.csproj", "{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naru.Concurrency.Tests", "..\Naru\Naru.Concurrency.Tests\Naru.Concurrency.Tests.csproj", "{B22FA3A7-CB84-49B0-B69D-DF0FB4657D25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +157,14 @@ Global
 		{29289AA9-2B50-4CDA-8DF9-43F572681F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29289AA9-2B50-4CDA-8DF9-43F572681F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29289AA9-2B50-4CDA-8DF9-43F572681F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B22FA3A7-CB84-49B0-B69D-DF0FB4657D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B22FA3A7-CB84-49B0-B69D-DF0FB4657D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B22FA3A7-CB84-49B0-B69D-DF0FB4657D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B22FA3A7-CB84-49B0-B69D-DF0FB4657D25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,6 +190,8 @@ Global
 		{72505099-F699-406D-BCEC-8850CDFD49F3} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 		{15981272-C201-438A-AEEF-CE3CACD97179} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 		{9A778612-DF3E-417A-91F7-E354A1B3A412} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
+		{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
+		{B22FA3A7-CB84-49B0-B69D-DF0FB4657D25} = {74CF91DE-E5BC-42F8-8916-B3669E0CF7F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35

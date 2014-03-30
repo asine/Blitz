@@ -66,7 +66,7 @@ namespace Blitz.Client.Common.ReportRunner
 
         #endregion
 
-        protected ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler, 
+        protected ReportRunnerViewModel(ILog log, IStandardDialog standardDialog, IDispatcherSchedulerProvider scheduler, 
                                         IToolBarService toolBarService, TReportParameterViewModel reportParameterViewModel,
                                         TReportRunnerService service, BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, standardDialog)

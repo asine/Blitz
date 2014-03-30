@@ -66,7 +66,7 @@ namespace Blitz.Client.Shell
 
         #endregion
 
-        public ShellViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ShellViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                               IToolBarService toolBarService, IMenuService menuService, IEventStream eventStream,
                               IAppearanceViewModel appearanceViewModel,
                               BindableCollection<IViewModel> itemsCollection,

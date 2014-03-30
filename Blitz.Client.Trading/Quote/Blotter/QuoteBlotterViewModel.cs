@@ -23,7 +23,7 @@ namespace Blitz.Client.Trading.Quote.Blotter
 
         public DelegateCommand<QuoteBlotterItemViewModel> OpenCommand { get; private set; }
 
-        public QuoteBlotterViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog viewService,
+        public QuoteBlotterViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog viewService,
                                      BindableCollection<QuoteBlotterItemViewModel> itemsCollection, IQuoteBlotterService service,
                                      IToolBarService toolBarService)
             : base(log, scheduler, viewService)

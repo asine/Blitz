@@ -46,7 +46,7 @@ namespace Blitz.Client.Common.DynamicColumnEdit
 
         #endregion
 
-        public DynamicColumnEditViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, IDynamicColumnEditService service)
+        public DynamicColumnEditViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog, IDynamicColumnEditService service)
             : base(log, scheduler, standardDialog)
         {
             _service = service;

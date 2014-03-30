@@ -20,7 +20,7 @@ namespace Blitz.Client.Common.ReportParameter
 
         public IObservable<Unit> GenerateReport { get { return _generateReportSubject.AsObservable(); } }
 
-        protected ReportParameterWizardViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog) 
+        protected ReportParameterWizardViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog) 
             : base(log, scheduler, standardDialog)
         {
         }

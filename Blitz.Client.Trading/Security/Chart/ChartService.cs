@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Naru.Agatha;
+using Naru.Concurrency.Scheduler;
 using Naru.TPL;
 
 using Blitz.Common.Trading.Security.Chart;

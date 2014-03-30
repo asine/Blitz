@@ -19,7 +19,7 @@ namespace Blitz.Client.Customer.Report
         private readonly ReportRunnerViewModel _reportRunnerViewModel;
         private readonly ReportViewerViewModel _reportViewerViewModel;
 
-        public ReportViewModel(ILog log, IStandardDialog standardDialog, ISchedulerProvider scheduler,
+        public ReportViewModel(ILog log, IStandardDialog standardDialog, IDispatcherSchedulerProvider scheduler,
                                BindableCollection<IViewModel> itemsCollection,
                                ReportRunnerViewModel reportRunnerViewModel,
                                ReportViewerViewModel reportViewerViewModel)

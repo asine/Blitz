@@ -186,6 +186,10 @@
       <Project>{15981272-C201-438A-AEEF-CE3CACD97179}</Project>
       <Name>Naru.Aufofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.Concurrency\Naru.Concurrency.csproj">
+      <Project>{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}</Project>
+      <Name>Naru.Concurrency</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Naru\Naru.Core\Naru.Core.csproj">
       <Project>{17ea4111-2679-4155-a6e5-fe45e171ac2b}</Project>
       <Name>Naru.Core</Name>

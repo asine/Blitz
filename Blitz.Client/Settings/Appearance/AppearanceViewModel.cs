@@ -125,7 +125,7 @@ namespace Blitz.Client.Settings.Appearance
 
         #endregion
 
-        public AppearanceViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public AppearanceViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                    BindableCollection<string> fontSizesCollection,
                                    BindableCollection<Color> accentColorsCollection,
                                    BindableCollection<ThemeItemViewModel> themesCollection)

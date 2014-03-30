@@ -22,7 +22,7 @@ namespace Blitz.Client.Common.DynamicReportData
 
         public BindableCollection<DynamicColumn> Columns { get; private set; }
 
-        public DynamicReportDataViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog, IViewService viewService,
+        public DynamicReportDataViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog, IViewService viewService,
                                           BindableCollection<ExpandoObject> itemsCollection,
                                           BindableCollection<DynamicColumn> columnsCollection,
                                           IToolBarService toolBarService, Func<DynamicColumnManagementViewModel> dynamicColumnManagementViewModelFactory)

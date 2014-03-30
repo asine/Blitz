@@ -38,7 +38,7 @@ namespace Blitz.Client.Employee.ReportParameters
 
         #endregion
 
-        public ReportParameterStepViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ReportParameterStepViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                             IReportParameterStepService service,
                                             BindableCollection<DateTime> datesCollection)
             : base(log, scheduler, standardDialog)

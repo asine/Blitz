@@ -41,7 +41,7 @@ namespace Blitz.Client.Trading.Security.Chart
 
         public DelegateCommand GoCommand { get; private set; }
 
-        public ChartViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ChartViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                               BindableCollection<HistoricalDataDto> itemsCollection, IChartService service)
             : base(log, scheduler, standardDialog)
         {

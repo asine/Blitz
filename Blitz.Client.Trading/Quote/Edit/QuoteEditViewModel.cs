@@ -43,7 +43,7 @@ namespace Blitz.Client.Trading.Quote.Edit
 
         public BindableCollection<LookupValue> Instruments { get; private set; }
 
-        public QuoteEditViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public QuoteEditViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                   IQuoteEditService service,
                                   BindableCollection<IToolBarItem> toolBarItemsCollection,
                                   BindableCollection<LookupValue> instrumentsCollection,

@@ -24,10 +24,10 @@ namespace Blitz.Client.Customer.Reportviewer
     public class ReportViewerService : ReportViewerService<GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>, IReportViewerService
     {
         private readonly IRequestTask _requestTask;
-        private readonly ISchedulerProvider _scheduler;
+        private readonly IDispatcherSchedulerProvider _scheduler;
         private readonly Func<DynamicReportDataViewModel> _simpleReportDataViewModelFactory;
 
-        public ReportViewerService(IRequestTask requestTask, ISchedulerProvider scheduler, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
+        public ReportViewerService(IRequestTask requestTask, IDispatcherSchedulerProvider scheduler, Func<DynamicReportDataViewModel> simpleReportDataViewModelFactory) 
         {
             _requestTask = requestTask;
             _scheduler = scheduler;

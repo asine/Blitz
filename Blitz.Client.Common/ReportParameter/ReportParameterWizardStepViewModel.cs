@@ -9,7 +9,7 @@ namespace Blitz.Client.Common.ReportParameter
     public abstract class ReportParameterWizardStepViewModel<TContext> : WizardStepViewModel<TContext>
         where TContext : IWizardContext, new()
     {
-        protected ReportParameterWizardStepViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog) 
+        protected ReportParameterWizardStepViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog) 
             : base(log, scheduler, standardDialog)
         {
         }

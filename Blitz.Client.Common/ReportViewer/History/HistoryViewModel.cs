@@ -20,7 +20,7 @@ namespace Blitz.Client.Common.ReportViewer.History
 
         public event EventHandler<DataEventArgs<long>> Open;
 
-        public HistoryViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public HistoryViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                 BindableCollection<HistoryItemViewModel> itemsCollection) 
             : base(log, scheduler, standardDialog)
         {

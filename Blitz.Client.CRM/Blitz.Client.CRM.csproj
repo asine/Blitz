@@ -142,6 +142,10 @@
       <Project>{1d9ca7e1-b622-4c2c-b0cc-b317404c8f45}</Project>
       <Name>Naru.Agatha</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Naru\Naru.Concurrency\Naru.Concurrency.csproj">
+      <Project>{4C72DCB6-93BD-4BCC-95B8-2B0DE191BC01}</Project>
+      <Name>Naru.Concurrency</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Naru\Naru.Core\Naru.Core.csproj">
       <Project>{17ea4111-2679-4155-a6e5-fe45e171ac2b}</Project>
       <Name>Naru.Core</Name>

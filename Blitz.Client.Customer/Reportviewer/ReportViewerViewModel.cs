@@ -17,7 +17,7 @@ namespace Blitz.Client.Customer.Reportviewer
     public class ReportViewerViewModel :
         ReportViewerViewModel <IReportViewerService, GetHistoryListRequest, GetHistoryListResponse, GetHistoryReportsRequest, GetHistoryReportsResponse>
     {
-        public ReportViewerViewModel(ILog log, ISchedulerProvider scheduler, IStandardDialog standardDialog,
+        public ReportViewerViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
                                      IReportViewerService service, IToolBarService toolBarService,
                                      HistoryViewModel historyViewModel, BindableCollection<IViewModel> itemsCollection)
             : base(log, scheduler, standardDialog, service, toolBarService, historyViewModel, itemsCollection)
