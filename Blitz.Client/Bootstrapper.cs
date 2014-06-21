@@ -14,7 +14,6 @@ using Blitz.Client.Settings.Appearance;
 using Blitz.Client.Trading;
 
 using Naru.Agatha;
-using Naru.Aufofac.log4Net;
 using Naru.Core;
 using Naru.Log4Net;
 using Naru.WPF;
@@ -37,7 +36,6 @@ namespace Blitz.Client
                 RequestResponseAssembly = typeof(Blitz.Common.AssemblyHook).Assembly
             });
 
-            builder.RegisterModule(new LogInjectionModule());
             builder.RegisterModule(new Log4NetModule { SectionName = "CommonLogging.Blitz.Client" });
 
             builder.RegisterModule(new CoreModule());

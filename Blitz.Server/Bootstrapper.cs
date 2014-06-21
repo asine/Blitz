@@ -6,7 +6,6 @@ using Agatha.ServiceLayer.WCF;
 using Autofac;
 
 using Naru.Agatha;
-using Naru.Aufofac.log4Net;
 using Naru.Log4Net;
 
 using Raven.Client;
@@ -22,18 +21,17 @@ namespace Blitz.Server
 
         public Bootstrapper()
         {
-            Naru.Core.UnhandledExceptionHandler.InstallDomainUnhandledException();
-            Naru.TPL.UnhandledExceptionHandler.InstallTaskUnobservedException();
-
             IContainer container = null;
 
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new LogInjectionModule());
             builder.RegisterModule(new Log4NetModule
             {
                 SectionName = "CommonLogging.Blitz.Server"
             });
+
+            Naru.Core.UnhandledExceptionHandler.InstallDomainUnhandledException();
+            Naru.TPL.UnhandledExceptionHandler.InstallTaskUnobservedException();
 
             builder.RegisterModule(new AgathaServerModule
             {
