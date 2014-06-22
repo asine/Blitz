@@ -16,17 +16,17 @@ namespace Blitz.Client.Trading
     {
         private readonly ILog _log;
         private readonly IMenuService _menuService;
-        private readonly IEventStream _eventStream;
+        private readonly IMessageStream _messageStream;
         private readonly Func<QuoteBlotterViewModel> _quoteBlotterViewModelFactory;
         private readonly Func<ChartViewModel> _chartViewModelFactory;
 
-        public TradingStartable(ILog log, IMenuService menuService, IEventStream eventStream,
+        public TradingStartable(ILog log, IMenuService menuService, IMessageStream messageStream,
                                 Func<QuoteBlotterViewModel> quoteBlotterViewModelFactory,
                                 Func<ChartViewModel> chartViewModelFactory)
         {
             _log = log;
             _menuService = menuService;
-            _eventStream = eventStream;
+            _messageStream = messageStream;
             _quoteBlotterViewModelFactory = quoteBlotterViewModelFactory;
             _chartViewModelFactory = chartViewModelFactory;
         }
@@ -51,7 +51,7 @@ namespace Blitz.Client.Trading
                     _log.Debug("Adding Blotter to Main region");
 
                     var quoteBlotterViewModel = _quoteBlotterViewModelFactory();
-                    _eventStream.Push(quoteBlotterViewModel);
+                    _messageStream.Push(quoteBlotterViewModel);
                     quoteBlotterViewModel.ActivationStateViewModel.Activate();
                 });
             tradingMenuItem.Items.Add(newReportMenuItem);
@@ -65,7 +65,7 @@ namespace Blitz.Client.Trading
                     _log.Debug("Adding Chart to Main region");
 
                     var chartViewModel = _chartViewModelFactory();
-                    _eventStream.Push(chartViewModel);
+                    _messageStream.Push(chartViewModel);
                     chartViewModel.ActivationStateViewModel.Activate();
                 });
             tradingMenuItem.Items.Add(chartMenuItem);

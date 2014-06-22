@@ -18,16 +18,16 @@ namespace Blitz.Client.Employee
         private readonly ILog _log;
         private readonly IDispatcherSchedulerProvider _scheduler;
         private readonly IMenuService _menuService;
-        private readonly IEventStream _eventStream;
+        private readonly IMessageStream _messageStream;
         private readonly Func<ReportViewModel> _reportViewModelFactory;
 
-        public EmployeeStartable(ILog log, IDispatcherSchedulerProvider scheduler, IMenuService menuService, IEventStream eventStream,
+        public EmployeeStartable(ILog log, IDispatcherSchedulerProvider scheduler, IMenuService menuService, IMessageStream messageStream,
                                 Func<ReportViewModel> reportViewModelFactory)
         {
             _log = log;
             _scheduler = scheduler;
             _menuService = menuService;
-            _eventStream = eventStream;
+            _messageStream = messageStream;
             _reportViewModelFactory = reportViewModelFactory;
         }
 
@@ -51,7 +51,7 @@ namespace Blitz.Client.Employee
 
                     var reportViewModel = _reportViewModelFactory();
                     reportViewModel.SetupHeader(_scheduler, "Employee Report");
-                    _eventStream.Push(reportViewModel);
+                    _messageStream.Push(reportViewModel);
                     reportViewModel.ActivationStateViewModel.Activate();
                 });
             employeeMenuItem.Items.Add(newReportMenuItem);

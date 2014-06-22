@@ -67,7 +67,7 @@ namespace Blitz.Client.Shell
         #endregion
 
         public ShellViewModel(ILog log, IDispatcherSchedulerProvider scheduler, IStandardDialog standardDialog,
-                              IToolBarService toolBarService, IMenuService menuService, IEventStream eventStream,
+                              IToolBarService toolBarService, IMenuService menuService, IMessageStream messageStream,
                               IAppearanceViewModel appearanceViewModel,
                               BindableCollection<IViewModel> itemsCollection,
                               BindableCollection<Link> linkCollection,
@@ -88,7 +88,7 @@ namespace Blitz.Client.Shell
                                Command = new DelegateCommand(() => userInteraction.ShowModalAsync(appearanceViewModel))
                            });
 
-            eventStream.Of<IViewModel>()
+            messageStream.Of<IViewModel>()
                 .ObserveOn(Scheduler.Dispatcher.RX)
                 .Subscribe(x => Items.Add(x));
 

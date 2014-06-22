@@ -43,7 +43,7 @@ namespace Blitz.Client
             builder.RegisterModule(new WPFModule());
             builder.RegisterType<WPFStartable>().AsSelf();
 
-            builder.RegisterType<EventStream>().As<IEventStream>().InstancePerOwned<ReportViewModel>().SingleInstance();
+            builder.RegisterType<MessageStream>().As<IMessageStream>().InstancePerOwned<ReportViewModel>().SingleInstance();
 
             builder.RegisterType<ShellViewModel>().AsSelf();
             builder.RegisterType<AppearanceViewModel>().As<IAppearanceViewModel>().AsSelf();

@@ -16,15 +16,15 @@ namespace Blitz.Client.CRM
     {
         private readonly ILog _log;
         private readonly IMenuService _menuService;
-        private readonly IEventStream _eventStream;
+        private readonly IMessageStream _messageStream;
         private readonly Func<ClientEditViewModel> _clientEditViewModelFactory;
 
-        public CRMStartable(ILog log, IMenuService menuService, IEventStream eventStream,
+        public CRMStartable(ILog log, IMenuService menuService, IMessageStream messageStream,
                             Func<ClientEditViewModel> clientEditViewModelFactory)
         {
             _log = log;
             _menuService = menuService;
-            _eventStream = eventStream;
+            _messageStream = messageStream;
             _clientEditViewModelFactory = clientEditViewModelFactory;
         }
 
@@ -46,7 +46,7 @@ namespace Blitz.Client.CRM
                 () =>
                 {
                     var clientEditViewModel = _clientEditViewModelFactory();
-                    _eventStream.Push(clientEditViewModel);
+                    _messageStream.Push(clientEditViewModel);
                     clientEditViewModel.ActivationStateViewModel.Activate();
                 });
             crmMenuItem.Items.Add(newReportMenuItem);

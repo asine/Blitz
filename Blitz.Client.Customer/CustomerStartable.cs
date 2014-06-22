@@ -19,16 +19,16 @@ namespace Blitz.Client.Customer
     {
         private readonly ILog _log;
         private readonly IMenuService _menuService;
-        private readonly IEventStream _eventStream;
+        private readonly IMessageStream _messageStream;
         private readonly Func<ReportViewModel> _reportViewModelFactory;
         private readonly IDispatcherSchedulerProvider _scheduler;
 
-        public CustomerStartable(ILog log, IMenuService menuService, IEventStream eventStream,
+        public CustomerStartable(ILog log, IMenuService menuService, IMessageStream messageStream,
                                  Func<ReportViewModel> reportViewModelFactory, IDispatcherSchedulerProvider scheduler)
         {
             _log = log;
             _menuService = menuService;
-            _eventStream = eventStream;
+            _messageStream = messageStream;
             _reportViewModelFactory = reportViewModelFactory;
             _scheduler = scheduler;
         }
@@ -61,7 +61,7 @@ namespace Blitz.Client.Customer
 
                               var reportViewModel = _reportViewModelFactory();
                               reportViewModel.SetupHeader(_scheduler, "Customer Report");
-                              _eventStream.Push(reportViewModel);
+                              _messageStream.Push(reportViewModel);
 
                               return reportViewModel;
                           }, _scheduler.Dispatcher.TPL)
